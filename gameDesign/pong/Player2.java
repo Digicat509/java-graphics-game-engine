@@ -1,9 +1,9 @@
-package gameDesign.pong;
+package pong;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import gameDesign.gameEngine.GameObject;
+import gameEngine.GameObject;
 
 public class Player2 extends GameObject
 {

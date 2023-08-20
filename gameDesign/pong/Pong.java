@@ -1,6 +1,6 @@
-package gameDesign.pong;
+package pong;
 
-import gameDesign.gameEngine.GameEngine;
+import gameEngine.GameEngine;
 
 public class Pong {
 	static GameEngine game;

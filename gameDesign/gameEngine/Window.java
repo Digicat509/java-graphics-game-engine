@@ -1,4 +1,4 @@
-package gameDesign.gameEngine;
+package gameEngine;
 
 import javax.swing.*;
 

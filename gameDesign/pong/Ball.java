@@ -1,11 +1,11 @@
-package gameDesign.pong;
+package pong;
 
 import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.imageio.ImageIO;
 
-import gameDesign.gameEngine.GameObject;
+import gameEngine.GameObject;
 
 public class Ball extends GameObject{
 	static Image Ball;

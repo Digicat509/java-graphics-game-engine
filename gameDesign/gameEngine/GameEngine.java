@@ -1,4 +1,4 @@
-package gameDesign.gameEngine;
+package gameEngine;
 
 import java.awt.*;
 import java.util.*;

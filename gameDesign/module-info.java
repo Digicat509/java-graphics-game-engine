@@ -1,4 +1,10 @@
-module computerScienceClub {
+/**
+ * 
+ */
+/**
+ * @author alexa
+ *
+ */
+module javaGraphicsGameEngine {
 	requires java.desktop;
-	
 }
