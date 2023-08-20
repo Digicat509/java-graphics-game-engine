@@ -25,7 +25,7 @@ public class Handler{
 	//renders all game objects in hand
 	public void render(Graphics g)
 	{
-		for(GameObject o: Handler.hand)
+		for(GameObject o: hand)
 		{
 			o.draw(g);
 		}

@@ -11,7 +11,7 @@ public class GameEngine implements Runnable{
 	}
 	private int width = 320, height=240;
 	private float scale = 1f;
-	private String title = "What is going on??????";
+	private String title = "Nothing to see here";
 	private Window window;
 	private Thread thread;
 	private boolean running = false;
@@ -20,7 +20,7 @@ public class GameEngine implements Runnable{
 	double frame_time = 0;
 	int fps = 0;
 	int frames = 0;
-	private Handler hand;
+	Handler hand;
 	private Keyboard kevin = new Keyboard();
 	private Mouse mice = new Mouse();
 	
@@ -65,6 +65,7 @@ public class GameEngine implements Runnable{
 			}
 			if(render) {
 				window.update();
+				kevin.update();
 				frames++;
 			}
 			else {
@@ -97,15 +98,6 @@ public class GameEngine implements Runnable{
 	public Handler getHandeler()
 	{
 		return hand;
-	}
-	public Handler getHandler() {
-		return hand;
-	}
-	public Keyboard getKeyboard() {
-		return kevin;
-	}
-	public Mouse getMouse() {
-		return mice;
 	}
 	public void update(Graphics g) {
 		hand.render(g);

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import gameEngine.GameObject;
+import gameEngine.Keyboard;
 
 public class Player2 extends GameObject
 {
@@ -24,11 +25,11 @@ public class Player2 extends GameObject
 	}
 	public void move()
 	{
-		if(Pong.game.getKeyboard().up && y > 0)
+		if(Keyboard.up && y > 0)
 		{
 			y -= 1;
 		}
-		if(Pong.game.getKeyboard().down && y+h < Pong.game.getHeight()-40)
+		if(Keyboard.down && y+h < Pong.game.getHeight()-40)
 		{
 			y += 1;
 		}
