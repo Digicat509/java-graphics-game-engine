@@ -1,4 +1,4 @@
-package games.pong;
+package pong;
 
 import gameEngine.GameEngine;
 

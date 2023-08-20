@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="gameDesign/" kind="src" path=""/>
-	<classpathentry kind="src" path="gameDesign"/>
+	<classpathentry kind="src" path="Games"/>
+	<classpathentry kind="src" path="GameEngine"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
