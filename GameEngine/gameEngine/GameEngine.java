@@ -29,6 +29,8 @@ public class GameEngine implements Runnable{
 	}
 	public void start() {
 		window = new Window(this);
+		window.getCanvas().addKeyListener(kevin);
+		window.getCanvas().addMouseListener(mice);
 		thread = new Thread(this);
 		thread.run();
 	}
@@ -64,8 +66,8 @@ public class GameEngine implements Runnable{
 				}
 			}
 			if(render) {
-				window.update();
 				kevin.update();
+				window.update();
 				frames++;
 			}
 			else {
@@ -77,10 +79,10 @@ public class GameEngine implements Runnable{
 		
 	}
 	public int getHeight() {
-		return height;
+		return (int)(height*scale);
 	}
 	public int getWidth() {
-		return width;
+		return (int)(width*scale);
 	}
 	public float getScale() {
 		return scale;
@@ -91,6 +93,9 @@ public class GameEngine implements Runnable{
 	}
 	public String getTitle() {
 		return title;
+	}
+	public Keyboard getKeyboard() {
+		return kevin;
 	}
 	public void setTitle(String title) {
 		this.title = title;

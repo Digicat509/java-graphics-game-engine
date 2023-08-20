@@ -27,11 +27,11 @@ public class Player1 extends GameObject
 	{
 		if(Keyboard.w && y > 0)
 		{
-			y -= 1;
+			y -= 3;
 		}
-		if(Keyboard.s && y+h < Pong.game.getHeight()-40)
+		if(Keyboard.s && y+h < Pong.game.getHeight())
 		{
-			y += 1;
+			y += 3;
 		}
 	}
 }

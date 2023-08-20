@@ -18,7 +18,7 @@ public class Window {
 		game=ge;
 		image = new BufferedImage(ge.getWidth(), ge.getHeight(), BufferedImage.TYPE_INT_RGB);
 		canvas = new Canvas();
-		Dimension dimension = new Dimension((int)(ge.getWidth()*ge.getScale()), (int)(ge.getHeight()*ge.getScale()));
+		Dimension dimension = new Dimension((int)(ge.getWidth()), (int)(ge.getHeight()));
 		
 		canvas.setPreferredSize(dimension);
 		

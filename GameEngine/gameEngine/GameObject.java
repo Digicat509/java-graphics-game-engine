@@ -23,9 +23,12 @@ public abstract class GameObject
 	{
 		for(GameObject o: Handler.hitsHand)
 		{
-			if((this.getBounds()).intersects((Rectangle)o.getBounds()))
+			if(!this.equals(o))
 			{
-				return true;
+				if((this.getBounds()).intersects((Rectangle)o.getBounds()))
+				{
+					return true;
+				}
 			}
 		}
 		return false;
@@ -35,11 +38,10 @@ public abstract class GameObject
 		for(GameObject o: Handler.hitsHand)
 		{
 			if(this.layers > 0);
-			{
-				if(layers >= o.layers)
+				if(!this.equals(o))
+					if(layers >= o.layers)
 						if((this.getBounds()).intersects((Rectangle)o.getBounds()))
 							return true;
-			}
 		}
 		return false;
 	}

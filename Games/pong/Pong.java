@@ -16,7 +16,7 @@ public class Pong {
 		game = new GameEngine();
 		game.setTitle("Pong!");
 		game.setScale(2f);
-		ball = new Ball(.5f, .5f);
+		ball = new Ball(1, 1);
 		p1 = new Player1();
 		p2 = new Player2();
 		game.start();

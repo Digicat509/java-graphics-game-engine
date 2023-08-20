@@ -42,8 +42,8 @@ public class Ball extends GameObject{
 		{ 
 			x = 305;
 			y = 210;
-			dx = .5f;
-			dy = .5f;
+			dx = 1;
+			dy = 1;
 			int rand = (int)(Math.random()*4);
 			if(rand == 1)
 				dx *= -1f;
@@ -59,8 +59,8 @@ public class Ball extends GameObject{
 		{
 			x = 305;
 			y = 210;
-			dx = .5f;
-			dy = .5f;
+			dx = 1;
+			dy = 1;
 			int rand = (int)(Math.random()*4);
 			if(rand == 1)
 				dx *= -1f;
@@ -74,7 +74,7 @@ public class Ball extends GameObject{
 		}
 		if(x > Pong.game.getWidth()-w || x < 0)
 			dx *= -1;
-		if( y > Pong.game.getHeight()-35-h || y < 0)
+		if( y > Pong.game.getHeight()-h || y < 0)
 			dy *= -1;
 		collide();
 	}
