@@ -40,6 +40,7 @@ public class Ball extends GameObject{
 	{
 		if(x > Pong.game.getWidth()-w)
 		{ 
+			Pong.p1Score++;
 			x = 305;
 			y = 210;
 			dx = 1;
@@ -57,6 +58,7 @@ public class Ball extends GameObject{
 		}
 		if(x < 0)
 		{
+			Pong.p2Score++;
 			x = 305;
 			y = 210;
 			dx = 1;
