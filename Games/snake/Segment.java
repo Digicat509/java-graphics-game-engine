@@ -8,7 +8,7 @@ import gameEngine.GameObject;
 
 public class Segment extends GameObject{
 	public static int size = 30;
-	public static float speed = 1f;
+	public static float speed = 2f;
 	public String direction;
 	static Image sideSnake;
 	static Image upSnake;
@@ -40,7 +40,6 @@ public class Segment extends GameObject{
 	@Override
 	public void draw(Graphics g)//draws the correct image for the direction of the segment
 	{
-		//g.setColor(new Color(28, 152, 0));
 		if(direction.equals("up") || direction.equals("down"))
 			g.drawImage(upSnake, (int)x,(int)y,w,h, null);
 		if(direction.equals("left") || direction.equals("right"))

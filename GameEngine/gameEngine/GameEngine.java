@@ -91,6 +91,12 @@ public class GameEngine implements Runnable{
 	{
 		scale = s;
 	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
 	public String getTitle() {
 		return title;
 	}

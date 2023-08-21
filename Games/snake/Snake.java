@@ -13,7 +13,8 @@ public class Snake {
 	{
 		game = new GameEngine();
 		game.setTitle("Snake!");
-		game.setScale(2f);
+		game.setWidth(480);
+		game.setHeight(480);
 		new Background();
 		player = new Player();
 		new Apple();

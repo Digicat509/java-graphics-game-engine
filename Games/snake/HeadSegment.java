@@ -70,8 +70,6 @@ public class HeadSegment extends Segment{
 					dy = speed;
 					direction = "down";
 					Player.pressed = true;
-					//Player.frameCounter = 1;
-					//Player.trackers.add(new SegmentTracker());
 				}
 				else if("up".equals(nextMove) && !("down".equals(direction)))
 				{
@@ -79,8 +77,6 @@ public class HeadSegment extends Segment{
 					dy = -speed;
 					direction = "up";
 					Player.pressed = true;
-					//Player.frameCounter = 1;
-					//Player.trackers.add(new SegmentTracker());
 				}
 				else if("right".equals(nextMove) && !("left".equals(direction)))
 				{
@@ -88,8 +84,6 @@ public class HeadSegment extends Segment{
 					dy = 0;
 					direction = "right";
 					Player.pressed = true;
-					//Player.frameCounter = 1;
-					//Player.trackers.add(new SegmentTracker());
 				}
 				else if("left".equals(nextMove) && !("right".equals(direction)))
 				{
@@ -97,8 +91,6 @@ public class HeadSegment extends Segment{
 					dy = 0;
 					direction = "left";
 					Player.pressed = true;
-					//Player.frameCounter = 1;
-					//Player.trackers.add(new SegmentTracker());
 				}
 			}
 		}

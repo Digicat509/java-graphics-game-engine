@@ -11,8 +11,6 @@ public class Player extends GameObject{
 	static boolean pressed;
 	static int frameCounter = 1;
 	int snakeLength;
-	//static int currentSegment = 1;
-	//static ArrayList <SegmentTracker> trackers = new ArrayList <SegmentTracker>();
 	public Player()//constructor makes a 3 segment snake
 	{
 		Snake.game.getHandeler().add(this, true);
@@ -48,25 +46,8 @@ public class Player extends GameObject{
 	public void move()// goes through the list and updates the direction of each segment
 	{
 		pressed = false;
-		//frameCounter++;
-		if(/*frameCounter % (Segment.size) == 0*/ list.get(1).x % Segment.size == 0 && list.get(1).y % Segment.size == 0)
+		if(list.get(1).x % Segment.size == 0 && list.get(1).y % Segment.size == 0)
 		{
-			/*for(int i = trackers.size()-1; i >= 0; i--)
-			{
-				list.get(trackers.get(i).currentSegment).dx = list.get(trackers.get(i).currentSegment-1).dx;
-				list.get(trackers.get(i).currentSegment).dy = list.get(trackers.get(i).currentSegment-1).dy;
-				if(list.get(trackers.get(i).currentSegment).dx > 0)
-					list.get(trackers.get(i).currentSegment).direction = "right";
-				else if(list.get(trackers.get(i).currentSegment).dx < 0)
-					list.get(trackers.get(i).currentSegment).direction = "left";
-				else if(list.get(trackers.get(i).currentSegment).dy > 0)
-					list.get(trackers.get(i).currentSegment).direction = "down";
-				else if(list.get(trackers.get(i).currentSegment).dy < 0)
-					list.get(trackers.get(i).currentSegment).direction = "up";
-				trackers.get(i).currentSegment++;
-				if(trackers.get(i).currentSegment >= list.size())
-					trackers.remove(i);
-			}*/
 			for(int i = list.size()-1; i > 0; i--)
 			{
 				list.get(i).dx = list.get(i-1).dx;
@@ -104,13 +85,5 @@ public class Player extends GameObject{
 			}
 		}
 		return false;
-	}
-}
-class SegmentTracker
-{
-	int currentSegment;
-	public SegmentTracker()
-	{
-		currentSegment = 1;
 	}
 }
