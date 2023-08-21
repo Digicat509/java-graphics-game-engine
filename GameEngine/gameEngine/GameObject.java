@@ -4,9 +4,13 @@ import java.awt.*;
 
 public abstract class GameObject
 {
-	protected float x,y,dx,dy;
-	protected int w,h;
+	public float x,y,dx,dy;
+	public int w,h;
 	protected int layers;
+	public GameObject()
+	{
+		this(1);
+	}
 	public GameObject(int layers)
 	{
 		this.layers = layers;
