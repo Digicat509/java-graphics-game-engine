@@ -6,6 +6,7 @@ import java.util.*;
 public class Handler{
 	static ArrayList <GameObject> hand = new ArrayList <GameObject>();
 	static ArrayList <GameObject> hitsHand = new ArrayList <GameObject>();
+	private boolean markForClear = false;
 	//Constructor
 	public Handler()
 	{
@@ -22,9 +23,19 @@ public class Handler{
 	{
 		hand.remove(o);
 	}
+	public void clear()
+	{
+		markForClear = true;
+	}
 	//renders all game objects in hand
 	public void render(Graphics g)
 	{
+		if(markForClear)
+		{
+			hand.clear();
+			hitsHand.clear();
+			markForClear = false;
+		}
 		for(GameObject o: hand)
 		{
 			o.draw(g);

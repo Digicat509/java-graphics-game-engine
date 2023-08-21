@@ -19,7 +19,7 @@ public class Apple extends GameObject{
 		h = 20;
 		x = ((int)(Math.random()*(16)))*30+5;
 		y = ((int)(Math.random()*(16)))*30+5;
-		while(this.hits(Snake.player))
+		while(Snake.player.hits(this))
 		{
 			x = ((int)(Math.random()*(16)))*30+5;
 			y = ((int)(Math.random()*(16)))*30+5;
@@ -32,7 +32,7 @@ public class Apple extends GameObject{
 		y = ((int)(Math.random()*(16)))*30+5;
 		if(Snake.player.snakeLength < 256)
 		{
-			while(this.hits(Snake.player))
+			while(Snake.player.hits(this))
 			{
 				x = ((int)(Math.random()*(16)))*30+5;
 				y = ((int)(Math.random()*(16)))*30+5;
@@ -47,6 +47,11 @@ public class Apple extends GameObject{
 	@Override
 	public void draw(Graphics g)//draws the apple with the apple image in the package
 	{
+		if(this.hits(Snake.player.list.get(0)))
+		{
+			Snake.player.addSegment();
+			teleport();
+		}
 		g.setColor(Color.red);
 		g.drawImage(apple, (int)x, (int)y, w, h, null);
 	}

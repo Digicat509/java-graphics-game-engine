@@ -20,4 +20,8 @@ public class Snake {
 		new Apple();
 		game.start();
 	}
+	public static void restart()
+	{
+		
+	}
 }

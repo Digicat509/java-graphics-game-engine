@@ -25,7 +25,6 @@ public class HeadSegment extends Segment{
 	@Override
 	public void draw(Graphics g)
 	{
-		//g.setColor(new Color(28, 152, 0));
 		if(direction.equals("up"))
 			g.drawImage(upSnake, (int)x,(int)y,w,h, null);
 		if(direction.equals("down"))
@@ -43,12 +42,14 @@ public class HeadSegment extends Segment{
 		//if the player hits the edge
 		if(x < 0 || x > Snake.game.getWidth()-w || y < 0 || y > (Snake.game.getHeight()-h))
 		{
-			
+			Snake.game.getHandeler().clear();
+			Snake.restart();
 		}
 		//if the player hits itself
-		if(this.hits())
+		if(Snake.player.hits(this))
 		{
-			
+			Snake.game.getHandeler().clear();
+			Snake.restart();
 		}
 		//sets the movement booleans
 		if(Keyboard.down)
