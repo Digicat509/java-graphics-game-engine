@@ -13,7 +13,7 @@ public class Player2 extends GameObject
 		super(1);
 		w = 5;
 		h = 50;
-		x = 575;
+		x = 600;
 		y = 210;
 		Pong.game.getHandeler().add(this, true);
 	}

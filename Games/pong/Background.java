@@ -16,9 +16,9 @@ public class Background extends GameObject{
 	public void draw(Graphics g)
 	{
 		g.setColor(Color.white);
-		g.fillRect(305, 0, 3, Pong.game.getHeight());
+		g.fillRect(314, 0, 3, Pong.game.getHeight());
 		g.setFont(new Font("Courier New", 0, 30));
 		g.drawString(""+Pong.p1Score, 275, 35);
-		g.drawString(""+Pong.p2Score, 320, 35);
+		g.drawString(""+Pong.p2Score, 335, 35);
 	}
 }

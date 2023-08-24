@@ -21,6 +21,7 @@ public class Game2048 extends GameObject{
 		game.setTitle("2048!");
 		game.setWidth(470);
 		game.setHeight(470);
+		game.getHandeler().add(this, false);
 		new Background();
 		blockStart();
 		game.start();
@@ -45,7 +46,8 @@ public class Game2048 extends GameObject{
 			blocks[r][c] = new Block(r, c);
 		}
 	}
-	public static void render(Graphics g)
+	@Override
+	public void draw(Graphics g)
 	{
 		up = Keyboard.up;
 		down = Keyboard.down;
@@ -80,7 +82,7 @@ public class Game2048 extends GameObject{
 					}
 				}
 			}
-			addBlock();
+			addBlock();//this is the cocurrent modification problem 
 			up = false;
 			down = false;
 			left = false;
