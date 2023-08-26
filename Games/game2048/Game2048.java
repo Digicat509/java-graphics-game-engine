@@ -1,10 +1,10 @@
 package game2048;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import gameEngine.GameEngine;
 import gameEngine.GameObject;
-import gameEngine.Keyboard;
 
 public class Game2048 extends GameObject{
 	static GameEngine game;
@@ -51,13 +51,13 @@ public class Game2048 extends GameObject{
 	public void draw(Graphics g)
 	{
 		if(!up)
-			up = Keyboard.up;
+			up = game.getInput().isKey(KeyEvent.VK_UP);
 		if(!down)
-			down = Keyboard.down;
+			down = game.getInput().isKey(KeyEvent.VK_DOWN);
 		if(!left)
-			left = Keyboard.left;
+			left = game.getInput().isKey(KeyEvent.VK_LEFT);
 		if(!right)
-			right = Keyboard.right;
+			right = game.getInput().isKey(KeyEvent.VK_RIGHT);
 		if(updateTimer % 20 == 0)
 		{
 			if(down)

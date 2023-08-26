@@ -2,9 +2,9 @@ package pong;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import gameEngine.GameObject;
-import gameEngine.Keyboard;
 
 public class Player2 extends GameObject
 {
@@ -25,11 +25,11 @@ public class Player2 extends GameObject
 	}
 	public void move()
 	{
-		if(Keyboard.up && y > 0)
+		if(Pong.game.getInput().isKey(KeyEvent.VK_UP) && y > 0)
 		{
 			y -= 3;
 		}
-		if(Keyboard.down && y+h < Pong.game.getHeight())
+		if(Pong.game.getInput().isKey(KeyEvent.VK_DOWN) && y+h < Pong.game.getHeight())
 		{
 			y += 3;
 		}

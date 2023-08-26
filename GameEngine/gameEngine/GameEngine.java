@@ -13,6 +13,7 @@ public class GameEngine implements Runnable{
 	private float scale = 1f;
 	private String title = "Nothing to see here";
 	private Window window;
+	private Input input;
 	private Thread thread;
 	private boolean running = false;
 	private final double UPDATE_CAP = 1.0/60;
@@ -21,17 +22,14 @@ public class GameEngine implements Runnable{
 	int fps = 0;
 	int frames = 0;
 	Handler hand;
-	private Keyboard kevin = new Keyboard();
-	private Mouse mice = new Mouse();
 	
 	public GameEngine() {
 		hand = new Handler();
 	}
 	public void start() {
 		window = new Window(this);
-		window.getCanvas().addKeyListener(kevin);
-		window.getCanvas().addMouseListener(mice);
 		thread = new Thread(this);
+		input = new Input(this);
 		thread.run();
 	}
 	public void stop() {
@@ -66,7 +64,7 @@ public class GameEngine implements Runnable{
 				}
 			}
 			if(render) {
-				kevin.update();
+				input.update();
 				window.update();
 				frames++;
 			}
@@ -97,8 +95,11 @@ public class GameEngine implements Runnable{
 	public String getTitle() {
 		return title;
 	}
-	public Keyboard getKeyboard() {
-		return kevin;
+	public Input getInput() {
+		return input;
+	}
+	public Window getWindow() {
+		return window;
 	}
 	public void setTitle(String title) {
 		this.title = title;

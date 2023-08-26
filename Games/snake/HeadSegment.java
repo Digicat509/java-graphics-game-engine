@@ -1,10 +1,10 @@
 package snake;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 import javax.imageio.ImageIO;
 
-import gameEngine.Keyboard;
 //The head of the snake it is special
 //It is drawn differently and is always the first item in the snake list
 public class HeadSegment extends Segment{
@@ -52,13 +52,13 @@ public class HeadSegment extends Segment{
 			Snake.restart();
 		}
 		//sets the movement booleans
-		if(Keyboard.down)
+		if(Snake.game.getInput().isKey(KeyEvent.VK_DOWN))
 			nextMove = "down";
-		else if(Keyboard.up)
+		else if(Snake.game.getInput().isKey(KeyEvent.VK_UP))
 			nextMove = "up";
-		else if(Keyboard.right)
+		else if(Snake.game.getInput().isKey(KeyEvent.VK_RIGHT))
 			nextMove = "right";
-		else if(Keyboard.left)
+		else if(Snake.game.getInput().isKey(KeyEvent.VK_LEFT))
 			nextMove = "left";
 		//changes the heads direction
 		if(x%Segment.size == 0 && y%Segment.size == 0)
