@@ -75,9 +75,6 @@ public class GameEngine implements Runnable{
 			}
 		}
 	}
-	private void dispose() {
-		
-	}
 	public int getHeight() {
 		return (int)(height*scale);
 	}

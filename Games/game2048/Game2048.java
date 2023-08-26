@@ -11,6 +11,7 @@ public class Game2048 extends GameObject{
 	static Block[][] blocks = new Block[4][4];
 	private static int currentScore;
 	public static boolean up, down, left, right;
+	int updateTimer = 0;
 	public static void main(String[] args)
 	{
 		Game2048 game2048 = new Game2048();
@@ -49,150 +50,158 @@ public class Game2048 extends GameObject{
 	@Override
 	public void draw(Graphics g)
 	{
-		up = Keyboard.up;
-		down = Keyboard.down;
-		left = Keyboard.left;
-		right = Keyboard.right;
-		if(down)
+		if(!up)
+			up = Keyboard.up;
+		if(!down)
+			down = Keyboard.down;
+		if(!left)
+			left = Keyboard.left;
+		if(!right)
+			right = Keyboard.right;
+		if(updateTimer % 20 == 0)
 		{
-			for(int r = 0; r < blocks.length; r++)
+			if(down)
 			{
-				for(int c = blocks.length-2; c >= 0; c--)
+				for(int r = 0; r < blocks.length; r++)
 				{
-					if(blocks[r][c] != null)
+					for(int c = blocks.length-2; c >= 0; c--)
 					{
-						int i = 1;
-						while(c+i < blocks.length && blocks[r][c+i] == null)
+						if(blocks[r][c] != null)
 						{
-							blocks[r][c+(i-1)].col++;
-							blocks[r][c+i] = blocks[r][c+(i-1)];
-							blocks[r][c+(i-1)] = null;
-							i++;
-						}
-						if(c+i < blocks.length && blocks[r][c+i] != null)
-						{
-							if(blocks[r][c+i].value == blocks[r][c+(i-1)].value)
+							int i = 1;
+							while(c+i < blocks.length && blocks[r][c+i] == null)
 							{
-								blocks[r][c+i].value += blocks[r][c+(i-1)].value;
-								currentScore += blocks[r][c+i].value;
+								blocks[r][c+(i-1)].col++;
+								blocks[r][c+i] = blocks[r][c+(i-1)];
 								blocks[r][c+(i-1)] = null;
-								blocks[r][c+i].valueSizeChanged = true;
+								i++;
+							}
+							if(c+i < blocks.length && blocks[r][c+i] != null)
+							{
+								if(blocks[r][c+i].value == blocks[r][c+(i-1)].value)
+								{
+									blocks[r][c+i].value += blocks[r][c+(i-1)].value;
+									currentScore += blocks[r][c+i].value;
+									blocks[r][c+(i-1)] = null;
+									blocks[r][c+i].valueSizeChanged = true;
+								}
 							}
 						}
 					}
 				}
+				addBlock();
+				up = false;
+				down = false;
+				left = false;
+				right = false;
 			}
-			addBlock();//this is the cocurrent modification problem 
-			up = false;
-			down = false;
-			left = false;
-			right = false;
-		}
-		else if(up)
-		{
-			for(int r = 0; r < blocks.length; r++)
+			else if(up)
 			{
-				for(int c = 1; c < blocks[0].length; c++)
+				for(int r = 0; r < blocks.length; r++)
 				{
-					if(blocks[r][c] != null)
+					for(int c = 1; c < blocks[0].length; c++)
 					{
-						int i = 1;
-						while(c-i >= 0 && blocks[r][c-i] == null)
+						if(blocks[r][c] != null)
 						{
-							blocks[r][c-(i-1)].col--;
-							blocks[r][c-i] = blocks[r][c-(i-1)];
-							blocks[r][c-(i-1)] = null;
-							i++;
-						}
-						if(c-i >= 0 && blocks[r][c-i] != null)
-						{
-							if(blocks[r][c-i].value == blocks[r][c-(i-1)].value)
+							int i = 1;
+							while(c-i >= 0 && blocks[r][c-i] == null)
 							{
-								blocks[r][c-i].value += blocks[r][c-(i-1)].value;
-								currentScore += blocks[r][c-i].value;
+								blocks[r][c-(i-1)].col--;
+								blocks[r][c-i] = blocks[r][c-(i-1)];
 								blocks[r][c-(i-1)] = null;
-								blocks[r][c-i].valueSizeChanged = true;
+								i++;
+							}
+							if(c-i >= 0 && blocks[r][c-i] != null)
+							{
+								if(blocks[r][c-i].value == blocks[r][c-(i-1)].value)
+								{
+									blocks[r][c-i].value += blocks[r][c-(i-1)].value;
+									currentScore += blocks[r][c-i].value;
+									blocks[r][c-(i-1)] = null;
+									blocks[r][c-i].valueSizeChanged = true;
+								}
 							}
 						}
 					}
 				}
+				addBlock();
+				up = false;
+				down = false;
+				left = false;
+				right = false;
 			}
-			addBlock();
-			up = false;
-			down = false;
-			left = false;
-			right = false;
-		}
-		else if(left)
-		{
-			for(int r = 1; r < blocks.length; r++)
+			else if(left)
 			{
-				for(int c = 0; c < blocks[0].length; c++)
+				for(int r = 1; r < blocks.length; r++)
 				{
-					if(blocks[r][c] != null)
+					for(int c = 0; c < blocks[0].length; c++)
 					{
-						int i = 1;
-						while(r-i >= 0 && blocks[r-i][c] == null)
+						if(blocks[r][c] != null)
 						{
-							blocks[r-(i-1)][c].row--;
-							blocks[r-i][c] = blocks[r-(i-1)][c];
-							blocks[r-(i-1)][c] = null;
-							i++;
-						}
-						if(r-i >= 0 && blocks[r-i][c] != null)
-						{
-							if(blocks[r-i][c].value == blocks[r-(i-1)][c].value)
+							int i = 1;
+							while(r-i >= 0 && blocks[r-i][c] == null)
 							{
-								blocks[r-i][c].value += blocks[r-(i-1)][c].value;
-								currentScore += blocks[r-i][c].value;
+								blocks[r-(i-1)][c].row--;
+								blocks[r-i][c] = blocks[r-(i-1)][c];
 								blocks[r-(i-1)][c] = null;
-								blocks[r-i][c].valueSizeChanged = true;
+								i++;
+							}
+							if(r-i >= 0 && blocks[r-i][c] != null)
+							{
+								if(blocks[r-i][c].value == blocks[r-(i-1)][c].value)
+								{
+									blocks[r-i][c].value += blocks[r-(i-1)][c].value;
+									currentScore += blocks[r-i][c].value;
+									blocks[r-(i-1)][c] = null;
+									blocks[r-i][c].valueSizeChanged = true;
+								}
 							}
 						}
 					}
 				}
+				addBlock();
+				up = false;
+				down = false;
+				left = false;
+				right = false;
 			}
-			addBlock();
-			up = false;
-			down = false;
-			left = false;
-			right = false;
-		}
-		else if(right)
-		{
-			for(int r = blocks.length-2; r >= 0; r--)
+			else if(right)
 			{
-				for(int c = 0; c < blocks[0].length; c++)
+				for(int r = blocks.length-2; r >= 0; r--)
 				{
+					for(int c = 0; c < blocks[0].length; c++)
+					{
 					if(blocks[r][c] != null)
 					{
 						int i = 1;
-						while(r+i < blocks.length && blocks[r+i][c] == null)
-						{
-							blocks[r+(i-1)][c].row++;
-							blocks[r+i][c] = blocks[r+(i-1)][c];
-							blocks[r+(i-1)][c] = null;
-							i++;
-						}
-						if(r+i < blocks.length && blocks[r+i][c] != null)
-						{
-							if(blocks[r+i][c].value == blocks[r+(i-1)][c].value)
+							while(r+i < blocks.length && blocks[r+i][c] == null)
 							{
-								blocks[r+i][c].value += blocks[r+(i-1)][c].value;
-								currentScore += blocks[r+i][c].value;
+								blocks[r+(i-1)][c].row++;
+								blocks[r+i][c] = blocks[r+(i-1)][c];
 								blocks[r+(i-1)][c] = null;
-								blocks[r+i][c].valueSizeChanged = true;
+								i++;
+							}
+							if(r+i < blocks.length && blocks[r+i][c] != null)
+							{
+								if(blocks[r+i][c].value == blocks[r+(i-1)][c].value)
+								{
+									blocks[r+i][c].value += blocks[r+(i-1)][c].value;
+									currentScore += blocks[r+i][c].value;
+									blocks[r+(i-1)][c] = null;
+									blocks[r+i][c].valueSizeChanged = true;
+								}
 							}
 						}
 					}
 				}
+				addBlock();
+				up = false;
+				down = false;
+				left = false;
+				right = false;
 			}
-			addBlock();
-			up = false;
-			down = false;
-			left = false;
-			right = false;
 		}
+		updateTimer++;
 	}
 	public static boolean didLose()
 	{
