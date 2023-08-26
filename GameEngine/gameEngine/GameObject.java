@@ -2,7 +2,7 @@ package gameEngine;
 
 import java.awt.*;
 
-public abstract class GameObject
+public abstract class GameObject implements Comparable<GameObject>
 {
 	public float x,y,dx,dy;
 	public int w,h;
@@ -14,6 +14,10 @@ public abstract class GameObject
 	public GameObject(int layers)
 	{
 		this.layers = layers;
+	}
+	public int compareTo(GameObject other)
+	{
+		return (this.layers-other.layers);
 	}
 	public boolean hits(GameObject other)
 	{
