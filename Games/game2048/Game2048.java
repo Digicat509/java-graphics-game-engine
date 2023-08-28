@@ -46,6 +46,10 @@ public class Game2048 extends GameObject{
 			}
 			blocks[r][c] = new Block(r, c);
 		}
+		else if(didLose())
+		{
+			game.getHandeler().clear();
+		}
 	}
 	@Override
 	public void draw(Graphics g)
