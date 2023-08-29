@@ -43,13 +43,15 @@ public abstract class GameObject implements Comparable<GameObject>
 	}
 	public boolean hits()
 	{
-		for(GameObject o: Handler.hitsHand)
+		if(this.layers > 0)
 		{
-			if(this.layers > 0);
-				if(!this.equals(o))
-					if(layers >= o.layers)
-						if((this.getBounds()).intersects((Rectangle)o.getBounds()))
-							return true;
+			for(GameObject o: Handler.hitsHand)
+			{
+					if(!this.equals(o))
+						if(this.layers >= o.layers)
+							if((this.getBounds()).intersects((Rectangle)o.getBounds()))
+								return true;
+			}
 		}
 		return false;
 	}

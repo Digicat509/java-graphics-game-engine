@@ -13,6 +13,7 @@ public class Platform extends GameObject {
 		this.y = y;
 		this.w = w;
 		this.h = h;
+		Platformer.game.getHandeler().add(this, true);
 	}
 	@Override
 	public void draw(Graphics g)
