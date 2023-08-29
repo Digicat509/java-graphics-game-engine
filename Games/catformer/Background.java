@@ -1,4 +1,4 @@
-package platformer;
+package catformer;
 
 import gameEngine.GameObject;
 

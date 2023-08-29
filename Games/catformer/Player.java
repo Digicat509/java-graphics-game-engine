@@ -1,4 +1,4 @@
-package platformer;
+package catformer;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,6 +7,9 @@ import java.awt.event.KeyEvent;
 import gameEngine.GameObject;
 
 public class Player extends GameObject{
+	private float gravity = .5f;
+	private float jumpStrength = 10f;
+	private boolean onGround = false;
 	public Player(int x, int y)
 	{
 		super(2);
@@ -28,9 +31,9 @@ public class Player extends GameObject{
 	public void move()
 	{
 		dx = 0;
-		if(Platformer.game.getInput().isKey(KeyEvent.VK_W))
+		if(onGround && Platformer.game.getInput().isKey(KeyEvent.VK_W))
 		{
-			dy = -5;
+			dy = -jumpStrength;
 		}
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_D))
 		{
@@ -42,9 +45,17 @@ public class Player extends GameObject{
 		}
 		y += dy;
 		x += dx;
-		if(!this.hits())
+		GameObject o = this.hits();
+		if(o != null)
 		{
-			dy += .5;
+			dy = 0;
+			y = o.y-h;
+			onGround = true;
+		}
+		else
+		{
+			onGround = false;
+			dy += gravity;
 		}
 	}
 }

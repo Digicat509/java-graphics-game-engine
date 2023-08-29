@@ -1,4 +1,4 @@
-package platformer;
+package catformer;
 
 import gameEngine.GameEngine;
 
@@ -16,6 +16,8 @@ public class Platformer {
 		new Background();
 		new Player(0, 0);
 		new Building(0, 200, 50);
+		new Pipe(40, 300, 30);
+		new Building(70, 250, 50);
 		game.start();
 	}
 }

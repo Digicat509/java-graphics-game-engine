@@ -41,7 +41,7 @@ public abstract class GameObject implements Comparable<GameObject>
 		}
 		return false;
 	}
-	public boolean hits()
+	public GameObject hits()
 	{
 		if(this.layers > 0)
 		{
@@ -50,10 +50,10 @@ public abstract class GameObject implements Comparable<GameObject>
 					if(!this.equals(o))
 						if(this.layers >= o.layers)
 							if((this.getBounds()).intersects((Rectangle)o.getBounds()))
-								return true;
+								return o;
 			}
 		}
-		return false;
+		return null;
 	}
 	public Shape getBounds()
 	{

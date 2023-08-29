@@ -1,4 +1,4 @@
-package platformer;
+package catformer;
 
 import java.awt.Color;
 import java.awt.Graphics;

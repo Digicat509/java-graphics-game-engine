@@ -1,4 +1,4 @@
-package platformer;
+package catformer;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,7 +11,7 @@ public class Pipe extends Platform {
 	@Override
 	public void draw(Graphics g)
 	{
-		g.setColor(Color.black);
+		g.setColor(Color.gray);
 		g.fillRect((int)x, (int)y, w, h);
 	}
 }
