@@ -44,7 +44,6 @@ public class Player extends GameObject{
 			dx -= 1;
 		}
 		y += dy;
-		x += dx;
 		GameObject o = this.hits();
 		if(o != null)
 		{
@@ -57,5 +56,6 @@ public class Player extends GameObject{
 			onGround = false;
 			dy += gravity;
 		}
+		x += dx;
 	}
 }
