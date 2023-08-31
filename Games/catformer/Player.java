@@ -54,11 +54,13 @@ public class Player extends GameObject{
 				y = o.y-h;
 				onGround = true;
 			}
+			//collision on the right
 			if(o.x+o.w > this.x && o.y < this.y && this.x > o.x) {
 				System.out.println("Right");
 				dx = 0;
 				x = o.x +o.w;
 			}
+			//collision in the left 
 			else if(o.x < this.x + this.w && o.y < this.y) {
 				System.out.println("Left");
 				dx = 0;
