@@ -6,7 +6,10 @@ public abstract class GameObject implements Comparable<GameObject>
 {
 	public float x,y,dx,dy;
 	public int w,h;
+	public double rotation;
 	protected int layers;
+	private Image image;
+	private boolean visible = true;
 	public GameObject()
 	{
 		this(1);
@@ -14,6 +17,16 @@ public abstract class GameObject implements Comparable<GameObject>
 	public GameObject(int layers)
 	{
 		this.layers = layers;
+	}
+	public GameObject(Image image)
+	{
+		this(1);
+		this.image = image;
+	}
+	public GameObject(int layers, Image image)
+	{
+		this.layers = layers;
+		this.image = image;
 	}
 	public int compareTo(GameObject other)
 	{
@@ -59,12 +72,29 @@ public abstract class GameObject implements Comparable<GameObject>
 	{
 		return new Rectangle((int)x, (int)y, w, h);
 	}
-	
+	public void show()
+	{
+		visible = true;
+	}
+	public void hide()
+	{
+		visible = false;
+	}
 	public void draw(Graphics g)
 	{
-		g.setColor(Color.white);
-		g.fillRect((int)x,(int)y,w,h);
-		move();
+		if(visible)
+		{
+			Graphics2D g2d = (Graphics2D)g;
+			g2d.rotate(rotation);
+			try {
+				g2d.drawImage(image, (int)x, (int)y, (int)w, (int)h, null);
+			}
+			catch(Exception e) {
+				g2d.setColor(Color.white);
+				g2d.fillRect((int)x,(int)y,w,h);
+			}
+			move();
+		}
 	}
 	public void move()
 	{

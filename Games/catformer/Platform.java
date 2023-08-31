@@ -8,17 +8,12 @@ import gameEngine.GameObject;
 
 public class Platform extends GameObject {
 
-	public Platform(int x, int y, int w, int h) {
+	public Platform(int x, int y, int w, int h,double theta) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
+		rotation = theta;
 		Platformer.game.getHandeler().add(this, true);
-	}
-	@Override
-	public void draw(Graphics g)
-	{
-		g.setColor(Color.black);
-		g.fillRect((int)x, (int)y, w, h);
 	}
 }

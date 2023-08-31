@@ -9,6 +9,7 @@ import gameEngine.GameObject;
 public class Player extends GameObject{
 	private float gravity = .5f;
 	private float jumpStrength = 10f;
+	private float speed = 2;
 	private boolean onGround = false;
 	public Player(int x, int y)
 	{
@@ -37,15 +38,13 @@ public class Player extends GameObject{
 		}
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_D))
 		{
-			dx += 1;
+			dx += speed;
 		}
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_A))
 		{
-			dx -= 1;
+			dx -= speed;
 		}
 		y += dy;
-		
-		
 		GameObject o = this.hits();
 		if(o != null)
 		{
@@ -54,19 +53,6 @@ public class Player extends GameObject{
 				y = o.y-h;
 				onGround = true;
 			}
-			//collision on the right
-			if(o.x+o.w > this.x && o.y < this.y && this.x > o.x) {
-				System.out.println("Right");
-				dx = 0;
-				x = o.x +o.w;
-			}
-			//collision in the left 
-			else if(o.x < this.x + this.w && o.y < this.y) {
-				System.out.println("Left");
-				dx = 0;
-				x = o.x - w;
-			}
-			
 		}
 		else
 		{
@@ -74,5 +60,10 @@ public class Player extends GameObject{
 			dy += gravity;
 		}
 		x += dx;
+		o = this.hits();
+		if(o != null)
+		{
+			x -= dx;
+		}
 	}
 }

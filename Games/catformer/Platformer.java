@@ -18,6 +18,7 @@ public class Platformer {
 		new Building(0, 200, 50);
 		new Pipe(40, 300, 50);
 		new Building(90, 250, 50);
+		new Spikes(200, 200, 50, 20);
 		game.start();
 	}
 }

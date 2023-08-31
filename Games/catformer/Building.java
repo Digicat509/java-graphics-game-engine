@@ -1,17 +1,18 @@
 package catformer;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 
 public class Building extends Platform {
 
 	public Building(int x, int y, int w) {
-		super(x, y, w, Platformer.game.getHeight()-y);
+		super(x, y, w, Platformer.game.getHeight()-y, 0);
 	}
 	@Override
 	public void draw(Graphics g)
 	{
-		g.setColor(Color.red);
-		g.fillRect((int)x, (int)y, w, h);
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.rotate(rotation);
+		g2d.setColor(Color.red);
+		g2d.fillRect((int)x, (int)y, w, h);
 	}
 }
