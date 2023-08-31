@@ -44,12 +44,27 @@ public class Player extends GameObject{
 			dx -= 1;
 		}
 		y += dy;
+		
+		
 		GameObject o = this.hits();
 		if(o != null)
 		{
-			dy = 0;
-			y = o.y-h;
-			onGround = true;
+			if(o.y>= this.y) {
+				dy = 0;
+				y = o.y-h;
+				onGround = true;
+			}
+			if(o.x+o.w > this.x && o.y < this.y && this.x > o.x) {
+				System.out.println("Right");
+				dx = 0;
+				x = o.x +o.w;
+			}
+			else if(o.x < this.x + this.w && o.y < this.y) {
+				System.out.println("Left");
+				dx = 0;
+				x = o.x - w;
+			}
+			
 		}
 		else
 		{

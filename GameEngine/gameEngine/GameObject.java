@@ -59,6 +59,7 @@ public abstract class GameObject implements Comparable<GameObject>
 	{
 		return new Rectangle((int)x, (int)y, w, h);
 	}
+	
 	public void draw(Graphics g)
 	{
 		g.setColor(Color.white);
