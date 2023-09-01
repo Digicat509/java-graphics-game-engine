@@ -85,7 +85,6 @@ public abstract class GameObject implements Comparable<GameObject>
 		if(visible)
 		{
 			Graphics2D g2d = (Graphics2D)g;
-			g2d.rotate(rotation);
 			try {
 				g2d.drawImage(image, (int)x, (int)y, (int)w, (int)h, null);
 			}

@@ -65,5 +65,9 @@ public class Player extends GameObject{
 		{
 			x -= dx;
 		}
+		if(x < 0)
+			x = 0;
+		if(y > Platformer.game.getHeight())
+			Platformer.game.getHandeler().clear();
 	}
 }
