@@ -2,64 +2,49 @@ package gameEngine;
 
 import java.awt.*;
 
-public abstract class GameObject implements Comparable<GameObject>
-{
+public abstract class GameObject implements Comparable<GameObject> {
 	public float x,y,dx,dy;
 	public int w,h;
 	public double rotation;
 	protected int layers;
 	private Image image;
 	private boolean visible = true;
-	public GameObject()
-	{
+	public GameObject() {
 		this(1);
 	}
-	public GameObject(int layers)
-	{
+	public GameObject(int layers) {
 		this.layers = layers;
 	}
-	public GameObject(Image image)
-	{
+	public GameObject(Image image) {
 		this(1);
 		this.image = image;
 	}
-	public GameObject(int layers, Image image)
-	{
+	public GameObject(int layers, Image image) {
 		this.layers = layers;
 		this.image = image;
 	}
-	public int compareTo(GameObject other)
-	{
+	public int compareTo(GameObject other) {
 		return (this.layers-other.layers);
 	}
-	public boolean hits(GameObject other)
-	{
-		if((this.getBounds()).intersects((Rectangle)other.getBounds()))
-		{
+	public boolean hits(GameObject other) {
+		if((this.getBounds()).intersects((Rectangle)other.getBounds())) {
 			return true;
 		}
 		return false;
 	}
-	public boolean hitsAny()
-	{
-		for(GameObject o: Handler.hitsHand)
-		{
-			if(!this.equals(o))
-			{
-				if((this.getBounds()).intersects((Rectangle)o.getBounds()))
-				{
+	public boolean hitsAny() {
+		for(GameObject o: Handler.hitsHand) {
+			if(!this.equals(o)) {
+				if((this.getBounds()).intersects((Rectangle)o.getBounds())) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	public GameObject hits()
-	{
-		if(this.layers > 0)
-		{
-			for(GameObject o: Handler.hitsHand)
-			{
+	public GameObject hits() {
+		if(this.layers > 0) {
+			for(GameObject o: Handler.hitsHand) {
 					if(!this.equals(o))
 						if(this.layers >= o.layers)
 							if((this.getBounds()).intersects((Rectangle)o.getBounds()))
@@ -68,22 +53,17 @@ public abstract class GameObject implements Comparable<GameObject>
 		}
 		return null;
 	}
-	public Shape getBounds()
-	{
+	public Shape getBounds() {
 		return new Rectangle((int)x, (int)y, w, h);
 	}
-	public void show()
-	{
+	public void show() {
 		visible = true;
 	}
-	public void hide()
-	{
+	public void hide() {
 		visible = false;
 	}
-	public void draw(Graphics g)
-	{
-		if(visible)
-		{
+	public void draw(Graphics g) {
+		if(visible) {
 			Graphics2D g2d = (Graphics2D)g;
 			try {
 				g2d.drawImage(image, (int)x, (int)y, (int)w, (int)h, null);
@@ -95,8 +75,7 @@ public abstract class GameObject implements Comparable<GameObject>
 			move();
 		}
 	}
-	public void move()
-	{
+	public void move() {
 		x += dx;
 		y += dy;
 	}

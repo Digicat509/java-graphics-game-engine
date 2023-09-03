@@ -10,23 +10,20 @@ public class Text extends GameObject{
 	String text;
 	int textSize;
 	String font;
-	public Text(String s, int x, int y)
-	{
+	public Text(String s, int x, int y) {
 		text = s;
 		this.x = x;
 		this.y = y;
 		Handler.addHand.put(this, false);
 	}
-	public Text(String s, int x, int y, int textSize)
-	{
+	public Text(String s, int x, int y, int textSize) {
 		text = s;
 		this.x = x;
 		this.y = y;
 		this.textSize = textSize;
 		Handler.addHand.put(this, false);
 	}
-	public Text(String s, int x, int y, int textSize, String font)
-	{
+	public Text(String s, int x, int y, int textSize, String font) {
 		text = s;
 		this.x = x;
 		this.y = y;
@@ -34,21 +31,18 @@ public class Text extends GameObject{
 		this.font = font;
 		Handler.addHand.put(this, false);
 	}
-	public Text(String s, Rectangle rect)
-	{
+	public Text(String s, Rectangle rect) {
 		text = s;
 		this.rect = rect;
 		Handler.addHand.put(this, false);
 	}
-	public Text(String s, Rectangle rect, int textSize)
-	{
+	public Text(String s, Rectangle rect, int textSize) {
 		text = s;
 		this.rect = rect;
 		this.textSize = textSize;
 		Handler.addHand.put(this, false);
 	}
-	public Text(String s, Rectangle rect, int textSize, String font)
-	{
+	public Text(String s, Rectangle rect, int textSize, String font) {
 		text = s;
 		this.rect = rect;
 		this.textSize = textSize;
@@ -56,19 +50,17 @@ public class Text extends GameObject{
 		Handler.addHand.put(this, false);
 	}
 	@Override
-	public void draw(Graphics g)
-	{
+	public void draw(Graphics g) {
 		if(font != null)
 			g.setFont(new Font(font, 0, g.getFont().getSize()));
 		if(textSize > 0)
 			g.setFont(new Font(g.getFont().getFontName(), 0, textSize));
 		FontMetrics metrics = g.getFontMetrics();
-		if(rect != null){
+		if(rect != null) {
 			int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
 			int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
 		}
-		else
-		{
+		else {
 			x = x - metrics.stringWidth(text) / 2;
 			y = y - metrics.getHeight() / 2 + metrics.getAscent();
 		}

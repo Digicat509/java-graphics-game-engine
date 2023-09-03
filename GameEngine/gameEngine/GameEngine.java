@@ -3,7 +3,7 @@ package gameEngine;
 import java.awt.*;
 import java.util.*;
 
-public class GameEngine implements Runnable{
+public class GameEngine implements Runnable {
 	
 	public static void main(String[] args) {
 		GameEngine ge = new GameEngine();
