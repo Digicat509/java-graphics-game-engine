@@ -111,43 +111,4 @@ public class GameEngine implements Runnable{
 	public void update(Graphics g) {
 		hand.render(g);
 	}
-	public static void drawCenteredString(Graphics g, String s, int x, int y)
-	{
-		FontMetrics metrics = g.getFontMetrics();
-		x = x - metrics.stringWidth(s) / 2;
-		y = y - metrics.getHeight() / 2 + metrics.getAscent();
-		g.drawString(s, x, y);
-	}
-	public static void drawCenteredString(Graphics g, String s, int x, int y, int size)
-	{
-		g.setFont(new Font(g.getFont().getFontName(), 0, size));
-		FontMetrics metrics = g.getFontMetrics();
-		x = x - metrics.stringWidth(s) / 2;
-		y = y - metrics.getHeight() / 2 + metrics.getAscent();
-		g.drawString(s, x, y);
-	}
-	public static void drawCenteredString(Graphics g, String s, int x, int y, int size, String font)
-	{
-		g.setFont(new Font(font, 0, size));
-		FontMetrics metrics = g.getFontMetrics();
-		x = x - metrics.stringWidth(s) / 2;
-		y = y - metrics.getHeight() / 2 + metrics.getAscent();
-		g.drawString(s, x, y);
-	}
-	public static void drawCenteredString(Graphics g, String s, Rectangle rect)
-	{
-		g.setFont(new Font(g.getFont().getFontName(), 0, g.getFont().getSize()));
-		FontMetrics metrics = g.getFontMetrics();
-		int x = rect.x + (rect.width - metrics.stringWidth(s)) / 2;
-	    int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
-		g.drawString(s, x, y);
-	}
-	public static void drawCenteredString(Graphics g, String s, Rectangle rect, int size)
-	{
-		g.setFont(new Font(g.getFont().getFontName(), 0, size));
-		FontMetrics metrics = g.getFontMetrics();
-		int x = rect.x + (rect.width - metrics.stringWidth(s)) / 2;
-	    int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
-		g.drawString(s, x, y);
-	}
 }
