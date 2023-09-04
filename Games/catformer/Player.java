@@ -9,7 +9,7 @@ import gameEngine.GameObject;
 public class Player extends GameObject{
 	private float gravity = .5f;
 	private float jumpStrength = 10f;
-	private float speed = 2;
+	private float speed = 3;
 	private int localX;
 	private boolean onGround = false;
 	public Player(int x, int y)
@@ -40,11 +40,37 @@ public class Player extends GameObject{
 		}
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_D))
 		{
-			dx += speed;
+			if(localX > 0)
+				dx += speed;
+			else
+			{
+				x += speed;
+				localX += speed;
+				GameObject o = this.hits();
+				if(o != null)
+				{
+					x -= speed;
+					localX -= speed;
+				}
+			}
 		}
-		if(localX > 0 && Platformer.game.getInput().isKey(KeyEvent.VK_A))
+		if(Platformer.game.getInput().isKey(KeyEvent.VK_A))
 		{
-			dx -= speed;
+			if(localX > 0)
+				dx -= speed;
+			else if(x > 0)
+			{
+				x -= speed;
+				localX -= speed;
+				GameObject o = this.hits();
+				if(o != null)
+				{
+					x += speed;
+					localX += speed;
+				}
+				if(x < 0)
+					x = 0;
+			}
 		}
 		y += dy;
 		GameObject o = this.hits();
