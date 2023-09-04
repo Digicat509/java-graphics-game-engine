@@ -1,9 +1,5 @@
 package catformer;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-
 import gameEngine.GameObject;
 
 public class Platform extends GameObject {

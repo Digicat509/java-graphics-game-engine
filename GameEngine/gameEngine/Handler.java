@@ -3,6 +3,7 @@ package gameEngine;
 import java.awt.Graphics;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 public class Handler {
 	static PriorityQueue <GameObject> hand = new PriorityQueue <GameObject>();
@@ -22,6 +23,9 @@ public class Handler {
 	}
 	public void clear() {
 		markForClear = true;
+	}
+	public void forEach(Consumer<GameObject> c){
+		hand.forEach(c);
 	}
 	//renders all game objects in hand
 	public void render(Graphics g) {

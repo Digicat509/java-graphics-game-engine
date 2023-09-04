@@ -22,6 +22,7 @@ public class GameEngine implements Runnable {
 	int fps = 0;
 	int frames = 0;
 	Handler hand;
+	private State state;
 	
 	public GameEngine() {
 		hand = new Handler();
@@ -33,7 +34,7 @@ public class GameEngine implements Runnable {
 		thread.run();
 	}
 	public void stop() {
-		
+		stopPlay();
 	}
 	public void run() {
 		running = true;
@@ -73,6 +74,23 @@ public class GameEngine implements Runnable {
 			}
 		}
 	}
+	public enum State {
+		TITLE,
+		PLAYING,
+		STOP_PLAY
+	}
+	public void play() {
+		state = State.PLAYING;
+	}
+	private void stopPlay() {
+		state = State.STOP_PLAY;
+	}
+	public void title() {
+		state = State.TITLE;
+	}
+	public State getState() {
+		return state;
+	}
 	public int getHeight() {
 		return (int)(height*scale);
 	}
@@ -109,6 +127,10 @@ public class GameEngine implements Runnable {
 		return hand;
 	}
 	public void update(Graphics g) {
+		if(state == State.STOP_PLAY) {
+			hand.clear();
+			title();
+		}
 		hand.render(g);
 	}
 }

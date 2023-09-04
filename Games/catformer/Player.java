@@ -59,15 +59,17 @@ public class Player extends GameObject{
 			onGround = false;
 			dy += gravity;
 		}
-		x += dx;
+		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
 		o = this.hits();
 		if(o != null)
 		{
-			x -= dx;
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 		}
 		if(x < 0)
 			x = 0;
-		if(y > Platformer.game.getHeight())
-			Platformer.game.getHandeler().clear();
+		if(y > Platformer.game.getHeight()) {
+			Platformer.game.stop();
+			Platformer.start();
+		}
 	}
 }

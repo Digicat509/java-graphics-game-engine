@@ -13,11 +13,11 @@ public class Platformer {
 		game = new GameEngine();
 		game.setTitle("Platformer!");
 		game.setScale(2f);
-		new Background();
-		new Player(0, 0);
-		new Building(0, 200, 50);
-		new Pipe(40, 300, 50);
-		new Building(90, 250, 50);
+		start();
 		game.start();
+	}
+	public static void start()
+	{
+		new Level(Level.Stage.INFINITE);
 	}
 }
