@@ -10,11 +10,13 @@ public class Player extends GameObject{
 	private float gravity = .5f;
 	private float jumpStrength = 10f;
 	private float speed = 2;
+	private int localX;
 	private boolean onGround = false;
 	public Player(int x, int y)
 	{
 		super(2);
 		this.x = x;
+		localX = 0;
 		this.y = y;
 		w = 20;
 		h = 20;
@@ -40,7 +42,7 @@ public class Player extends GameObject{
 		{
 			dx += speed;
 		}
-		if(Platformer.game.getInput().isKey(KeyEvent.VK_A))
+		if(localX > 0 && Platformer.game.getInput().isKey(KeyEvent.VK_A))
 		{
 			dx -= speed;
 		}
@@ -59,14 +61,14 @@ public class Player extends GameObject{
 			onGround = false;
 			dy += gravity;
 		}
+		localX += dx;
 		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
 		o = this.hits();
 		if(o != null)
 		{
+			localX -= dx;
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 		}
-		if(x < 0)
-			x = 0;
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
 			Platformer.start();

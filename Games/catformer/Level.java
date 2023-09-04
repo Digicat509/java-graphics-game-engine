@@ -26,7 +26,7 @@ public class Level {
 			int width = (int)(Math.random()*3+1)*50;
 			new Building(0, ((int)(Math.random()*300)+100), width);
 			currX += width;
-			while(currX < Platformer.game.getWidth())
+			while(currX < Platformer.game.getWidth()*10)//TODO technicaly not infinite need to make add as player moves
 			{
 				int rand = (int)(Math.random()*100);width = (int)(Math.random()*3+1)*50;
 				new Building(currX+rand, ((int)(Math.random()*300)+100), width);
