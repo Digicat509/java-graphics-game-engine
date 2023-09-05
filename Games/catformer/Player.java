@@ -8,11 +8,13 @@ import gameEngine.GameObject;
 
 public class Player extends GameObject{
 	private float gravity = .5f;
+	private float slidingGravity = 2f;
 	private float jumpStrength = 10f;
 	private float speed = 3;
 	private int localX;
 	private boolean onGround = false;
 	private boolean wallJump = false;
+	private boolean sliding = false;
 	public Player(int x, int y)
 	{
 		super(2);
@@ -35,7 +37,6 @@ public class Player extends GameObject{
 	
 	public void arrowMovement() {
 		dx = 0;
-		//GameObject o = this.hits();
 		if(onGround && Platformer.game.getInput().isKey(KeyEvent.VK_W))
 		{
 			dy = -jumpStrength;
@@ -98,6 +99,8 @@ public class Player extends GameObject{
 		{
 			onGround = false;
 			dy += gravity;
+			if(sliding)
+				dy = slidingGravity;
 		}
 		localX += dx;
 		
@@ -107,19 +110,22 @@ public class Player extends GameObject{
 		if(o != null)
 		{
 			localX -= dx;
-			
+			//stops downward acceleration when sliding 
+			if((Platformer.game.getInput().isKey(KeyEvent.VK_D) && dx > 0) || (Platformer.game.getInput().isKey(KeyEvent.VK_A) && dx < 0))
+				sliding = true;
 			//Wall jump if touching a wall
 			if(wallJump && Platformer.game.getInput().isKey(KeyEvent.VK_W))
 			{
 				System.out.println("WallJump?");
 				wallJump = false;
 				dy = -jumpStrength;
-				dx *= 20;
+				dx *= 10;
 			}
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 		}
 		else {
 			//wallJump = true;
+			sliding = false;
 		}
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
