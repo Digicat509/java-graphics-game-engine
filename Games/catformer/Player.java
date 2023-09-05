@@ -12,6 +12,7 @@ public class Player extends GameObject{
 	private float speed = 3;
 	private int localX;
 	private boolean onGround = false;
+	private boolean wallJump = false;
 	public Player(int x, int y)
 	{
 		super(2);
@@ -31,12 +32,14 @@ public class Player extends GameObject{
 		g.fillRect((int)x, (int)y, w, h);
 		move();
 	}
-	public void move()
-	{
+	
+	public void arrowMovement() {
 		dx = 0;
+		//GameObject o = this.hits();
 		if(onGround && Platformer.game.getInput().isKey(KeyEvent.VK_W))
 		{
 			dy = -jumpStrength;
+			
 		}
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_D))
 		{
@@ -46,6 +49,7 @@ public class Player extends GameObject{
 			{
 				x += speed;
 				localX += speed;
+				
 				GameObject o = this.hits();
 				if(o != null)
 				{
@@ -54,10 +58,12 @@ public class Player extends GameObject{
 				}
 			}
 		}
+		
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_A))
 		{
-			if(localX > 0)
+			if(localX > 0) 
 				dx -= speed;
+			
 			else if(x > 0)
 			{
 				x -= speed;
@@ -73,6 +79,12 @@ public class Player extends GameObject{
 			}
 		}
 		y += dy;
+	}
+	
+	public void move()
+	{
+		arrowMovement();
+		
 		GameObject o = this.hits();
 		if(o != null)
 		{
@@ -88,16 +100,31 @@ public class Player extends GameObject{
 			dy += gravity;
 		}
 		localX += dx;
+		
+		
 		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
 		o = this.hits();
 		if(o != null)
 		{
 			localX -= dx;
+			
+			//Wall jump if touching a wall
+			if(wallJump && Platformer.game.getInput().isKey(KeyEvent.VK_W))
+			{
+				System.out.println("WallJump?");
+				wallJump = false;
+				dy = -jumpStrength;
+				dx *= 20;
+			}
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
+		}
+		else {
+			//wallJump = true;
 		}
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
 			Platformer.start();
 		}
+		
 	}
 }
