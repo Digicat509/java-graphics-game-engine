@@ -15,6 +15,7 @@ public class Player extends GameObject{
 	private boolean onGround = false;
 	private boolean wallJump = false;
 	private boolean sliding = false;
+	private long waitTime;
 	public Player(int x, int y)
 	{
 		super(2);
@@ -112,19 +113,24 @@ public class Player extends GameObject{
 			localX -= dx;
 			//stops downward acceleration when sliding 
 			if((Platformer.game.getInput().isKey(KeyEvent.VK_D) && dx > 0) || (Platformer.game.getInput().isKey(KeyEvent.VK_A) && dx < 0))
-				sliding = true;
-			//Wall jump if touching a wall
-			if(wallJump && Platformer.game.getInput().isKey(KeyEvent.VK_W))
 			{
-				System.out.println("WallJump?");
-				wallJump = false;
-				dy = -jumpStrength;
-				dx *= 10;
+				sliding = true;
+				//Wall jump if touching a wall
+				if(wallJump && Platformer.game.getInput().isKey(KeyEvent.VK_W))
+				{
+					System.out.println("WallJump?");
+					wallJump = false;
+					dy = -jumpStrength;
+					dx *= 10;
+					sliding = false;
+					waitTime = System.currentTimeMillis()+300;
+				}
 			}
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 		}
 		else {
-			//wallJump = true;
+			if(waitTime <= System.currentTimeMillis())
+				wallJump = true;
 			sliding = false;
 		}
 		if(y > Platformer.game.getHeight()) {
