@@ -18,6 +18,6 @@ public class Platformer {
 	}
 	public static void start()
 	{
-		new Level(Level.Stage.INFINITE);
+		new Level(Level.Stage.LEVEL1);
 	}
 }
