@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 
 import javax.imageio.ImageIO;
 
+import gameEngine.Hitbox;
+import gameEngine.RectangularHitbox;
+
 //The head of the snake it is special
 //It is drawn differently and is always the first item in the snake list
 public class HeadSegment extends Segment{
@@ -99,16 +102,16 @@ public class HeadSegment extends Segment{
 		y += dy;
 	}
 	// the head hit test is specially sized to avoid unwanted collisions
-	public Rectangle getHeadBounds()
+	public Hitbox getHeadBounds()
 	{
 		if(direction.equals("right"))
-			return new Rectangle((int)(x+(w-2)), (int)(y+(h/2)), 2, 2);
+			return new RectangularHitbox((int)(x+(w-2)), (int)(y+(h/2)), 2, 2);
 		if(direction.equals("left"))
-			return new Rectangle((int)x, (int)(y+(h/2)), 2, 2);
+			return new RectangularHitbox((int)x, (int)(y+(h/2)), 2, 2);
 		if(direction.equals("up"))
-			return new Rectangle((int)(x+(w/2)), (int)y, 2, 2);
+			return new RectangularHitbox((int)(x+(w/2)), (int)y, 2, 2);
 		if(direction.equals("down"))
-			return new Rectangle((int)(x+(w/2)), (int)(y+(h-2)), 2, 2);
-		return new Rectangle(0, 0, 0, 0);
+			return new RectangularHitbox((int)(x+(w/2)), (int)(y+(h-2)), 2, 2);
+		return new RectangularHitbox(0, 0, 0, 0);
 	}
 }

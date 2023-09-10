@@ -68,7 +68,7 @@ public class Player extends GameObject{
 	{
 		for(int i = 0; i < list.size(); i++)
 		{
-			if(list.get(i).getBounds().intersects((Rectangle2D)other.getBounds()))
+			if(list.get(i).getHitbox().hits(other.getHitbox()))
 			{
 				return true;
 			}
@@ -79,7 +79,7 @@ public class Player extends GameObject{
 	{
 		for(int i = 1; i < list.size(); i++)
 		{
-			if(list.get(i).getBounds().intersects(other.getHeadBounds()))
+			if(list.get(i).getHitbox().hits(other.getHeadBounds()))
 			{
 				return true;
 			}

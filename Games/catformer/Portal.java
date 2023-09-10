@@ -23,9 +23,4 @@ public class Portal extends GameObject{
 		g.fillOval((int)x, (int)y, w, h);
 		g.fillOval((int)(x+ox), (int)(y+oy), w, h);
 	}
-	@Override
-	public Rectangle getBounds()
-	{
-		return new Rectangle((int)x, (int)y, w, h);
-	}
 }
