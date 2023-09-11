@@ -3,9 +3,11 @@ package catformer;
 import java.awt.*;
 
 public class Pipe extends Platform {
-
 	public Pipe(int x, int y, int w) {
 		super(x, y, w, 10, 0);
+	}
+	public Pipe(int x, int y, int w, int theta) {
+		super(x, y, w, 10, theta);
 	}
 	@Override
 	public void draw(Graphics g)

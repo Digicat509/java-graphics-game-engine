@@ -16,7 +16,7 @@ public class Level {
 			new Building(230, 220, 80);
 			new Building(350, 180, 40);
 			new Building(450, 320, 150);
-			new Pipe(600, 370, 50);
+			new Pipe(600, 370, 50, 90);
 			new Portal(165,300,300,100);
 
 		}

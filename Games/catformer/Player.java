@@ -21,29 +21,23 @@ public class Player extends GameObject{
 	private boolean sliding = false;
 	private long waitTime;
 	private boolean facing = true;
-	Image image;
 	
 	public Player(int x, int y)
 	{
-		super(2);
-		try {
-			image = ImageIO.read(getClass().getResource("Cat.png"));
-		}catch(Exception e){}
-		
+		super(2, "assets/Cat.png");
 		this.x = x;
 		localX = 0;
 		this.y = y;
-		w = 40;
-		h = 40;
+		w = 20;
+		h = 20;
 		dx = 0;
 		dy = 0;
 		Platformer.game.getHandeler().add(this, true);
 	}
 	
-	public void draw(Graphics go)
+	@Override
+	public void draw(Graphics g)
 	{
-		Graphics2D g = (Graphics2D)go;
-		
 		if(facing) {
 			g.drawImage(image,(int)x,(int)y, w, h, null);
 		}
@@ -110,7 +104,6 @@ public class Player extends GameObject{
 		o = this.hits();
 		if(o != null)
 		{
-			localX -= dx;
 			//stops downward acceleration when sliding 
 			if((Platformer.game.getInput().isKey(KeyEvent.VK_D) && dx > 0) || (Platformer.game.getInput().isKey(KeyEvent.VK_A) && dx < 0))
 			{
@@ -126,6 +119,7 @@ public class Player extends GameObject{
 					waitTime = System.currentTimeMillis()+200;
 				}
 			}
+			localX -= dx;
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 		}
 		else {
