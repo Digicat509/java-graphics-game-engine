@@ -4,12 +4,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 public class GameImage extends GameObject {
-	private Image image;
-	public GameImage(int x, int y, Image i) {
+	public GameImage(int x, int y, String i) {
+		super(0, i);
 		this.x = x;
 		this.y = y;
-		image = i;
-		Handler.addHand.put(this, false);
 	}
 	@Override
 	public void draw(Graphics g) {
