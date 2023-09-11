@@ -2,7 +2,11 @@ package catformer;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+
+import javax.imageio.ImageIO;
 
 import gameEngine.GameObject;
 
@@ -16,25 +20,38 @@ public class Player extends GameObject{
 	private boolean wallJump = false;
 	private boolean sliding = false;
 	private long waitTime;
-
+	private boolean facing = true;
+	Image image;
+	
 	public Player(int x, int y)
 	{
 		super(2);
+		try {
+			image = ImageIO.read(getClass().getResource("Cat.png"));
+		}catch(Exception e){}
+		
 		this.x = x;
 		localX = 0;
 		this.y = y;
-		w = 20;
-		h = 20;
+		w = 40;
+		h = 40;
 		dx = 0;
 		dy = 0;
 		Platformer.game.getHandeler().add(this, true);
 	}
-	@Override
-	public void draw(Graphics g)
+	
+	public void draw(Graphics go)
 	{
-		g.setColor(new Color(213, 250, 88));
-		g.fillRect((int)x, (int)y, w, h);
+		Graphics2D g = (Graphics2D)go;
+		
+		if(facing) {
+			g.drawImage(image,(int)x,(int)y, w, h, null);
+		}
+		else {
+			g.drawImage(image,(int)x+w,(int)y, -w, h, null);
+		}
 		move();
+		
 	}
 	
 	public void arrowMovement() {
@@ -46,6 +63,7 @@ public class Player extends GameObject{
 		}
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_D))
 		{
+			facing = true;
 			if(localX > 0)
 				dx += speed;
 			else
@@ -65,6 +83,7 @@ public class Player extends GameObject{
 		
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_A))
 		{
+			facing = false;
 			if(localX > 0) 
 				dx -= speed;
 			
@@ -83,6 +102,7 @@ public class Player extends GameObject{
 			}
 		}
 		y += dy;
+		
 	}
 	
 	public void collisionJumps(GameObject o) {
@@ -114,15 +134,6 @@ public class Player extends GameObject{
 			sliding = false;
 		}
 	}
-	
-//	public void teleport() {
-//		GameObject o = this.hits();
-//		if(o instanceof Portal) {
-//			for(GameObject temp: Platformer.game.getHandeler().hand) {
-//				
-//			}
-//		}
-//	}
 	
 	public void move()
 	{
