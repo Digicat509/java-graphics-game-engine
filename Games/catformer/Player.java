@@ -96,7 +96,6 @@ public class Player extends GameObject{
 			}
 		}
 		y += dy;
-		
 	}
 	
 	public void collisionJumps(GameObject o) {
@@ -134,6 +133,18 @@ public class Player extends GameObject{
 		arrowMovement();
 		
 		GameObject o = this.hits();
+		if(o instanceof Portal)
+		{
+			y -= dy;
+			int move = (int)(((Portal)o).x+((Portal)o).ox+((Portal)o).w/2-this.w);
+			this.y = ((Portal)o).y+((Portal)o).oy-this.h;
+			localX += move;
+			dy = -dy;
+			y += dy;
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= move;});
+		}
+		
+		o = this.hits();
 		if(o != null)
 		{
 			if(o.y>= this.y) {
@@ -158,5 +169,7 @@ public class Player extends GameObject{
 			Platformer.start();
 		}
 		
+		if(Platformer.level.stage.equals(Level.Stage.INFINITE))
+				Platformer.level.update(localX, y);
 	}
 }
