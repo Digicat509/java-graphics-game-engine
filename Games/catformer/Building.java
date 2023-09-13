@@ -14,4 +14,5 @@ public class Building extends Platform {
 		g2d.setColor(Color.red);
 		g2d.fillRect((int)x, (int)y, w, h);
 	}
+	
 }
