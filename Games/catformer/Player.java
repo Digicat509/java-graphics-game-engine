@@ -2,7 +2,11 @@ package catformer;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+
+import javax.imageio.ImageIO;
 
 import gameEngine.GameObject;
 
@@ -16,10 +20,11 @@ public class Player extends GameObject{
 	private boolean wallJump = false;
 	private boolean sliding = false;
 	private long waitTime;
-
+	private boolean facing = true;
+	
 	public Player(int x, int y)
 	{
-		super(2);
+		super(2, "assets/Cat.png");
 		this.x = x;
 		localX = 0;
 		this.y = y;
@@ -29,12 +34,18 @@ public class Player extends GameObject{
 		dy = 0;
 		Platformer.game.getHandeler().add(this, true);
 	}
+	
 	@Override
 	public void draw(Graphics g)
 	{
-		g.setColor(new Color(213, 250, 88));
-		g.fillRect((int)x, (int)y, w, h);
+		if(facing) {
+			g.drawImage(image,(int)x,(int)y, w, h, null);
+		}
+		else {
+			g.drawImage(image,(int)x+w,(int)y, -w, h, null);
+		}
 		move();
+		
 	}
 	
 	public void arrowMovement() {
@@ -46,6 +57,7 @@ public class Player extends GameObject{
 		}
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_D))
 		{
+			facing = true;
 			if(localX > 0)
 				dx += speed;
 			else
@@ -65,6 +77,7 @@ public class Player extends GameObject{
 		
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_A))
 		{
+			facing = false;
 			if(localX > 0) 
 				dx -= speed;
 			
@@ -90,7 +103,6 @@ public class Player extends GameObject{
 		o = this.hits();
 		if(o != null)
 		{
-			localX -= dx;
 			//stops downward acceleration when sliding 
 			if((Platformer.game.getInput().isKey(KeyEvent.VK_D) && dx > 0) || (Platformer.game.getInput().isKey(KeyEvent.VK_A) && dx < 0))
 			{
@@ -106,6 +118,7 @@ public class Player extends GameObject{
 					waitTime = System.currentTimeMillis()+200;
 				}
 			}
+			localX -= dx;
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 		}
 		else {
@@ -115,20 +128,30 @@ public class Player extends GameObject{
 		}
 	}
 	
-//	public void teleport() {
-//		GameObject o = this.hits();
-//		if(o instanceof Portal) {
-//			for(GameObject temp: Platformer.game.getHandeler().hand) {
-//				
-//			}
-//		}
-//	}
-	
 	public void move()
 	{
 		arrowMovement();
 		
 		GameObject o = this.hits();
+		
+		if(o instanceof Enemy)
+		{
+			Platformer.game.stop();
+			Platformer.start();
+		}
+		
+		if(o instanceof Portal)
+		{
+			y -= dy;
+			int move = (int)(((Portal)o).x+((Portal)o).ox+((Portal)o).w/2-this.w);
+			this.y = ((Portal)o).y+((Portal)o).oy-this.h;
+			localX += move;
+			dy = -dy;
+			y += dy;
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= move;});
+		}
+		
+		o = this.hits();
 		if(o != null)
 		{
 			if(o.y>= this.y) {
@@ -153,5 +176,7 @@ public class Player extends GameObject{
 			Platformer.start();
 		}
 		
+		if(Platformer.level.stage.equals(Level.Stage.INFINITE))
+				Platformer.level.update(localX, y);
 	}
 }

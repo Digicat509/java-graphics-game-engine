@@ -9,7 +9,7 @@ public class Platform extends GameObject {
 		this.y = y;
 		this.w = w;
 		this.h = h;
-		rotation = theta;
+		this.theta = theta;
 		Platformer.game.getHandeler().add(this, true);
 	}
 }

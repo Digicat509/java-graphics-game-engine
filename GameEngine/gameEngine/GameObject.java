@@ -2,13 +2,17 @@ package gameEngine;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.util.HashSet;
+
+import javax.imageio.ImageIO;
 
 public abstract class GameObject implements Comparable<GameObject> {
 	public float x,y,dx,dy;
 	public int w,h;
-	public double rotation;
+	public double theta;
 	protected int layers;
-	private Image image;
+	protected Image image;
 	private boolean visible = true;
 	public GameObject() {
 		this(1);
@@ -16,13 +20,21 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public GameObject(int layers) {
 		this.layers = layers;
 	}
-	public GameObject(Image image) {
+	public GameObject(String image) {
 		this(1);
-		this.image = image;
+		try {
+			this.image = ImageIO.read(getClass().getResource(image));
+		} catch (IOException e) {
+			System.out.println("No Image!!!");
+		}
 	}
-	public GameObject(int layers, Image image) {
+	public GameObject(int layers, String image) {
 		this.layers = layers;
-		this.image = image;
+		try {
+			this.image = ImageIO.read(getClass().getResource(image));
+		} catch (IOException e) {
+			System.out.println("No Image!!!");
+		}
 	}
 	public int compareTo(GameObject other) {
 		return (this.layers-other.layers);
@@ -56,6 +68,18 @@ public abstract class GameObject implements Comparable<GameObject> {
 	}
 	public Hitbox getHitbox() {
 		return new RectangularHitbox((int)x, (int)y, w, h);
+	public HashSet<GameObject> allHits() {
+		HashSet<GameObject> hiting = new HashSet<GameObject>(); 
+		if(this.layers > 0) {
+			for(GameObject o: Handler.hitsHand) {
+					if(!this.equals(o))
+						if(this.layers >= o.layers)
+							if((this.getBounds()).intersects((Rectangle)o.getBounds()))
+								hiting.add(o);
+			}
+			return hiting;
+		}
+		return null;
 	}
 	public void show() {
 		visible = true;

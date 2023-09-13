@@ -4,6 +4,7 @@ import gameEngine.GameEngine;
 
 public class Platformer {
 	static GameEngine game;
+	static Level level;
 	public static void main(String[] args)
 	{
 		Platformer platformer = new Platformer();
@@ -18,6 +19,6 @@ public class Platformer {
 	}
 	public static void start()
 	{
-		new Level(Level.Stage.LEVEL1);
+		level = new Level(Level.Stage.LEVEL1);
 	}
 }
