@@ -4,52 +4,44 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import gameEngine.GameObject;
 
-public class DogEnemy extends GameObject{
+public class DogEnemy extends Enemy{
 	
-	private boolean onGround = false;
 	private float gravity = 0.5f;
 	
 	public DogEnemy(int x, int y) {
-		this.x = x;
-		this.y = y;
+		super(x, y, 2, 0);
 		w = 20;
 		h = 20;
-		dx = 5;
-		dy = 0;
-		Platformer.game.getHandeler().add(this, true);
 	}
 	
 	public void move() {
+		y+=dy;
 		GameObject o = this.hits();
 		
 		if(o != null)
 		{
-			if(x > o.x && (x+w) < (o.x+o.w) )
-				x+=dx;
-			else {
+			x+= dx;
+			if(x < o.x) {
+				x = o.x;
 				dx*=-1;
 			}
-			
+			else if((x+w) > (o.x+o.w)){
+				x = o.x+o.w-w;
+				dx*=-1;
+			}
+			dy = 0;
 			if(o.y>= this.y) {
 				y = o.y-h;
-				dy = 0;
-				
-				System.out.println("TOUCH");
-
 			}
-			//System.out.println("NO TOUCH");
-
 		}
 		else
 		{
-			System.out.println("GRAVITY");
 			dy += gravity;
 		}
-		y+=dy;
 	}
 	
 	public void draw(Graphics g) {
-		g.setColor(Color.red);
+		g.setColor(Color.blue);
 		g.fillRect((int)x, (int)y, w, h);
 		move();
 	}

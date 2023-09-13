@@ -133,6 +133,13 @@ public class Player extends GameObject{
 		arrowMovement();
 		
 		GameObject o = this.hits();
+		
+		if(o instanceof Enemy)
+		{
+			Platformer.game.stop();
+			Platformer.start();
+		}
+		
 		if(o instanceof Portal)
 		{
 			y -= dy;

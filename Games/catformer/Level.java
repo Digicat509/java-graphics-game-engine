@@ -12,8 +12,7 @@ public class Level {
 			new Player(10, 0);
 			new Building(0, 200, 50);
 			new Pipe(40, 300, 50);
-			new Building(90, 250, 50);
-			new Building(120, 250, 50);
+			new Building(90, 250, 80);
 			new Building(230, 220, 80);
 			new Building(350, 180, 40);
 			new Building(450, 320, 150);

@@ -2,6 +2,7 @@ package gameEngine;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.HashSet;
 
 import javax.imageio.ImageIO;
 
@@ -61,6 +62,19 @@ public abstract class GameObject implements Comparable<GameObject> {
 							if((this.getBounds()).intersects((Rectangle)o.getBounds()))
 								return o;
 			}
+		}
+		return null;
+	}
+	public HashSet<GameObject> allHits() {
+		HashSet<GameObject> hiting = new HashSet<GameObject>(); 
+		if(this.layers > 0) {
+			for(GameObject o: Handler.hitsHand) {
+					if(!this.equals(o))
+						if(this.layers >= o.layers)
+							if((this.getBounds()).intersects((Rectangle)o.getBounds()))
+								hiting.add(o);
+			}
+			return hiting;
 		}
 		return null;
 	}
