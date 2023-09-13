@@ -9,7 +9,7 @@ public class Level {
 		if(stage == Stage.LEVEL1)
 		{
 			new Background();
-			new Player(10, 0);
+			Platformer.player = new Player(10, 0);
 			new Building(0, 200, 50);
 			new Pipe(40, 300, 50);
 			new Building(90, 250, 80);
@@ -24,7 +24,7 @@ public class Level {
 		if(stage == Stage.INFINITE)
 		{
 			new Background();
-			new Player(10, 0);
+			Platformer.player = new Player(10, 0);
 			int width = (int)(Math.random()*3+1)*50;
 			int height = ((int)(Math.random()*300)+100);
 			new Building(0, height, width);
@@ -32,6 +32,7 @@ public class Level {
 			while(currX < Platformer.game.getWidth()*10)
 			{
 				int rand = (int)(Math.random()*100);
+				int prob = (int)(Math.random()*10);
 				width = (int)(Math.random()*3+1)*50;
 				if(height < 100)
 					height = height + ((int)(Math.random()*100));
@@ -39,6 +40,12 @@ public class Level {
 					height = height - ((int)(Math.random()*100));
 				else
 					height = height + ((int)(Math.random()*200)-100);
+				if(prob >= 8) 
+					new DogEnemy(currX+rand+width/2, height-21);
+				else if(prob >= 7)
+					new DumbDroneEnemy(currX+rand+width/2, height-16);
+				else if(prob >= 6)
+					new SmartDroneEnemy(currX+rand+width/2, height-16);
 				new Building(currX+rand, height, width);
 				currX += rand+width;
 			}

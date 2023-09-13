@@ -9,7 +9,7 @@ public class DogEnemy extends Enemy{
 	private float gravity = 0.5f;
 	
 	public DogEnemy(int x, int y) {
-		super(x, y, 2, 0);
+		super(x, y, 2);
 		w = 20;
 		h = 20;
 	}

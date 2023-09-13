@@ -101,7 +101,7 @@ public class Player extends GameObject{
 	public void collisionJumps(GameObject o) {
 		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
 		o = this.hits();
-		if(o != null)
+		if(o instanceof Platform)
 		{
 			//stops downward acceleration when sliding 
 			if((Platformer.game.getInput().isKey(KeyEvent.VK_D) && dx > 0) || (Platformer.game.getInput().isKey(KeyEvent.VK_A) && dx < 0))
