@@ -68,13 +68,14 @@ public abstract class GameObject implements Comparable<GameObject> {
 	}
 	public Hitbox getHitbox() {
 		return new RectangularHitbox((int)x, (int)y, w, h);
+	}
 	public HashSet<GameObject> allHits() {
 		HashSet<GameObject> hiting = new HashSet<GameObject>(); 
 		if(this.layers > 0) {
 			for(GameObject o: Handler.hitsHand) {
 					if(!this.equals(o))
 						if(this.layers >= o.layers)
-							if((this.getBounds()).intersects((Rectangle)o.getBounds()))
+							if(this.getHitbox().hits(o.getHitbox()))
 								hiting.add(o);
 			}
 			return hiting;
