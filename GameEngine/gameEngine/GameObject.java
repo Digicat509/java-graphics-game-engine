@@ -1,6 +1,7 @@
 package gameEngine;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.HashSet;
 
@@ -39,7 +40,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 		return (this.layers-other.layers);
 	}
 	public boolean hits(GameObject other) {
-		if((this.getBounds()).intersects((Rectangle)other.getBounds())) {
+		if(this.getHitbox().hits(other.getHitbox())) {
 			return true;
 		}
 		return false;
@@ -47,7 +48,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public boolean hitsAny() {
 		for(GameObject o: Handler.hitsHand) {
 			if(!this.equals(o)) {
-				if((this.getBounds()).intersects((Rectangle)o.getBounds())) {
+				if(this.getHitbox().hits(o.getHitbox())) {
 					return true;
 				}
 			}
@@ -59,12 +60,14 @@ public abstract class GameObject implements Comparable<GameObject> {
 			for(GameObject o: Handler.hitsHand) {
 					if(!this.equals(o))
 						if(this.layers >= o.layers)
-							if((this.getBounds()).intersects((Rectangle)o.getBounds()))
+							if(this.getHitbox().hits(o.getHitbox()))
 								return o;
 			}
 		}
 		return null;
 	}
+	public Hitbox getHitbox() {
+		return new RectangularHitbox((int)x, (int)y, w, h);
 	public HashSet<GameObject> allHits() {
 		HashSet<GameObject> hiting = new HashSet<GameObject>(); 
 		if(this.layers > 0) {
@@ -77,9 +80,6 @@ public abstract class GameObject implements Comparable<GameObject> {
 			return hiting;
 		}
 		return null;
-	}
-	public Shape getBounds() {
-		return new Rectangle((int)x, (int)y, w, h);
 	}
 	public void show() {
 		visible = true;
