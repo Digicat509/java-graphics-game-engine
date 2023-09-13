@@ -9,14 +9,12 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public double rotation;
 	protected int layers;
 	private Image image;
-	private Hitbox hitbox;
 	private boolean visible = true;
 	public GameObject() {
 		this(1);
 	}
 	public GameObject(int layers) {
 		this.layers = layers;
-		createHitbox();
 	}
 	public GameObject(Image image) {
 		this(1);
@@ -25,22 +23,17 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public GameObject(int layers, Image image) {
 		this.layers = layers;
 		this.image = image;
-		createHitbox();
 	}
 	public int compareTo(GameObject other) {
 		return (this.layers-other.layers);
 	}
 	public boolean hits(GameObject other) {
-		if(this.hitbox == null)
-			createHitbox();
 		if(this.getHitbox().hits(other.getHitbox())) {
 			return true;
 		}
 		return false;
 	}
 	public boolean hitsAny() {
-		if(this.hitbox == null)
-			createHitbox();
 		for(GameObject o: Handler.hitsHand) {
 			if(!this.equals(o)) {
 				if(this.getHitbox().hits(o.getHitbox())) {
@@ -51,8 +44,6 @@ public abstract class GameObject implements Comparable<GameObject> {
 		return false;
 	}
 	public GameObject hits() {
-		if(this.hitbox == null)
-			createHitbox();
 		if(this.layers > 0) {
 			for(GameObject o: Handler.hitsHand) {
 					if(!this.equals(o))
@@ -64,10 +55,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 		return null;
 	}
 	public Hitbox getHitbox() {
-		return hitbox;
-	}
-	public void createHitbox() {
-		hitbox = new RectangularHitbox((int)x, (int)y, w, h);
+		return new RectangularHitbox((int)x, (int)y, w, h);
 	}
 	public void show() {
 		visible = true;

@@ -16,15 +16,12 @@ public class RectangularHitbox extends Hitbox {
 
 	@Override
 	public boolean hits(Hitbox other) {
-		System.out.println("check hits");//happening
-		if(rect.intersects(other.getBounds()))
-			System.out.println("hiting???");//not happening
-		return other != null ? this.rect.intersects(other.getBounds()): false;
+		return other != null ? this.getBounds().intersects(other.getBounds()): false;
 	}
 
 	@Override
 	public boolean contains(Hitbox other) {
-		return other != null ? this.rect.contains(other.getBounds()): false;
+		return other != null ? this.getBounds().contains(other.getBounds()): false;
 
 	}
 
