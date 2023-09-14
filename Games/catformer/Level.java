@@ -3,6 +3,7 @@ package catformer;
 public class Level {
 	public Stage stage;
 	int currX = 0;
+	private int drawCurrX = 0;
 	public Level(Stage stage)
 	{
 		this.stage = stage;
@@ -29,6 +30,7 @@ public class Level {
 			int height = ((int)(Math.random()*300)+100);
 			new Building(0, height, width);
 			currX += width;
+			drawCurrX += width;
 			while(currX < Platformer.game.getWidth()*10)
 			{
 				int rand = (int)(Math.random()*100);
@@ -41,28 +43,30 @@ public class Level {
 				else
 					height = height + ((int)(Math.random()*200)-100);
 				if(prob >= 8) 
-					new DogEnemy(currX+rand+width/2, height-21);
+					new DogEnemy(drawCurrX+rand+width/2, height-21);
 				else if(prob >= 7)
-					new DumbDroneEnemy(currX+rand+width/2, height-16);
+					new DumbDroneEnemy(drawCurrX+rand+width/2, height-16);
 				else if(prob >= 6)
-					new SmartDroneEnemy(currX+rand+width/2, height-16);
-				new Building(currX+rand, height, width);
+					new SmartDroneEnemy(drawCurrX+rand+width/2, height-16);
+				new Building(drawCurrX+rand, height, width);
 				currX += rand+width;
+				drawCurrX += rand+width;
 			}
 		}
 	}
 	public void update(float x, float y)
 	{
-		if(currX < x+400)
+		if(currX < x+Platformer.game.getWidth())
 		{
 			System.out.println("update level");
 			int ocurrX = currX + Platformer.game.getWidth()*10;
+			drawCurrX = Platformer.game.getWidth();
 			int width = (int)(Math.random()*3+1)*50;
 			int height = ((int)(Math.random()*300)+100);
 			while(currX < ocurrX)
 			{
-				System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 				int rand = (int)(Math.random()*100);
+				int prob = (int)(Math.random()*10);
 				width = (int)(Math.random()*3+1)*50;
 				if(height < 100)
 					height = height + ((int)(Math.random()*100));
@@ -70,8 +74,15 @@ public class Level {
 					height = height - ((int)(Math.random()*100));
 				else
 					height = height + ((int)(Math.random()*200)-100);
-				new Building(currX+rand, height, width);
+				if(prob >= 8) 
+					new DogEnemy(drawCurrX+rand+width/2, height-21);
+				else if(prob >= 7)
+					new DumbDroneEnemy(drawCurrX+rand+width/2, height-16);
+				else if(prob >= 6)
+					new SmartDroneEnemy(drawCurrX+rand+width/2, height-16);
+				new Building(drawCurrX+rand, height, width);
 				currX += rand+width;
+				drawCurrX += rand+width;
 			}
 		}
 	}
