@@ -24,7 +24,7 @@ public class Player extends GameObject{
 	
 	public Player(int x, int y)
 	{
-		super(2, "assets/Cat.png");
+		super(3, "assets/Cat.png");
 		this.x = x;
 		localX = 0;
 		this.y = y;
@@ -141,7 +141,7 @@ public class Player extends GameObject{
 		
 		GameObject o = this.hits();
 		
-		if(o instanceof Enemy)
+		if(o instanceof Enemy || o instanceof Hazard)
 		{
 			Platformer.game.stop();
 			Platformer.start();

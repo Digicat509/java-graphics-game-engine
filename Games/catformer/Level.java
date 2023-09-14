@@ -14,6 +14,7 @@ public class Level {
 			new Building(0, 200, 50);
 			new Pipe(40, 300, 50);
 			new Building(90, 250, 80);
+			new Spikes(230, 210, 20);
 			new Building(230, 220, 80);
 			new Building(350, 180, 40);
 			new Building(450, 320, 150);
