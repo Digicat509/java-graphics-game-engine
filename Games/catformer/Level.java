@@ -1,5 +1,7 @@
 package catformer;
 
+import gameEngine.Text;
+
 public class Level {
 	public Stage stage;
 	int currX = 0;
@@ -26,6 +28,7 @@ public class Level {
 		if(stage == Stage.INFINITE)
 		{
 			new Background();
+			Platformer.text = new Text(""+Platformer.distance+"m", Platformer.game.getWidth()-100, 30, 20);
 			Platformer.player = new Player(30, 0);
 			int width = (int)(Math.random()*3+1)*50;
 			int height = ((int)(Math.random()*300)+100);

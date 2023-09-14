@@ -1,5 +1,6 @@
 package gameEngine;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -7,9 +8,10 @@ import java.awt.Rectangle;
 
 public class Text extends GameObject{
 	Rectangle rect;
-	String text;
+	public String text;
 	int textSize;
 	String font;
+	boolean centered;
 	public Text(String s, int x, int y) {
 		text = s;
 		this.x = x;
@@ -51,18 +53,23 @@ public class Text extends GameObject{
 	}
 	@Override
 	public void draw(Graphics g) {
+		g.setColor(Color.white);
 		if(font != null)
 			g.setFont(new Font(font, 0, g.getFont().getSize()));
 		if(textSize > 0)
 			g.setFont(new Font(g.getFont().getFontName(), 0, textSize));
-		FontMetrics metrics = g.getFontMetrics();
-		if(rect != null) {
-			int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
-			int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
-		}
-		else {
-			x = x - metrics.stringWidth(text) / 2;
-			y = y - metrics.getHeight() / 2 + metrics.getAscent();
+		if(!centered)
+		{
+			FontMetrics metrics = g.getFontMetrics();
+			if(rect != null) {
+				x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+				y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
+			}
+			else {
+				x = x - metrics.stringWidth(text) / 2;
+				y = y - metrics.getHeight() / 2 + metrics.getAscent();
+			}
+			centered = true;
 		}
 		g.drawString(text, (int)x, (int)y);
 	}

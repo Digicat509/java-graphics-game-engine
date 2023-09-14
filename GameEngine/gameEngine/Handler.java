@@ -25,7 +25,7 @@ public class Handler {
 		markForClear = true;
 	}
 	public void forEach(Consumer<GameObject> c){
-		hand.forEach(c);
+		hitsHand.forEach(c);
 	}
 	//renders all game objects in hand
 	public void render(Graphics g) {

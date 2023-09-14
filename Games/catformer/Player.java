@@ -183,6 +183,8 @@ public class Player extends GameObject{
 			Platformer.start();
 		}
 		
+		Platformer.updateDistance((localX+30)/w);
+		
 		if(Platformer.level.stage.equals(Level.Stage.INFINITE))
 				Platformer.level.update(localX, y);
 	}
