@@ -120,6 +120,13 @@ public class Player extends GameObject{
 			}
 			localX -= dx;
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
+			/*o = this.hits(); supposed to fix the collision issue when wall jumping 
+			if(o instanceof Platform) TODO fix this
+			{
+				Platform p = (Platform)o;
+				localX += (p.x-x);
+				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= p.x-x;});
+			}*/
 		}
 		else {
 			if(waitTime <= System.currentTimeMillis())

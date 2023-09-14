@@ -9,7 +9,7 @@ public class Level {
 		if(stage == Stage.LEVEL1)
 		{
 			new Background();
-			Platformer.player = new Player(10, 0);
+			Platformer.player = new Player(30, 0);
 			new Building(0, 200, 50);
 			new Pipe(40, 300, 50);
 			new Building(90, 250, 80);
@@ -24,7 +24,7 @@ public class Level {
 		if(stage == Stage.INFINITE)
 		{
 			new Background();
-			Platformer.player = new Player(10, 0);
+			Platformer.player = new Player(30, 0);
 			int width = (int)(Math.random()*3+1)*50;
 			int height = ((int)(Math.random()*300)+100);
 			new Building(0, height, width);

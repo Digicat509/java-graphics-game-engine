@@ -22,8 +22,8 @@ public class DumbDroneEnemy extends Enemy {
 	@Override
 	public void move() {
 		y+=dy;
-		GameObject o = this.hits();
 		
+		GameObject o = this.hits();
 		if(o != null)
 		{
 			if(Platformer.player.x < this.x && Platformer.player.x > this.x-100) {
