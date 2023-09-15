@@ -8,9 +8,10 @@ import gameEngine.GameObject;
 public class DumbDroneEnemy extends Enemy {
 	
 	private float gravity = 0.5f;
+	private boolean onGround = false;
 	
 	public DumbDroneEnemy(int x, int y) {
-		super(x, y, 5);
+		super(x, y, 0);
 		w = 15;
 		h = 15;
 	}
@@ -26,11 +27,9 @@ public class DumbDroneEnemy extends Enemy {
 		GameObject o = this.hits();
 		if(o != null)
 		{
+			onGround = true;
 			if(Platformer.player.x < this.x && Platformer.player.x > this.x-100) {
-				x -= dx;
-			}
-			if(Platformer.player.x > this.x && Platformer.player.x < this.x+this.w+100) {
-				x += dx;
+				dx = -4;
 			}
 			dy = 0;
 			if(o.y>= this.y) {
@@ -39,7 +38,14 @@ public class DumbDroneEnemy extends Enemy {
 		}
 		else
 		{
+			onGround = false;
 			dy += gravity;
 		}
+		x += dx;
+		o = this.hits();
+		if(!onGround && o != null)
+			x = o.x+o.w;
+		if(y > Platformer.game.getHeight())
+			Platformer.game.getHandeler().remove(this);
 	}
 }

@@ -38,7 +38,7 @@ public class Level {
 			while(currX < Platformer.game.getWidth()*10)
 			{
 				int rand = (int)(Math.random()*100);
-				int prob = (int)(Math.random()*10);
+				int prob = (int)(Math.random()*20);
 				width = (int)(Math.random()*3+1)*50;
 				if(height < 100)
 					height = height + ((int)(Math.random()*100));
@@ -46,12 +46,14 @@ public class Level {
 					height = height - ((int)(Math.random()*100));
 				else
 					height = height + ((int)(Math.random()*200)-100);
-				if(prob >= 8) 
+				if(prob >= 16) 
 					new DogEnemy(drawCurrX+rand+width/2, height-21);
-				else if(prob >= 7)
+				else if(prob >= 14)
 					new DumbDroneEnemy(drawCurrX+rand+width/2, height-16);
-				else if(prob >= 6)
+				else if(prob >= 12)
 					new SmartDroneEnemy(drawCurrX+rand+width/2, height-16);
+				else if(prob >= 8 && rand > 75 && height > 100)
+					new Portal(drawCurrX+rand-75, height+30, drawCurrX+rand+150, height-100);
 				new Building(drawCurrX+rand, height, width);
 				currX += rand+width;
 				drawCurrX += rand+width;

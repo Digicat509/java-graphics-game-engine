@@ -31,6 +31,6 @@ public class Platformer {
 		if(text != null)
 			text.text = ""+distance+"m";
 		else
-			text = new Text(""+distance+"m", game.getWidth()-100, 30);
+			text = new Text(""+distance+"m", game.getWidth()-100, 30, 20);
 	}
 }

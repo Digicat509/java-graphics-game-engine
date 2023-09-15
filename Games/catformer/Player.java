@@ -150,8 +150,8 @@ public class Player extends GameObject{
 		if(o instanceof Portal)
 		{
 			y -= dy;
-			int move = (int)(((Portal)o).x+((Portal)o).ox+((Portal)o).w/2-this.w);
-			this.y = ((Portal)o).y+((Portal)o).oy-this.h;
+			int move = (int)(((Portal)o).oPortal.x-this.w/2);
+			this.y = (((Portal)o).oPortal.y-this.h);
 			localX += move;
 			dy = -dy;
 			y += dy;

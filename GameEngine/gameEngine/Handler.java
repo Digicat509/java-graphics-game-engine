@@ -9,6 +9,7 @@ public class Handler {
 	static PriorityQueue <GameObject> hand = new PriorityQueue <GameObject>();
 	static ArrayList <GameObject> hitsHand = new ArrayList <GameObject>();
 	static HashMap <GameObject, Boolean> addHand = new HashMap <GameObject, Boolean>();
+	static ArrayList<GameObject> removeHand = new ArrayList<GameObject>();
 	private boolean markForClear = false;
 	//Constructor
 	public Handler() {
@@ -19,7 +20,7 @@ public class Handler {
 		addHand.put(o, canCollide);
 	}
 	public void remove(GameObject o) {
-		hand.remove(o);
+		removeHand.add(o);
 	}
 	public void clear() {
 		markForClear = true;
@@ -34,6 +35,12 @@ public class Handler {
 			hitsHand.clear();
 			markForClear = false;
 		}
+		for(GameObject o: removeHand)
+		{
+			hand.remove(o);
+			hitsHand.remove(o);
+		}
+		removeHand.clear();
 		for(Entry<GameObject, Boolean> e: addHand.entrySet()) {
 			hand.add(e.getKey());
 			if(e.getValue())
