@@ -16,10 +16,4 @@ public class Platform extends GameObject {
 		this.theta = theta;
 		Platformer.game.getHandeler().add(this, true);
 	}
-	
-	public void draw(Graphics g) {
-		Graphics2D g2d = (Graphics2D)g;
-		g2d.setColor(Color.blue);
-		g2d.fillRect((int)x, (int)y, w, h);
-	}
 }

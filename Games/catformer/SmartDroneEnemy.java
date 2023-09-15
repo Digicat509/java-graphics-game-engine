@@ -10,7 +10,7 @@ public class SmartDroneEnemy extends Enemy {
 	private float gravity = 0.5f;
 	
 	public SmartDroneEnemy(int x, int y) {
-		super(x, y, 2);
+		super(x, y, 3);
 		w = 15;
 		h = 15;
 	}

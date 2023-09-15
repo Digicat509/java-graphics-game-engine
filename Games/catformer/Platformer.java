@@ -17,13 +17,14 @@ public class Platformer {
 	{
 		game = new GameEngine();
 		game.setTitle("Platformer!");
-		game.setScale(2f);
+		game.setWidth((int)(game.getWidth()*1.5));
+		game.setScale(3f);
 		start();
 		game.start();
 	}
 	public static void start()
 	{
-		level = new Level(Level.Stage.LEVEL1);
+		level = new Level(Level.Stage.INFINITE);
 	}
 	public static void updateDistance(int d)
 	{

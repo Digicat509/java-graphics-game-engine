@@ -50,12 +50,12 @@ public class Player extends GameObject{
 	
 	public void arrowMovement() {
 		dx = 0;
-		if(onGround && Platformer.game.getInput().isKey(KeyEvent.VK_W))
+		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 		{
 			dy = -jumpStrength;
 			
 		}
-		if(Platformer.game.getInput().isKey(KeyEvent.VK_D))
+		if(Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
 		{
 			facing = true;
 			if(localX > 0)
@@ -75,7 +75,7 @@ public class Player extends GameObject{
 			
 		}
 		
-		if(Platformer.game.getInput().isKey(KeyEvent.VK_A))
+		if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
 		{
 			facing = false;
 			if(localX > 0) 
@@ -104,11 +104,11 @@ public class Player extends GameObject{
 		if(o instanceof Platform)
 		{
 			//stops downward acceleration when sliding 
-			if((Platformer.game.getInput().isKey(KeyEvent.VK_D) && dx > 0) || (Platformer.game.getInput().isKey(KeyEvent.VK_A) && dx < 0))
+			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && dx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && dx < 0))
 			{
 				sliding = true;
 				//Wall jump if touching a wall
-				if(onGround == false && wallJump && Platformer.game.getInput().isKey(KeyEvent.VK_W))
+				if(onGround == false && wallJump && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 				{
 					System.out.println("WallJump?");
 					wallJump = false;

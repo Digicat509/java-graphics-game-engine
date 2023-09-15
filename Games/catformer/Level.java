@@ -19,7 +19,7 @@ public class Level {
 			new Building(340, 350, 70);
 			new Building(410, 200, 90);
 			new Building(600, 350, 150);
-			new Platform(600, 50, 70, 200, 0);
+			new FloatingPlatform(600, 50, 70, 200);
 			new Building(750, 50, 70);
 		}
 		if(stage == Stage.TEST)
@@ -53,12 +53,11 @@ public class Level {
 				int rand = (int)(Math.random()*100);
 				int prob = (int)(Math.random()*20);
 				width = (int)(Math.random()*3+1)*50;
-				if(height < 100)
+				height = height + ((int)(Math.random()*200)-100);
+				while(height < 250)
 					height = height + ((int)(Math.random()*100));
-				else if(height > Platformer.game.getHeight()-100)
+				while(height > Platformer.game.getHeight()-100)
 					height = height - ((int)(Math.random()*100));
-				else
-					height = height + ((int)(Math.random()*200)-100);
 				if(prob >= 16) 
 					new DogEnemy(drawCurrX+rand+width/2, height-21);
 				else if(prob >= 14)
