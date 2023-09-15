@@ -9,7 +9,20 @@ public class Level {
 	public Level(Stage stage)
 	{
 		this.stage = stage;
-		if(stage == Stage.LEVEL1)
+		
+		if(stage == Stage.LEVEL1) {
+			new Background();
+			Platformer.player = new Player(30, 250);
+			new Building(-20, 350, 100);
+			new Pipe(80, 400, 80);
+			new Building(160, 350, 100);
+			new Building(340, 350, 70);
+			new Building(410, 200, 90);
+			new Building(600, 350, 150);
+			new Platform(600, 50, 70, 200, 0);
+			new Building(750, 50, 70);
+		}
+		if(stage == Stage.TEST)
 		{
 			new Background();
 			Platformer.player = new Player(30, 0);
@@ -94,6 +107,7 @@ public class Level {
 	}
 	public enum Stage
 	{
+		TEST,
 		LEVEL1,
 		LEVEL2,
 		LEVEL3,

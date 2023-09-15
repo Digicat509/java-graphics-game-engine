@@ -108,7 +108,7 @@ public class Player extends GameObject{
 			{
 				sliding = true;
 				//Wall jump if touching a wall
-				if(wallJump && Platformer.game.getInput().isKey(KeyEvent.VK_W))
+				if(onGround == false && wallJump && Platformer.game.getInput().isKey(KeyEvent.VK_W))
 				{
 					System.out.println("WallJump?");
 					wallJump = false;
@@ -161,10 +161,16 @@ public class Player extends GameObject{
 		o = this.hits();
 		if(o != null)
 		{
-			if(o.y>= this.y) {
+			if(o.y>= this.y && x+w > o.x && x < o.x+o.w) {
 				dy = 0;
 				y = o.y-h;
 				onGround = true;
+				//System.out.println("over");
+			}
+			if(y >= o.y+o.h-5) {
+				System.out.println("under");
+				dy = 0;
+				y = o.y+o.h;
 			}
 		}
 		else
