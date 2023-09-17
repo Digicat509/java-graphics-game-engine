@@ -50,30 +50,33 @@ public class Level {
 			new Building(0, height, width);
 			currX += width;
 			drawCurrX += width;
-			while(currX < Platformer.game.getWidth()*10)
-			{
-				int rand = (int)(Math.random()*100);
-				int prob = (int)(Math.random()*20);
-				width = (int)(Math.random()*3+1)*50;
-				height = height + ((int)(Math.random()*200)-100);
-				while(height < 250)
-					height = height + ((int)(Math.random()*100));
-				while(height > Platformer.game.getHeight()-100)
-					height = height - ((int)(Math.random()*100));
-				if(prob >= 16) 
-					new DogEnemy(drawCurrX+rand+width/2, height-21);
-				else if(prob >= 14)
-					new DumbDroneEnemy(drawCurrX+rand+width/2, height-16);
-				else if(prob >= 12)
-					new SmartDroneEnemy(drawCurrX+rand+width/2, height-16);
-				else if (prob >= 11)
-					new AnimalControlEnemy(drawCurrX+rand+width/2, height-46);
-				else if(prob >= 7 && rand > 75 && height > 100)
-					new Portal(drawCurrX+rand-75, height+30, drawCurrX+rand+150, height-100);
-				new Building(drawCurrX+rand, height, width);
-				currX += rand+width;
-				drawCurrX += rand+width;
-			}
+			generate(height);
+		}
+	}
+	private void generate(int height) {
+		while(currX < Platformer.game.getWidth()*10)
+		{
+			int rand = (int)(Math.random()*100);
+			int prob = (int)(Math.random()*20);
+			int width = (int)(Math.random()*3+1)*50;
+			height = height + ((int)(Math.random()*200)-100);
+			while(height < 250)
+				height = height + ((int)(Math.random()*100));
+			while(height > Platformer.game.getHeight()-100)
+				height = height - ((int)(Math.random()*100));
+			if(prob >= 16) 
+				new DogEnemy(drawCurrX+rand+width/2, height-21);
+			else if(prob >= 14)
+				new DumbDroneEnemy(drawCurrX+rand+width/2, height-16);
+			else if(prob >= 12)
+				new SmartDroneEnemy(drawCurrX+rand+width/2, height-16);
+			else if (prob >= 11)
+				new AnimalControlEnemy(drawCurrX+rand+width/2, height-46);
+			else if(prob >= 7 && rand > 75 && height > 100)
+				new Portal(drawCurrX+rand-75, height+30, drawCurrX+rand+150, height-100);
+			new Building(drawCurrX+rand, height, width);
+			currX += rand+width;
+			drawCurrX += rand+width;
 		}
 	}
 	public void update(float x, float y)
@@ -81,31 +84,9 @@ public class Level {
 		if(currX < x+Platformer.game.getWidth())
 		{
 			System.out.println("update level");
-			int ocurrX = currX + Platformer.game.getWidth()*10;
 			drawCurrX = Platformer.game.getWidth();
-			int width = (int)(Math.random()*3+1)*50;
 			int height = ((int)(Math.random()*300)+100);
-			while(currX < ocurrX)
-			{
-				int rand = (int)(Math.random()*100);
-				int prob = (int)(Math.random()*10);
-				width = (int)(Math.random()*3+1)*50;
-				if(height < 100)
-					height = height + ((int)(Math.random()*100));
-				else if(height > Platformer.game.getHeight()-100)
-					height = height - ((int)(Math.random()*100));
-				else
-					height = height + ((int)(Math.random()*200)-100);
-				if(prob >= 8) 
-					new DogEnemy(drawCurrX+rand+width/2, height-21);
-				else if(prob >= 7)
-					new DumbDroneEnemy(drawCurrX+rand+width/2, height-16);
-				else if(prob >= 6)
-					new SmartDroneEnemy(drawCurrX+rand+width/2, height-16);
-				new Building(drawCurrX+rand, height, width);
-				currX += rand+width;
-				drawCurrX += rand+width;
-			}
+			generate(height);
 		}
 	}
 	public enum Stage
