@@ -6,6 +6,7 @@ public class Level {
 	public Stage stage;
 	int currX = 0;
 	private int drawCurrX = 0;
+	int height;
 	public Level(Stage stage)
 	{
 		this.stage = stage;
@@ -46,14 +47,14 @@ public class Level {
 			Platformer.text = new Text(""+Platformer.distance+"m", Platformer.game.getWidth()-100, 30, 20);
 			Platformer.player = new Player(30, 0);
 			int width = (int)(Math.random()*3+1)*50;
-			int height = ((int)(Math.random()*300)+100);
+			height = ((int)(Math.random()*300)+100);
 			new Building(0, height, width);
 			currX += width;
 			drawCurrX += width;
-			generate(height);
+			generate();
 		}
 	}
-	private void generate(int height) {
+	private void generate() {
 		while(currX < Platformer.game.getWidth()*10)
 		{
 			int rand = (int)(Math.random()*100);
@@ -85,8 +86,7 @@ public class Level {
 		{
 			System.out.println("update level");
 			drawCurrX = Platformer.game.getWidth();
-			int height = ((int)(Math.random()*300)+100);
-			generate(height);
+			generate();
 		}
 	}
 	public enum Stage
