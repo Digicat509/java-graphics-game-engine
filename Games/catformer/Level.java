@@ -26,6 +26,7 @@ public class Level {
 		{
 			new Background();
 			Platformer.player = new Player(30, 0);
+			Platformer.text = new Text(""+Platformer.distance+"m", Platformer.game.getWidth()-100, 30, 20);
 			new Building(0, 200, 50);
 			new Pipe(40, 300, 50);
 			new Building(90, 250, 80);
@@ -35,7 +36,8 @@ public class Level {
 			new Building(450, 320, 150);
 			new Pipe(600, 370, 50, 90);
 			new Portal(165,300,300,100);
-			new DogEnemy(100,-100);
+			//new DogEnemy(100,-100);
+			new AnimalControlEnemy(100, 100);
 
 		}
 		if(stage == Stage.INFINITE)
@@ -64,7 +66,9 @@ public class Level {
 					new DumbDroneEnemy(drawCurrX+rand+width/2, height-16);
 				else if(prob >= 12)
 					new SmartDroneEnemy(drawCurrX+rand+width/2, height-16);
-				else if(prob >= 8 && rand > 75 && height > 100)
+				else if (prob >= 11)
+					new AnimalControlEnemy(drawCurrX+rand+width/2, height-46);
+				else if(prob >= 7 && rand > 75 && height > 100)
 					new Portal(drawCurrX+rand-75, height+30, drawCurrX+rand+150, height-100);
 				new Building(drawCurrX+rand, height, width);
 				currX += rand+width;

@@ -8,6 +8,7 @@ import gameEngine.GameObject;
 public class SmartDroneEnemy extends Enemy {
 	
 	private float gravity = 0.5f;
+	private static final int RANGE = 100;
 	
 	public SmartDroneEnemy(int x, int y) {
 		super(x, y, 3);
@@ -26,10 +27,10 @@ public class SmartDroneEnemy extends Enemy {
 		
 		if(o != null)
 		{
-			if(Platformer.player.x < this.x && Platformer.player.x > this.x-100) {
+			if(Platformer.player.x < this.x && Platformer.player.x > this.x-RANGE) {
 				x -= dx;
 			}
-			if(Platformer.player.x > this.x && Platformer.player.x < this.x+this.w+100) {
+			if(Platformer.player.x > this.x && Platformer.player.x < this.x+this.w+RANGE) {
 				x += dx;
 			}
 			if(x < o.x) {

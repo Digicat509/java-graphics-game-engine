@@ -9,6 +9,7 @@ public class Platformer {
 	static Player player;
 	static Text text;
 	static int distance;
+	public static final float GRAVITY = .5f;
 	public static void main(String[] args)
 	{
 		Platformer platformer = new Platformer();
@@ -31,7 +32,5 @@ public class Platformer {
 		distance = d;
 		if(text != null)
 			text.text = ""+distance+"m";
-		else
-			text = new Text(""+distance+"m", game.getWidth()-100, 30, 20);
 	}
 }

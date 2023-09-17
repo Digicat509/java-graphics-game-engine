@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import gameEngine.GameObject;
 
 public class Player extends GameObject{
-	private float gravity = .5f;
 	private float slidingGravity = 2f;
 	private float jumpStrength = 10f;
 	private float speed = 3;
@@ -145,6 +144,8 @@ public class Player extends GameObject{
 		{
 			Platformer.game.stop();
 			Platformer.start();
+			if(o instanceof Net)
+				Platformer.game.getHandeler().remove(o);
 		}
 		
 		if(o instanceof Portal)
@@ -176,7 +177,7 @@ public class Player extends GameObject{
 		else
 		{
 			onGround = false;
-			dy += gravity;
+			dy += Platformer.GRAVITY;
 			if(sliding)
 				dy = slidingGravity;
 		}
