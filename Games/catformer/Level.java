@@ -51,11 +51,11 @@ public class Level {
 			new Building(0, height, width);
 			currX += width;
 			drawCurrX += width;
-			generate();
+			generate(0);
 		}
 	}
-	private void generate() {
-		while(currX < Platformer.game.getWidth()*10)
+	private void generate(int x) {
+		while(currX < x+Platformer.game.getWidth()*10)
 		{
 			int rand = (int)(Math.random()*100);
 			int prob = (int)(Math.random()*20);
@@ -86,7 +86,7 @@ public class Level {
 		{
 			System.out.println("update level");
 			drawCurrX = Platformer.game.getWidth();
-			generate();
+			generate((int)x);
 		}
 	}
 	public enum Stage
