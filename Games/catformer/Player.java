@@ -20,6 +20,7 @@ public class Player extends GameObject{
 	private boolean sliding = false;
 	private long waitTime;
 	private boolean facing = true;
+	private int scrollDistance = 0;
 	
 	public Player(int x, int y)
 	{
@@ -57,7 +58,7 @@ public class Player extends GameObject{
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
 		{
 			facing = true;
-			if(localX > 0)
+			if(localX > scrollDistance)
 				dx += speed;
 			else
 			{
@@ -77,7 +78,7 @@ public class Player extends GameObject{
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
 		{
 			facing = false;
-			if(localX > 0) 
+			if(localX > scrollDistance) 
 				dx -= speed;
 			
 			else if(x > 0)
@@ -99,13 +100,19 @@ public class Player extends GameObject{
 	
 	public void collisionJumps(GameObject o) {
 		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
+
 		o = this.hits();
+		//System.out.println(o);
+
 		if(o instanceof Platform)
 		{
+			System.out.println("Touch?");
 			//stops downward acceleration when sliding 
 			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && dx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && dx < 0))
 			{
 				sliding = true;
+				System.out.println("Sliding?");
+
 				//Wall jump if touching a wall
 				if(onGround == false && wallJump && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 				{
@@ -127,6 +134,8 @@ public class Player extends GameObject{
 				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= p.x-x;});
 			}*/
 		}
+		
+
 		else {
 			if(waitTime <= System.currentTimeMillis())
 				wallJump = true;
@@ -139,6 +148,7 @@ public class Player extends GameObject{
 		arrowMovement();
 		
 		GameObject o = this.hits();
+		System.out.println(o);
 		
 		if(o instanceof Enemy || o instanceof Hazard)
 		{
@@ -169,7 +179,7 @@ public class Player extends GameObject{
 				//System.out.println("over");
 			}
 			if(y >= o.y+o.h-5) {
-				System.out.println("under");
+				//System.out.println("under");
 				dy = 0;
 				y = o.y+o.h;
 			}
@@ -183,6 +193,7 @@ public class Player extends GameObject{
 		}
 		localX += dx;
 		
+		//System.out.println("Collision jumps?");
 		collisionJumps(o);
 		
 		if(y > Platformer.game.getHeight()) {
