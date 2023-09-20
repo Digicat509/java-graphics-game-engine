@@ -21,6 +21,7 @@ public class Level {
 			new Building(410, 250, 90);
 			new Building(600, 350, 150);
 			new FloatingPlatform(600, 50, 70, 200);
+			new TutorialBoss(630, 0);
 			new Building(750, 50, 70);
 		}
 		if(stage == Stage.TEST)

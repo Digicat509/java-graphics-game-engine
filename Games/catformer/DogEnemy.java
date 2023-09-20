@@ -6,8 +6,6 @@ import gameEngine.GameObject;
 
 public class DogEnemy extends Enemy{
 	
-	private float gravity = 0.5f;
-	
 	public DogEnemy(int x, int y) {
 		super(x, y, 2);
 		w = 20;
@@ -36,7 +34,7 @@ public class DogEnemy extends Enemy{
 		}
 		else
 		{
-			dy += gravity;
+			dy += Platformer.GRAVITY;
 		}
 	}
 	
