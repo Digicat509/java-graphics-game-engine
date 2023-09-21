@@ -21,7 +21,7 @@ public class Level {
 			new Building(410, 250, 90);
 			new Building(600, 350, 150);
 			new FloatingPlatform(600, 50, 70, 200);
-			//new TutorialBoss(630, 0);
+			new TutorialBoss(630, 0);
 			new Building(750, 50, 70);
 		}
 		if(stage == Stage.TEST)
@@ -38,8 +38,8 @@ public class Level {
 			new Building(450, 320, 150);
 			new Pipe(600, 370, 50, 90);
 			new Portal(165,300,300,100);
-			//new DogEnemy(100,-100);
-			new AnimalControlEnemy(100, 100);
+			new DumbDroneEnemy(100,200);
+			//new AnimalControlEnemy(100, 100);
 
 		}
 		if(stage == Stage.INFINITE)

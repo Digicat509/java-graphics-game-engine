@@ -10,12 +10,13 @@ import gameEngine.GameObject;
 public class GrannyCandy extends Enemy {
 
 	private long timer = 0;
+	private boolean candy = true;
 	
 	public GrannyCandy(int x, int y, int dx, float dy) {
 		super(x, y, dx);
 		this.dy = dy;
-		w = 10;
-		h = 10;
+		w = 19;
+		h = 11;
 		try {
 			this.image = ImageIO.read(getClass().getResource("assets/Candy.png"));
 		} catch (Exception e) {e.printStackTrace();}
@@ -23,35 +24,49 @@ public class GrannyCandy extends Enemy {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.magenta);
-		//g.drawRect((int)x, (int)y, w, h);
-		g.drawImage(image, (int)x, (int)y, w, h, null);
+		if(!candy)
+			g.fillRect((int)x, (int)y, w, h);
+		else
+			g.drawImage(image, (int)x, (int)y, w, h, null);
 		move();
 	}
 	@Override
 	public void move() {
-		super.move();
-		
-		GameObject o = this.hits();
-		if(o != null && !(o instanceof Enemy))
+		if(timer == 0)
 		{
-			dy = 0;
-			dx = 0;
-			if(o.y<= this.y) {
+			x += dx;
+			y += dy;
+			GameObject o = this.hits();
+			if(o != null && !(o instanceof Enemy))
+			{
 				y = o.y-h;
+				dy = 0;
+				dx = 0;
+				if(timer == 0)
+					timer = System.currentTimeMillis()+50;
 			}
-			if(timer == 0)
-				timer = System.currentTimeMillis()+50;
+			else if(o == null)
+			{
+				dy += Platformer.GRAVITY;
+			}
 		}
-		else if(o == null)
+		if(timer > 0 && timer < System.currentTimeMillis() && candy)
 		{
-			dy += Platformer.GRAVITY;
+			w += (19.0/11)*2;
+			h += (11.0/19)*2;
+			y -= (19.0/11);
+			x -= (11.0/19);
+			timer = System.currentTimeMillis()+50;
+			candy = false;
 		}
-		if(timer > 0 && timer < System.currentTimeMillis() && w < 30)
+		else if(timer > 0 && timer < System.currentTimeMillis() && w < 30 && h < 30)
 		{
-			w += 5;
-			h += 5;
-			y -= 2.5;
-			x -= 2.5;
+			x += (w-h)/2;
+			w = h;
+			w += 2;
+			h += 2;
+			y -= 2;
+			x -= 1;
 			timer = System.currentTimeMillis()+50;
 		}
 		else if(timer > 0 && timer < System.currentTimeMillis())

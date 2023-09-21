@@ -3,6 +3,7 @@ package catformer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
+import java.util.HashSet;
 
 import javax.imageio.ImageIO;
 
@@ -53,10 +54,16 @@ public class DumbDroneEnemy extends Enemy {
 			onGround = false;
 			dy += Platformer.GRAVITY;
 		}
+		HashSet<GameObject> arr = this.allHits();
 		x += dx;
+		HashSet<GameObject> narr = this.allHits();
 		o = this.hits();
-		if(!onGround && o != null)
+		if(o != null)
 			x = o.x+o.w;
+		else if(arr.size() > 0 && narr.size() > 0 && arr.containsAll(narr))
+		{
+			dx *= -1;
+		}
 		if(y > Platformer.game.getHeight())
 			Platformer.game.getHandeler().remove(this);
 	}

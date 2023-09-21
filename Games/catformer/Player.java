@@ -199,8 +199,8 @@ public class Player extends GameObject{
 		localX += dx;
 		
 		//System.out.println("Collision jumps?");
-		//collisionJumps(o);
-		scroll();
+		collisionJumps(o);
+		//scroll();
 		
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
