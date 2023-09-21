@@ -111,12 +111,12 @@ public class Player extends GameObject{
 
 		if(o instanceof Platform)
 		{
-			System.out.println("Touch?");
+			//System.out.println("Touch?");
 			//stops downward acceleration when sliding 
 			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && dx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && dx < 0))
 			{
 				sliding = true;
-				System.out.println("Sliding?");
+				//System.out.println("Sliding?");
 
 				//Wall jump if touching a wall
 				if(onGround == false && wallJump && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
@@ -153,7 +153,6 @@ public class Player extends GameObject{
 		arrowMovement();
 		
 		GameObject o = this.hits();
-		System.out.println(o);
 		
 		if(o instanceof Enemy || o instanceof Hazard)
 		{
