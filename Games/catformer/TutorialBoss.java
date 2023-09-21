@@ -49,7 +49,7 @@ public class TutorialBoss extends Enemy {
 		y+=dy;
 		GameObject o = this.hits();
 		
-		if(o != null)
+		if(o != null && !(o instanceof Enemy))
 		{
 			x+= dx;
 			if(x < o.x) {
@@ -65,7 +65,7 @@ public class TutorialBoss extends Enemy {
 				y = o.y-h;
 			}
 		}
-		else
+		else if(o == null)
 		{
 			dy += Platformer.GRAVITY;
 		}
