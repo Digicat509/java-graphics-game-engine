@@ -98,11 +98,16 @@ public class Player extends GameObject{
 		y += dy;
 	}
 	
+	public void scroll() {
+		if(this.x>800) {
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
+		}
+	}
+	
 	public void collisionJumps(GameObject o) {
 		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
 
 		o = this.hits();
-		//System.out.println(o);
 
 		if(o instanceof Platform)
 		{
@@ -194,7 +199,8 @@ public class Player extends GameObject{
 		localX += dx;
 		
 		//System.out.println("Collision jumps?");
-		collisionJumps(o);
+		//collisionJumps(o);
+		scroll();
 		
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
