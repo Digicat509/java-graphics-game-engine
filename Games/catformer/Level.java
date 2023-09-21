@@ -13,7 +13,7 @@ public class Level {
 		
 		if(stage == Stage.LEVEL1) {
 			new Background();
-			Platformer.player = new Player(80, 250);
+			Platformer.player = new Player(30, 250);
 			new Building(-20, 350, 100);
 			new Pipe(80, 400, 80);
 			new Building(160, 350, 100);
