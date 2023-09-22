@@ -58,11 +58,10 @@ public class DumbDroneEnemy extends Enemy {
 		x += dx;
 		HashSet<GameObject> narr = this.allHits();
 		o = this.hits();
-		if(o != null)
+		if(o != null) {
 			x = o.x+o.w;
-		else if(arr.size() > 0 && narr.size() > 0 && arr.containsAll(narr))
-		{
-			dx *= -1;
+			if(arr.size() < narr.size() && onGround)//TODO bug test this
+				dx *= -1;
 		}
 		if(y > Platformer.game.getHeight())
 			Platformer.game.getHandeler().remove(this);
