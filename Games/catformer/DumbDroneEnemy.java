@@ -60,7 +60,7 @@ public class DumbDroneEnemy extends Enemy {
 		o = this.hits();
 		if(o != null) {
 			x = o.x+o.w;
-			if(arr.size() < narr.size() && onGround)//TODO bug test this
+			if(arr.size() < narr.size() && onGround)//TODO <---- bug test this
 				dx *= -1;
 		}
 		if(y > Platformer.game.getHeight())
