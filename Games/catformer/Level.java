@@ -1,5 +1,7 @@
 package catformer;
 
+import java.awt.event.KeyEvent;
+
 import gameEngine.Text;
 
 public class Level {
@@ -14,15 +16,33 @@ public class Level {
 		if(stage == Stage.LEVEL1) {
 			new Background();
 			Platformer.player = new Player(30, 250);
-			new Building(-20, 350, 100);
-			new Pipe(80, 400, 80);
-			new Building(160, 350, 100);
-			new Building(340, 350, 70);
-			new Building(410, 250, 90);
-			new Building(600, 350, 150);
-			new FloatingPlatform(600, 50, 70, 200);
-			new TutorialBoss(630, 0);
-			new Building(750, 50, 70);
+			new Pipe(120, 400, 80);
+			new Building(-40, 350, 160);
+			new Building(200, 350, 120);
+			new Building(400, 350, 80);
+			new Building(480, 250, 80);
+			new Building(640, 350, 160);
+			new FloatingPlatform(640, 50, 80, 200);
+			//new TutorialBoss(630, 0);
+			new Building(800, 50, 80);
+			new Building(1000, 500, 80);
+			new Building(1160, 550, 160);
+			new Building(1360, 550, 120);
+			new Building(1560, 500, 40);
+			
+
+			
+			new Pipe(1080, 100, 180);
+			new FloatingPlatform(1000, 50, 80, 350);
+			new Pipe(1360, 250, 120);
+			new FloatingPlatform(1480, 200, 80, 150);
+
+
+			
+			new Building(1680, 550, 160);
+			//new DumbDroneEnemy(1760,540);
+			new Building(1840, 500, 160);
+			//new DumbDroneEnemy(1920,490);
 		}
 		if(stage == Stage.TEST)
 		{
@@ -40,7 +60,7 @@ public class Level {
 			new Portal(165,300,300,100);
 			new DumbDroneEnemy(100,200);
 			//new AnimalControlEnemy(100, 100);
-
+			
 		}
 		if(stage == Stage.INFINITE)
 		{
