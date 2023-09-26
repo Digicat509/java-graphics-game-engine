@@ -12,7 +12,9 @@ public class Building extends Platform {
 	{
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.red);
-		g2d.fillRect((int)x, (int)y, w, h);
+		for(int i = 0; i < w; i += 10)//draws 10X10 rects change this to tiles when tile png is made
+			for(int j = 0; j <= h; j += 10)
+				g2d.fillRect((int)x+i, (int)y+j, 10, 10);
 	}
 	
 }
