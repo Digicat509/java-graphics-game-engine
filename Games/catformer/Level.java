@@ -16,33 +16,36 @@ public class Level {
 		if(stage == Stage.LEVEL1) {
 			new Background();
 			Platformer.player = new Player(30, 250);
-			new Pipe(120, 400, 80);
-			new Building(-40, 350, 160);
-			new Building(200, 350, 120);
-			new Building(400, 350, 80);
-			new Building(480, 250, 80);
-			new Building(640, 350, 160);
-			new FloatingPlatform(640, 50, 80, 200);
-			//new TutorialBoss(630, 0);
-			new Building(800, 50, 80);
-			new Building(1000, 500, 80);
-			new Building(1160, 550, 160);
-			new Building(1360, 550, 120);
-			new Building(1560, 500, 40);
+			new Pipe(100, 450, 100);
+			new Building(-50, 400, 150);
+			new Building(200, 400, 150);
 			
-
+			new Building(450, 400, 100);
+			new Building(550, 300, 100);
 			
-			new Pipe(1080, 100, 180);
-			new FloatingPlatform(1000, 50, 80, 350);
-			new Pipe(1360, 250, 120);
-			new FloatingPlatform(1480, 200, 80, 150);
-
-
+			new Building(750, 400, 150);
+			new FloatingPlatform(750, 100, 80, 200);
+			new Building(900, 100, 100);
+			new Building(1000, 500, 100);
 			
-			new Building(1680, 550, 160);
-			//new DumbDroneEnemy(1760,540);
-			new Building(1840, 500, 160);
-			//new DumbDroneEnemy(1920,490);
+			new DogEnemy(1250,525);
+			new Building(1150, 550, 150);
+			new DogEnemy(1450,525);
+			new Building(1400, 550, 100);
+			new Building(1600, 500, 50);
+			
+			new Pipe(1250, 100, 150);
+			new FloatingPlatform(1150, 50, 100, 300);
+			new Pipe(1550, 250, 100);
+			new FloatingPlatform(1650, 200, 100, 150);
+			
+			new Building(1750, 550, 150);
+			new DumbDroneEnemy(1870,540);
+			new Building(1900, 500, 150);
+			new DumbDroneEnemy(2035,490);
+			
+			new Building(2150, 500, 450);
+			new AnimalControlEnemy(2400, 100);
 		}
 		if(stage == Stage.TEST)
 		{

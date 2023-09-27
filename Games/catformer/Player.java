@@ -48,6 +48,8 @@ public class Player extends GameObject{
 		
 	}
 	
+	
+	
 	public void arrowMovement() {
 		dx = 0;
 		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
@@ -103,6 +105,7 @@ public class Player extends GameObject{
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 		}
 	}
+	
 	
 	public void collisionJumps(GameObject o) {
 		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
@@ -199,7 +202,6 @@ public class Player extends GameObject{
 		
 		//System.out.println("Collision jumps?");
 		collisionJumps(o);
-		//scroll();
 		
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
