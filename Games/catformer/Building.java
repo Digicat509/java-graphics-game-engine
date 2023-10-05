@@ -12,6 +12,11 @@ public class Building extends Platform {
 		try {
 			image = ImageIO.read(getClass().getResource("assets/TestTile.png"));
 		} catch (IOException e) {}
+		for(int i=0; i<(w/50); i++) {
+			for(int j=0; j<(h/50); j++) {
+				new BuildingBlock(x+(50*i),y+(50*j),50,50);
+			}
+		}
 	}
 	@Override
 	public void draw(Graphics g)
@@ -19,17 +24,19 @@ public class Building extends Platform {
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.red);
 		
-		for(int i = 0; i < w; i += 10) //draws 10X10 rects change this to tiles when tile png is made
-			for(int j = 0; j <= h; j += 10) {
-//				if(Math.random()>0.5) {
-//					g2d.setColor(Color.red);
-//				}
-//				else {
-//					g2d.setColor(Color.blue);
-//				}
-				//g2d.drawImage(image, (int)x+i, (int)y+j, 50, 50, null);
-				g2d.fillRect((int)x+i, (int)y+j, 10, 10);
-			}
+//		for(int i = 0; i < w; i += 10) //draws 10X10 rects change this to tiles when tile png is made
+//			for(int j = 0; j <= h; j += 10) {
+////				if(Math.random()>0.5) {
+////					g2d.setColor(Color.red);
+////				}
+////				else {
+////					g2d.setColor(Color.blue);
+////				}
+//				//g2d.drawImage(image, (int)x+i, (int)y+j, 50, 50, null);
+//				g2d.fillRect((int)x+i, (int)y+j, 10, 10);
+//			}
 	}
-	
+	public String toString() {
+		return x +", "+ y;
+	}
 }

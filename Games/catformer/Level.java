@@ -52,17 +52,8 @@ public class Level {
 			new Background();
 			Platformer.player = new Player(30, 0);
 			Platformer.text = new Text(""+Platformer.distance+"m", Platformer.game.getWidth()-100, 30, 20);
-			new Building(0, 200, 50);
-			new Pipe(40, 300, 50);
-			new Building(90, 250, 80);
-			new Spikes(230, 210, 20);
-			new Building(230, 220, 80);
-			new Building(350, 180, 40);
-			new Building(450, 320, 150);
-			new Pipe(600, 370, 50, 90);
-			new Portal(165,300,300,100);
-			new DumbDroneEnemy(100,200);
-			//new AnimalControlEnemy(100, 100);
+			new Building(-50, 300, 300);
+			
 			
 		}
 		if(stage == Stage.INFINITE)

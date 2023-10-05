@@ -22,6 +22,8 @@ public class Player extends GameObject{
 	private boolean facing = true;
 	private int scrollDistance = 0;
 	
+	private boolean sideTouch = false;
+	
 	public Player(int x, int y)
 	{
 		super(3, "assets/Cat.png");
@@ -65,13 +67,16 @@ public class Player extends GameObject{
 			else
 			{
 				x += speed;
-				localX += speed;
+				//localX += speed;
 				
 				GameObject o = this.hits();
 				if(o != null)
 				{
 					x -= speed;
-					localX -= speed;
+					sideTouch = true;
+					testJumps(o);
+					//System.out.println("touch");
+					//localX -= speed;
 				}
 			}
 			
@@ -86,12 +91,12 @@ public class Player extends GameObject{
 			else if(x > 0)
 			{
 				x -= speed;
-				localX -= speed;
+				//localX -= speed;
 				GameObject o = this.hits();
 				if(o != null)
 				{
 					x += speed;
-					localX += speed;
+					//localX += speed;
 				}
 				if(x < 0)
 					x = 0;
@@ -106,20 +111,55 @@ public class Player extends GameObject{
 		}
 	}
 	
+	public void testJumps(GameObject o) {
+		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
+
+		if(sideTouch) {
+			sliding = true;
+			System.out.println("asvdiufa sdfiuwheiufd dsfda");
+			
+			if(onGround==false) {
+				System.out.println("On Ground");
+			}
+			if((Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP))) {
+				System.out.println("Wall Jump");
+				onGround=true;
+				dy=-slidingGravity;
+			}
+
+			
+			if(onGround == false && wallJump && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP))) {
+				System.out.println("working!!!");
+				wallJump = false;
+				dy = -jumpStrength;
+				dx *= 10;
+				sliding = false;
+				waitTime = System.currentTimeMillis()+200;
+			}
+		}
+		//o = this.hits();
+
+		else {
+			if(waitTime <= System.currentTimeMillis())
+				wallJump = true;
+			sliding = false;
+		}
+
+		
+	}
 	
 	public void collisionJumps(GameObject o) {
 		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
 
 		o = this.hits();
+		System.out.println(this.allHits()+"\n\n\n\n");
 
 		if(o instanceof Platform)
 		{
-			//System.out.println("Touch?");
 			//stops downward acceleration when sliding 
 			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && dx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && dx < 0))
 			{
 				sliding = true;
-				//System.out.println("Sliding?");
 
 				//Wall jump if touching a wall
 				if(onGround == false && wallJump && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
@@ -202,6 +242,7 @@ public class Player extends GameObject{
 		
 		//System.out.println("Collision jumps?");
 		collisionJumps(o);
+		//testJumps(o);
 		
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();

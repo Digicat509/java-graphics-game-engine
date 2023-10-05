@@ -60,8 +60,9 @@ public abstract class GameObject implements Comparable<GameObject> {
 			for(GameObject o: Handler.hitsHand) {
 					if(!this.equals(o))
 						if(this.layers >= o.layers)
-							if(this.getHitbox().hits(o.getHitbox()))
+							if(this.getHitbox().hits(o.getHitbox())) {
 								return o;
+							}
 			}
 		}
 		return null;
