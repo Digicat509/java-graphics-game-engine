@@ -15,7 +15,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	protected Image image;
 	private boolean visible = true;
 	public GameObject() {
-		this(1);
+		this(0);
 	}
 	public GameObject(int layers) {
 		this.layers = layers;
