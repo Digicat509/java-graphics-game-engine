@@ -67,7 +67,7 @@ public class Player extends GameObject{
 			else
 			{
 				x += speed;
-				//localX += speed;
+				localX += speed;
 				
 				GameObject o = this.hits();
 				if(o != null)
@@ -76,7 +76,7 @@ public class Player extends GameObject{
 					sideTouch = true;
 					testJumps(o);
 					//System.out.println("touch");
-					//localX -= speed;
+					localX -= speed;
 				}
 			}
 			
@@ -91,12 +91,12 @@ public class Player extends GameObject{
 			else if(x > 0)
 			{
 				x -= speed;
-				//localX -= speed;
+				localX -= speed;
 				GameObject o = this.hits();
 				if(o != null)
 				{
 					x += speed;
-					//localX += speed;
+					localX += speed;
 				}
 				if(x < 0)
 					x = 0;

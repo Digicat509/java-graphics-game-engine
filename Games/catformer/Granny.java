@@ -5,13 +5,13 @@ import java.awt.Graphics;
 
 import gameEngine.GameObject;
 
-public class TutorialBoss extends Enemy {
+public class Granny extends Enemy {
 
 	private long delay = 0;
 	private static final int RANGE = 400;
 	public static int speed = 3;
 	
-	public TutorialBoss(int x, int y) {
+	public Granny(int x, int y) {
 		super(x, y, speed);
 		w = 30;
 		h = 30;

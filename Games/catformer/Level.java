@@ -45,7 +45,8 @@ public class Level {
 			new DumbDroneEnemy(2035,490);
 			
 			new Building(2150, 500, 450);
-			new AnimalControlEnemy(2400, 100);
+			//new AnimalControlEnemy(2400, 100);
+			new Granny(2400, 100);
 		}
 		if(stage == Stage.TEST)
 		{
