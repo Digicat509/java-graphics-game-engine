@@ -6,10 +6,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class BuildingBlock extends Platform{
+import gameEngine.GameObject;
+
+public class BuildingBlock extends GameObject{
 
 	public BuildingBlock(int x, int y, int w, int h) {
-		super(x, y, 55, 55, 0);
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
 		try {
 			image = ImageIO.read(getClass().getResource("assets/TestTile.png"));
 		} catch (IOException e) {}
