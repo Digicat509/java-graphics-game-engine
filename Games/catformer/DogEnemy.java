@@ -7,7 +7,7 @@ import gameEngine.GameObject;
 public class DogEnemy extends Enemy{
 	
 	public DogEnemy(int x, int y) {
-		super(x, y, 2);
+		super(x, y, 2, 10);
 		w = 20;
 		h = 20;
 	}

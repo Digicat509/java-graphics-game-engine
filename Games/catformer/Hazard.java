@@ -1,10 +1,8 @@
 package catformer;
 
-import gameEngine.GameObject;
-
-public class Hazard extends GameObject {
-	public Hazard(int x, int y, int w, int h) {
-		super(2);
+public class Hazard extends DangerThing {
+	public Hazard(int x, int y, int w, int h, int damage) {
+		super(damage);
 		this.x = x;
 		this.y = y;
 		this.w = w;

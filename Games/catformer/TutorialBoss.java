@@ -12,7 +12,7 @@ public class TutorialBoss extends Enemy {
 	public static int speed = 3;
 	
 	public TutorialBoss(int x, int y) {
-		super(x, y, speed);
+		super(x, y, speed, 20);
 		w = 30;
 		h = 30;
 	}

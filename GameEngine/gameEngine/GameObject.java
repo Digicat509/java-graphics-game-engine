@@ -13,7 +13,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public double theta;
 	protected int layers;
 	protected Image image;
-	private boolean visible = true;
+	protected boolean visible = true;
 	public GameObject() {
 		this(1);
 	}

@@ -15,7 +15,7 @@ public class DumbDroneEnemy extends Enemy {
 	private static final int RANGE = 150;
 	
 	public DumbDroneEnemy(int x, int y) {
-		super(x, y, 0);
+		super(x, y, 0, 30);
 		w = 22;
 		h = 12;
 		try {

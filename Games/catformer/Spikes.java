@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 public class Spikes extends Hazard{
 
 	public Spikes(int x, int y, int w) {
-		super(x, y, w, 10);
+		super(x, y, w, 10, 40);
 	}
 	public void draw(Graphics g)
 	{

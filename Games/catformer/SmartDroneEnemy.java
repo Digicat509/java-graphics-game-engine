@@ -14,7 +14,7 @@ public class SmartDroneEnemy extends Enemy {
 	private boolean facing = true;
 	
 	public SmartDroneEnemy(int x, int y) {
-		super(x, y, 3);
+		super(x, y, 3, 20);
 		w = 22;
 		h = 12;
 		try {
