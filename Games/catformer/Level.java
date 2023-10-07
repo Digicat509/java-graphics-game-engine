@@ -71,7 +71,7 @@ public class Level {
 		}
 	}
 	private void generate(int x) {
-		while(currX < x+Platformer.game.getWidth()*10)
+		while(currX < x+Platformer.game.getWidth())
 		{
 			int rand = (int)(Math.random()*100);
 			int prob = (int)(Math.random()*20);

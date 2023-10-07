@@ -152,7 +152,7 @@ public class Player extends GameObject{
 		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
 
 		o = this.hits();
-		System.out.println(this.allHits()+"\n\n\n\n");
+		//System.out.println(this.allHits()+"\n\n\n\n");
 
 		if(o instanceof Platform)
 		{
