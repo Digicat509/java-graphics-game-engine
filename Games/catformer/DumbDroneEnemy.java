@@ -13,9 +13,10 @@ public class DumbDroneEnemy extends Enemy {
 	
 	private boolean onGround = false;
 	private static final int RANGE = 150;
+	private boolean rolling = false;
 	
 	public DumbDroneEnemy(int x, int y) {
-		super(x, y, 0);
+		super(x, y, 0, 30);
 		w = 22;
 		h = 12;
 		try {
@@ -36,8 +37,9 @@ public class DumbDroneEnemy extends Enemy {
 		if(o != null)
 		{
 			onGround = true;
-			if(Platformer.player.x < this.x && Platformer.player.x > this.x-RANGE) {
+			if(Platformer.player.x < this.x && Platformer.player.x > this.x-RANGE && !rolling) {
 				dx = -4;
+				rolling = true;
 				try {
 					this.image = ImageIO.read(getClass().getResource("assets/RollingPolly.png"));
 					w = 15;
@@ -57,11 +59,12 @@ public class DumbDroneEnemy extends Enemy {
 		HashSet<GameObject> arr = this.allHits();
 		x += dx;
 		HashSet<GameObject> narr = this.allHits();
-		o = this.hits();
-		if(o != null) {
-			x = o.x+o.w;
-			if(arr.size() < narr.size() && onGround)//TODO <---- bug test this
+		if(arr.size() < narr.size()) {
+			x -= dx;
+			if(arr.size() < narr.size() && onGround)
+			{
 				dx *= -1;
+			}
 		}
 		if(y > Platformer.game.getHeight())
 			Platformer.game.getHandeler().remove(this);

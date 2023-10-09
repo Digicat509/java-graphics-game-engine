@@ -27,6 +27,5 @@ public class Portal extends GameObject{
 	public void draw(Graphics g) {
 		g.setColor(Color.green);
 		g.fillOval((int)x, (int)y, w, h);
-		//g.fillOval((int)(x+ox), (int)(y+oy), w, h);
 	}
 }

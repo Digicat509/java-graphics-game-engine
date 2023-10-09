@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class Net extends Enemy {
 
 	public Net(int x, int y, int dx, float dy) {
-		super(x, y, dx);
+		super(x, y, dx, 10);
 		this.dy = dy;
 		w = 10;
 		h = 10;

@@ -11,6 +11,8 @@ public class Handler {
 	static HashMap <GameObject, Boolean> addHand = new HashMap <GameObject, Boolean>();
 	static ArrayList<GameObject> removeHand = new ArrayList<GameObject>();
 	private boolean markForClear = false;
+	private boolean render = false;
+	private long timer = 0;
 	//Constructor
 	public Handler() {
 		
@@ -28,8 +30,20 @@ public class Handler {
 	public void forEach(Consumer<GameObject> c){
 		hitsHand.forEach(c);
 	}
+	public void startRender() {
+		render = true;
+	}
+	public void stopRender() {
+		render = false;
+	}
+	public void stopRender(int time) {
+		render = false;
+		timer = System.currentTimeMillis() + 1000*time;
+	}
 	//renders all game objects in hand
 	public void render(Graphics g) {
+		if(System.currentTimeMillis() > timer)
+			render = true;
 		if(markForClear) {
 			hand.clear();
 			hitsHand.clear();
@@ -47,8 +61,10 @@ public class Handler {
 				hitsHand.add(e.getKey());
 		}
 		addHand.clear();
-		for(GameObject o: hand) {
-			o.draw(g);
+		if(render) {
+			for(GameObject o: hand) {
+				o.draw(g);
+			}
 		}
 	}
 }

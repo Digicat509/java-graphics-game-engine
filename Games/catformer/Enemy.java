@@ -1,11 +1,9 @@
 package catformer;
 
-import gameEngine.GameObject;
-
-public class Enemy extends GameObject{
-	public Enemy(int x, int y, int dx)
+public class Enemy extends DangerThing{
+	public Enemy(int x, int y, int dx, int damage)
 	{
-		super(2);
+		super(damage);
 		this.x = x;
 		this.y = y;
 		this.dx = dx;

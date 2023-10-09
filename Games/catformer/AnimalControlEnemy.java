@@ -11,10 +11,10 @@ public class AnimalControlEnemy extends Enemy {
 	private static final int RANGE = 400;
 	
 	public AnimalControlEnemy(int x, int y) {
-		super(x, y, 0);
+		super(x, y, 0, 20);
 		this.w = 20;
 		this.h = 45;
-		delay = System.currentTimeMillis()+2000;
+		delay = System.currentTimeMillis()+3000;
 	}
 	@Override
 	public void draw(Graphics g) {

@@ -23,6 +23,12 @@ public class Player extends GameObject{
 	private int scrollDistance = 300;
 	
 	private boolean sideTouch = false;
+	private int invincibilityFrames = 30;
+	private boolean invinicible = false;
+	private long frameTimer;
+	private long timer = 0;
+	private int HP;
+	int maxHP;
 	
 	public Player(int x, int y)
 	{
@@ -34,17 +40,41 @@ public class Player extends GameObject{
 		h = 20;
 		dx = 0;
 		dy = 0;
+		HP = 100;
+		maxHP = HP;
+		new HPBar();
 		Platformer.game.getHandeler().add(this, true);
 	}
 	
 	@Override
 	public void draw(Graphics g)
 	{
-		if(facing) {
-			g.drawImage(image,(int)x,(int)y, w, h, null);
+		if(visible)
+		{
+			if(facing) {
+				g.drawImage(image,(int)x,(int)y, w, h, null);
+			}
+			else {
+				g.drawImage(image,(int)x+w,(int)y, -w, h, null);
+			}
+			if(System.currentTimeMillis() < timer)
+			{
+				if(frameTimer >= 5)
+				{
+					visible = false;
+					frameTimer = 0;
+				}
+				frameTimer ++;
+			}
 		}
-		else {
-			g.drawImage(image,(int)x+w,(int)y, -w, h, null);
+		else
+		{
+			if(frameTimer >= 5)
+			{
+				visible = true;
+				frameTimer = 0;
+			}
+			frameTimer ++;
 		}
 		move();
 		
@@ -230,12 +260,20 @@ public class Player extends GameObject{
 		
 		GameObject o = this.hits();
 		
-		if(o instanceof Enemy || o instanceof Hazard)
+		if(o instanceof DangerThing)
 		{
-			Platformer.game.stop();
-			Platformer.start();
+			if(System.currentTimeMillis() > timer)
+			{
+				this.HP -= ((DangerThing)o).damage;
+				timer = System.currentTimeMillis() + (int)(1000*((double)invincibilityFrames/60));
+			}
 			if(o instanceof Net)
 				Platformer.game.getHandeler().remove(o);
+			if(HP <= 0)
+			{
+				Platformer.game.stop();
+				Platformer.start();
+			}
 		}
 		
 		if(o instanceof Portal)
@@ -295,5 +333,8 @@ public class Player extends GameObject{
 		
 		if(Platformer.level.stage.equals(Level.Stage.INFINITE))
 				Platformer.level.update(localX, y);
+	}
+	public int getHP() {
+		return HP;
 	}
 }

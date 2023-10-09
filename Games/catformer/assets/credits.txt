@@ -1,0 +1,41 @@
+Programing
+Cris Ovalle
+Alexander Snyder
+
+Charecter Design:
+Charlotte Heinzerling 
+Cris Ovalle
+Alexander Snyder
+
+Level Design:
+Cris Ovalle
+
+Balancing:
+Alexander Snyder
+
+Charecter Art:
+Cris Ovalle
+Alexander Snyder
+
+Background Art:
+Tilly Chuard
+
+Play Testing:
+Aaron Cadle
+Tilly Chuard
+Olivia Darnell
+Jose Hernandez
+Evan Konkel
+Audrey Lewis
+Cris Ovalle
+Alex Ramos 
+Alexander Snyder
+
+And Thank you to Everyone Who Made This Game Possible
+
+Made Using Java in Eclipse
+
+Code available on GitHub at: 
+https://github.com/Digicat509/java-graphics-game-engine/tree/main/Games/catformer
+
+Thank You For Playing
