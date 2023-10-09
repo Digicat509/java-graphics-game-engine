@@ -1,5 +1,6 @@
 package catformer;
 
+
 import gameEngine.GameEngine;
 import gameEngine.Text;
 
@@ -10,6 +11,10 @@ public class Platformer {
 	static Text text;
 	static int distance;
 	public static final float GRAVITY = .5f;
+	private Screen screen;
+	
+	
+	
 	public static void main(String[] args)
 	{
 		Platformer platformer = new Platformer();
@@ -20,6 +25,8 @@ public class Platformer {
 		game.setTitle("Platformer!");
 		game.setWidth((int)(game.getWidth()*1.5));
 		game.setScale(3f);
+		screen = new Screen(game);
+		//this.addMouseListener(screen);
 		start();
 		game.start();
 	}

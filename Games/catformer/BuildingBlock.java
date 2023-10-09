@@ -6,19 +6,25 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class BuildingBlock extends Platform{
+import gameEngine.GameObject;
+
+public class BuildingBlock extends GameObject{
 
 	public BuildingBlock(int x, int y, int w, int h) {
-		super(x, y, 50, 50, 0);
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
 		try {
 			image = ImageIO.read(getClass().getResource("assets/TestTile.png"));
 		} catch (IOException e) {}
-		
+		Platformer.game.getHandeler().add(this, false);
 	}
 	
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
-		g2d.drawImage(image, (int)x, (int)y, 50, 50, null);
+		g2d.drawImage(image, (int)x, (int)y, 55, 55, null);
 	}
 
+	
 }

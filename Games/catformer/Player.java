@@ -20,7 +20,9 @@ public class Player extends GameObject{
 	private boolean sliding = false;
 	private long waitTime;
 	private boolean facing = true;
-	private int scrollDistance = 0;
+	private int scrollDistance = 300;
+	
+	private boolean sideTouch = false;
 	private int invincibilityFrames = 30;
 	private boolean invinicible = false;
 	private long frameTimer;
@@ -94,14 +96,19 @@ public class Player extends GameObject{
 				dx += speed;
 			else
 			{
-				x += speed;
-				localX += speed;
+				//x += speed;
+				//localX += speed;
+				dx += speed;
 				
 				GameObject o = this.hits();
 				if(o != null)
 				{
-					x -= speed;
-					localX -= speed;
+					dx -= speed;
+					//x -= speed;
+					sideTouch = true;
+					//testJumps(o);
+					//System.out.println("touch");
+					//localX -= speed;
 				}
 			}
 			
@@ -115,19 +122,37 @@ public class Player extends GameObject{
 			
 			else if(x > 0)
 			{
-				x -= speed;
-				localX -= speed;
+				dx -= speed;
+				//x -= speed;
+				//localX -= speed;
 				GameObject o = this.hits();
 				if(o != null)
 				{
-					x += speed;
-					localX += speed;
+					dx += speed;
+					//x += speed;
+					//sideTouch = true;
+					//testJumps(o);
+					//localX += speed;
 				}
-				if(x < 0)
-					x = 0;
 			}
 		}
 		y += dy;
+	}
+	
+	private void updatePosition(int direction)
+	{
+		if(localX > scrollDistance)
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*this.dx;});
+		else
+			x += direction*dx;
+	}
+	
+	private void updatePosition(int direction, int amount)
+	{
+		if(localX > scrollDistance)
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
+		else
+			x += direction*dx;
 	}
 	
 	public void scroll() {
@@ -136,20 +161,66 @@ public class Player extends GameObject{
 		}
 	}
 	
-	
-	public void collisionJumps(GameObject o) {
+	public void testJumps(GameObject o) {
 		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
 
+		if(sideTouch) {
+			sliding = true;
+			System.out.println("asvdiufa sdfiuwheiufd dsfda");
+			
+			if(onGround==false) {
+				System.out.println("On Ground");
+			}
+			if((Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP))) {
+//				System.out.println("Wall Jump");
+//				onGround=true;
+//				dy=-slidingGravity;
+				System.out.println("WallJump?");
+				wallJump = false;
+				dy = -jumpStrength;
+				if(Platformer.game.getInput().isKey(KeyEvent.VK_A))
+					dx=-1;
+				if(Platformer.game.getInput().isKey(KeyEvent.VK_D))
+					dx=1;
+				dx *= 10;
+				sliding = false;
+				waitTime = System.currentTimeMillis()+200;
+			}
+
+			
+			if(onGround == false && wallJump && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP))) {
+				System.out.println("working!!!");
+				wallJump = false;
+				dy = -jumpStrength;
+				dx *= 10;
+				sliding = false;
+				waitTime = System.currentTimeMillis()+200;
+			}
+		}
+		//o = this.hits();
+
+		else {
+			if(waitTime <= System.currentTimeMillis())
+				wallJump = true;
+			sliding = false;
+		}
+
+		
+	}
+	
+	public void collisionJumps(GameObject o) {
+		//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
+		updatePosition(1);
+		
 		o = this.hits();
+		//System.out.println(this.allHits()+"\n\n\n\n");
 
 		if(o instanceof Platform)
 		{
-			//System.out.println("Touch?");
 			//stops downward acceleration when sliding 
 			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && dx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && dx < 0))
 			{
 				sliding = true;
-				//System.out.println("Sliding?");
 
 				//Wall jump if touching a wall
 				if(onGround == false && wallJump && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
@@ -159,17 +230,19 @@ public class Player extends GameObject{
 					dy = -jumpStrength;
 					dx *= 10;
 					sliding = false;
-					waitTime = System.currentTimeMillis()+200;
+					waitTime = System.currentTimeMillis()+150;
 				}
 			}
 			localX -= dx;
-			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
+			updatePosition(-1);
+			//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 			o = this.hits(); //supposed to fix the collision issue when wall jumping 
 			if(o instanceof Platform) //TODO fix this
 			{
 				Platform p = (Platform)o;
 				localX += dx;//(p.x-x);
-				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx/*p.x-x*/;});
+				updatePosition(1);
+				//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx/*p.x-x*/;});
 			}
 		}
 		
@@ -211,7 +284,8 @@ public class Player extends GameObject{
 			localX += move;
 			dy = -dy;
 			y += dy;
-			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= move;});
+			updatePosition(1, move);
+			//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= move;});
 		}
 		
 		o = this.hits();
@@ -240,6 +314,10 @@ public class Player extends GameObject{
 		
 		//System.out.println("Collision jumps?");
 		collisionJumps(o);
+		//testJumps(o);
+		
+		if(x < 0)
+			x = 0;
 		
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
