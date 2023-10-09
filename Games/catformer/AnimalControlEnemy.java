@@ -39,7 +39,7 @@ public class AnimalControlEnemy extends Enemy {
 			new Net((int)(x-10), (int)(y+10), -5, yVel);
 			delay = System.currentTimeMillis()+1000;
 		}
-		if(Platformer.player.x > x+w && delay < System.currentTimeMillis() && Math.abs(xDist) < 35+w)
+		if(Platformer.player.x > x+w && delay < System.currentTimeMillis() && Math.abs(xDist) < Platformer.player.scrollDistance+35+w)
 		{
 			new Net((int)(x-10), (int)(y+10), 5, yVel);
 			delay = System.currentTimeMillis()+1000;

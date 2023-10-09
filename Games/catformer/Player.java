@@ -20,11 +20,10 @@ public class Player extends GameObject{
 	private boolean sliding = false;
 	private long waitTime;
 	private boolean facing = true;
-	private int scrollDistance = 300;
+	public int scrollDistance = 300;
 	
 	private boolean sideTouch = false;
 	private int invincibilityFrames = 30;
-	private boolean invinicible = false;
 	private long frameTimer;
 	private long timer = 0;
 	private int HP;
@@ -152,7 +151,7 @@ public class Player extends GameObject{
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
 		else
-			x += direction*dx;
+			x += direction*amount;
 	}
 	
 	public void scroll() {
