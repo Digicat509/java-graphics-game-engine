@@ -20,7 +20,7 @@ public class Player extends GameObject{
 	private boolean sliding = false;
 	private long waitTime;
 	private boolean facing = true;
-	private int scrollDistance = 0;
+	private int scrollDistance = 300;
 	
 	private boolean sideTouch = false;
 	
@@ -74,7 +74,7 @@ public class Player extends GameObject{
 				{
 					x -= speed;
 					sideTouch = true;
-					testJumps(o);
+					//testJumps(o);
 					//System.out.println("touch");
 					localX -= speed;
 				}
@@ -96,6 +96,8 @@ public class Player extends GameObject{
 				if(o != null)
 				{
 					x += speed;
+					//sideTouch = true;
+					//testJumps(o);
 					localX += speed;
 				}
 				if(x < 0)
@@ -122,9 +124,19 @@ public class Player extends GameObject{
 				System.out.println("On Ground");
 			}
 			if((Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP))) {
-				System.out.println("Wall Jump");
-				onGround=true;
-				dy=-slidingGravity;
+//				System.out.println("Wall Jump");
+//				onGround=true;
+//				dy=-slidingGravity;
+				System.out.println("WallJump?");
+				wallJump = false;
+				dy = -jumpStrength;
+				if(Platformer.game.getInput().isKey(KeyEvent.VK_A))
+					dx=-1;
+				if(Platformer.game.getInput().isKey(KeyEvent.VK_D))
+					dx=1;
+				dx *= 10;
+				sliding = false;
+				waitTime = System.currentTimeMillis()+200;
 			}
 
 			
@@ -169,7 +181,7 @@ public class Player extends GameObject{
 					dy = -jumpStrength;
 					dx *= 10;
 					sliding = false;
-					waitTime = System.currentTimeMillis()+200;
+					waitTime = System.currentTimeMillis()+150;
 				}
 			}
 			localX -= dx;

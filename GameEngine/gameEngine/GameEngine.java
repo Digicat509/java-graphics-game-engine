@@ -22,7 +22,7 @@ public class GameEngine implements Runnable {
 	int fps = 0;
 	int frames = 0;
 	Handler hand;
-	private State state;
+	public static State state;
 	
 	public GameEngine() {
 		hand = new Handler();
@@ -82,7 +82,7 @@ public class GameEngine implements Runnable {
 	public void play() {
 		state = State.PLAYING;
 	}
-	private void stopPlay() {
+	public void stopPlay() {
 		state = State.STOP_PLAY;
 	}
 	public void title() {
