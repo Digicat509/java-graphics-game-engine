@@ -66,17 +66,19 @@ public class Player extends GameObject{
 				dx += speed;
 			else
 			{
-				x += speed;
-				localX += speed;
+				//x += speed;
+				//localX += speed;
+				dx += speed;
 				
 				GameObject o = this.hits();
 				if(o != null)
 				{
-					x -= speed;
+					dx -= speed;
+					//x -= speed;
 					sideTouch = true;
 					//testJumps(o);
 					//System.out.println("touch");
-					localX -= speed;
+					//localX -= speed;
 				}
 			}
 			
@@ -90,21 +92,37 @@ public class Player extends GameObject{
 			
 			else if(x > 0)
 			{
-				x -= speed;
-				localX -= speed;
+				dx -= speed;
+				//x -= speed;
+				//localX -= speed;
 				GameObject o = this.hits();
 				if(o != null)
 				{
-					x += speed;
+					dx += speed;
+					//x += speed;
 					//sideTouch = true;
 					//testJumps(o);
-					localX += speed;
+					//localX += speed;
 				}
-				if(x < 0)
-					x = 0;
 			}
 		}
 		y += dy;
+	}
+	
+	private void updatePosition(int direction)
+	{
+		if(localX > scrollDistance)
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*this.dx;});
+		else
+			x += direction*dx;
+	}
+	
+	private void updatePosition(int direction, int amount)
+	{
+		if(localX > scrollDistance)
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
+		else
+			x += direction*dx;
 	}
 	
 	public void scroll() {
@@ -161,8 +179,9 @@ public class Player extends GameObject{
 	}
 	
 	public void collisionJumps(GameObject o) {
-		Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
-
+		//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
+		updatePosition(1);
+		
 		o = this.hits();
 		//System.out.println(this.allHits()+"\n\n\n\n");
 
@@ -185,13 +204,15 @@ public class Player extends GameObject{
 				}
 			}
 			localX -= dx;
-			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
+			updatePosition(-1);
+			//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 			o = this.hits(); //supposed to fix the collision issue when wall jumping 
 			if(o instanceof Platform) //TODO fix this
 			{
 				Platform p = (Platform)o;
 				localX += dx;//(p.x-x);
-				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx/*p.x-x*/;});
+				updatePosition(1);
+				//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx/*p.x-x*/;});
 			}
 		}
 		
@@ -225,7 +246,8 @@ public class Player extends GameObject{
 			localX += move;
 			dy = -dy;
 			y += dy;
-			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= move;});
+			updatePosition(1, move);
+			//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= move;});
 		}
 		
 		o = this.hits();
@@ -255,6 +277,9 @@ public class Player extends GameObject{
 		//System.out.println("Collision jumps?");
 		collisionJumps(o);
 		//testJumps(o);
+		
+		if(x < 0)
+			x = 0;
 		
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
