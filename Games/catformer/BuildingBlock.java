@@ -10,13 +10,13 @@ import gameEngine.GameObject;
 
 public class BuildingBlock extends GameObject{
 
-	public BuildingBlock(int x, int y, int w, int h) {
+	public BuildingBlock(int x, int y, int w, int h, String path) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
 		try {
-			image = ImageIO.read(getClass().getResource("assets/TestTile.png"));
+			image = ImageIO.read(getClass().getResource(path));
 		} catch (IOException e) {}
 		Platformer.game.getHandeler().add(this, false);
 	}

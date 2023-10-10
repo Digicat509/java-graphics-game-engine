@@ -261,7 +261,7 @@ public class Player extends GameObject{
 		Platformer.updateDistance((localX+30)/w);
 		
 		if(Platformer.level.stage.equals(Level.Stage.INFINITE))
-				Platformer.level.update(localX, y);
+				Platformer.level.update(localX+30, y);
 	}
 	public int getHP() {
 		return HP;
