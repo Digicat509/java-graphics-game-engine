@@ -99,7 +99,6 @@ public class Player extends GameObject{
 				if(o != null)
 				{
 					dx -= speed;
-					sideTouch = true;
 				}
 			}
 			
