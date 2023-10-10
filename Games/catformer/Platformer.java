@@ -32,9 +32,9 @@ public class Platformer {
 	}
 	public static void start()
 	{
-		new Credits();
-		//level = new Level(Level.Stage.LEVEL1);
-		//game.getHandeler().stopRender(1);
+		//new Credits();
+		level = new Level(Level.Stage.INFINITE);
+		game.getHandeler().stopRender(1);
 	}
 	public static void updateDistance(int d)
 	{

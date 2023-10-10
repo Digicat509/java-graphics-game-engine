@@ -67,19 +67,24 @@ public class Level {
 			new Building(0, height, width);
 			currX += width;
 			drawCurrX += width;
-			generate(0);
+			generate();
 		}
 	}
-	private void generate(int x) {
-		while(currX < x+Platformer.game.getWidth())
+	private void generate() {
+		int dist = drawCurrX+Platformer.game.getWidth();
+		int width = (int)(Math.random()*3+1)*50;
+		new Building(drawCurrX, height, width);
+		currX += width;
+		drawCurrX += width;
+		while(drawCurrX < dist)
 		{
 			int rand = (int)(Math.random()*100);
 			int prob = (int)(Math.random()*20);
-			int width = (int)(Math.random()*3+1)*50;
+			width = (int)(Math.random()*3+1)*50;
 			height = height + ((int)(Math.random()*200)-100);
 			while(height < 250)
 				height = height + ((int)(Math.random()*100));
-			while(height > Platformer.game.getHeight()-100)
+			while(height > Platformer.game.getHeight()-200)
 				height = height - ((int)(Math.random()*100));
 			if(prob >= 16) 
 				new DogEnemy(drawCurrX+rand+width/2, height-21);
@@ -101,8 +106,8 @@ public class Level {
 		if(currX < x+Platformer.game.getWidth())
 		{
 			System.out.println("update level");
-			drawCurrX = Platformer.game.getWidth();
-			generate((int)x);
+			drawCurrX = (int)Platformer.player.x+Platformer.game.getWidth();
+			generate();
 		}
 	}
 	public enum Stage
