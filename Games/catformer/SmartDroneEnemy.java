@@ -10,13 +10,13 @@ import gameEngine.GameObject;
 public class SmartDroneEnemy extends Enemy {
 	
 	private float gravity = 0.5f;
-	private static final int RANGE = 100;
+	private static final int RANGE = 200;
 	private boolean facing = true;
 	
 	public SmartDroneEnemy(int x, int y) {
 		super(x, y, 3, 20);
-		w = 22;
-		h = 12;
+		w = 28;
+		h = 15;
 		try {
 			this.image = ImageIO.read(getClass().getResource("assets/Beetle.png"));
 		} catch (Exception e) {e.printStackTrace();}

@@ -24,6 +24,7 @@ public class Player extends GameObject{
 	private int invincibilityFrames = 30;
 	private long frameTimer;
 	private long timer = 0;
+	private long healTimer = 0;
 	private int HP;
 	int maxHP;
 	
@@ -219,6 +220,21 @@ public class Player extends GameObject{
 			y += dy;
 			localX += move;
 			updatePosition(1, move);
+		}
+		
+		if(o instanceof Box)
+		{
+			if(System.currentTimeMillis() > healTimer)
+			{
+				if(this.HP <= maxHP-5)
+				{
+					this.HP += ((Box)o).heal/10;
+					((Box)o).heal -= 5;
+					if(((Box)o).heal <= 0)
+						Platformer.game.getHandeler().remove(o);
+				}
+				healTimer = System.currentTimeMillis() + 1000;
+			}
 		}
 		
 		o = this.hits();
