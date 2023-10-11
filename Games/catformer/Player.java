@@ -271,7 +271,7 @@ public class Player extends GameObject{
 		
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_R)){
 			Platformer.game.stop();
-			Platformer.start();
+			//Platformer.start();
 		}
 		
 		Platformer.updateDistance((localX+30)/w);

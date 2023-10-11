@@ -59,12 +59,12 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 		scroll = e.getWheelRotation();
 	}
 	public void mouseDragged(MouseEvent e) {
-		mouseX = (int)(e.getX() / ge.getScale());
-		mouseY = (int)(e.getY() / ge.getScale());
+		mouseX = (int)(e.getX()/* / ge.getScale()*/);
+		mouseY = (int)(e.getY() /*/ ge.getScale()*/);
 	}
 	public void mouseMoved(MouseEvent e) {
-		mouseX = (int)(e.getX() / ge.getScale());
-		mouseY = (int)(e.getY() / ge.getScale());
+		mouseX = (int)(e.getX()/* / ge.getScale()*/);
+		mouseY = (int)(e.getY()/* / ge.getScale()*/);
 	}
 	public void mouseEntered(MouseEvent e) {
 

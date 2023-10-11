@@ -22,7 +22,7 @@ public class GameEngine implements Runnable {
 	int fps = 0;
 	int frames = 0;
 	Handler hand;
-	public static State state;
+	public State state;
 	
 	public GameEngine() {
 		hand = new Handler();

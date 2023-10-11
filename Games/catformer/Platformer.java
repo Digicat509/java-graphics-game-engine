@@ -29,17 +29,14 @@ public class Platformer {
 		game.title();
 		screen = new Screen(game);
 		
-		screen.updateState(GameEngine.state.TITLE);
+		screen.updateState(Platformer.game.state.TITLE);
 		//start();
 		game.start();
 	}
 	public static void start()
 	{
+		game.getHandeler().clear();
 		//new Credits();
-//<<<<<<< HEAD
-//		level = new Level(Level.Stage.LEVEL1);
-//		game.getHandeler().stopRender(1);
-//=======
 		if(sound == null)
 			sound = new Sound();
 		else
@@ -47,7 +44,7 @@ public class Platformer {
 			sound.audio.stop();
 			sound.audio.setFramePosition(0);
 		}
-		level = new Level(Level.Stage.LEVEL2);
+		level = new Level(Level.Stage.LEVEL1);
 		game.getHandeler().stopRender(1);
 		sound.audio.loop(Clip.LOOP_CONTINUOUSLY);
 	}
