@@ -15,7 +15,7 @@ public class Screen extends GameObject{
 	public Screen(GameEngine ge) {
 		game = ge;
 		
-		Platformer.game.getHandeler().add(this, false);
+		Platformer.game.getHandeler().add((GameObject)this, false);
 	}
 	
 	public void mousePressed(MouseEvent e) {
@@ -53,6 +53,10 @@ public class Screen extends GameObject{
 		int mx= Platformer.game.getInput().getMouseX();
 		int my= Platformer.game.getInput().getMouseY();
 		
+		if(Platformer.game.getInput().isMouseClicked()) {
+			System.out.println(mx+", "+my);
+			//loop through btn list and check which ones are pressed
+		}
 		
 	}
 }

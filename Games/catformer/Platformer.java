@@ -47,10 +47,9 @@ public class Platformer {
 			sound.audio.stop();
 			sound.audio.setFramePosition(0);
 		}
-		level = new Level(Level.Stage.INFINITE);
+		level = new Level(Level.Stage.LEVEL2);
 		game.getHandeler().stopRender(1);
 		sound.audio.loop(Clip.LOOP_CONTINUOUSLY);
-//>>>>>>> 7cbf51ee2234943fcaa1f4cfdc6a3f46363c1650
 	}
 	public static void updateDistance(int d)
 	{

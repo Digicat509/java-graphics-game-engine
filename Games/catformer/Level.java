@@ -29,9 +29,9 @@ public class Level {
 			new Building(1000, 500, 100);
 			
 			new DogEnemy(1250,525);
-			new Building(1150, 550, 150);
-			new DogEnemy(1450,525);
-			new Building(1400, 550, 100);
+			new Building(1150, 550, 350);
+			//new DogEnemy(1450,525);
+			//new Building(1400, 550, 100);
 			new Building(1600, 500, 50);
 			
 			new Pipe(1250, 100, 150);
@@ -44,9 +44,19 @@ public class Level {
 			new Building(1900, 500, 150);
 			new DumbDroneEnemy(2035,490);
 			
-			new Building(2150, 500, 450);
+			new Building(2150, 500, 400);
+			new Box(2350-12,500-16);
+			
+			new Building(2650, 500, 450);
 			//new AnimalControlEnemy(2400, 100);
-			new Granny(2400, 100);
+			new Granny(2900, 100);
+		}
+		
+		if(stage == Stage.LEVEL2) {
+			new Background();
+			Platformer.player = new Player(30, 250);
+			new Building(-50, 400, 400);
+			//new Building(-50, 400, 400);
 		}
 		if(stage == Stage.TEST)
 		{

@@ -81,6 +81,15 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	public void mouseClicked(MouseEvent e) {
 
 	}
+	
+	public boolean isMouseClicked() {
+		//System.out.println(buttons[0]);
+		if(buttons[1]==true) {
+			return true;
+		}
+		return false;
+	}
+
 	public void keyPressed(KeyEvent e) {
 		keys[e.getKeyCode()]=true;
 	}

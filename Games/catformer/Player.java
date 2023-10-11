@@ -167,7 +167,7 @@ public class Player extends GameObject{
 					dy = -jumpStrength;
 					dx *= 10;
 					sliding = false;
-					waitTime = System.currentTimeMillis()+250;
+					waitTime = System.currentTimeMillis()+200;
 				}
 			}
 			localX -= dx;
