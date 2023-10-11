@@ -25,16 +25,18 @@ public class Platformer {
 		game.setTitle("Platformer!");
 		game.setWidth((int)(game.getWidth()*1.5));
 		game.setScale(3f);
+		game.title();
 		screen = new Screen(game);
-		//this.addMouseListener(screen);
-		start();
+		
+		screen.updateState(GameEngine.state.TITLE);
+		//start();
 		game.start();
 	}
 	public static void start()
 	{
-		new Credits();
-		//level = new Level(Level.Stage.LEVEL1);
-		//game.getHandeler().stopRender(1);
+		//new Credits();
+		level = new Level(Level.Stage.LEVEL1);
+		game.getHandeler().stopRender(1);
 	}
 	public static void updateDistance(int d)
 	{
