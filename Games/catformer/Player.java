@@ -21,11 +21,10 @@ public class Player extends GameObject{
 	private long waitTime;
 	private boolean facing = true;
 	public int scrollDistance = 300;
-	
-	private boolean sideTouch = false;
 	private int invincibilityFrames = 30;
 	private long frameTimer;
 	private long timer = 0;
+	private long healTimer = 0;
 	private int HP;
 	int maxHP;
 	
@@ -101,7 +100,6 @@ public class Player extends GameObject{
 				if(o != null)
 				{
 					dx -= speed;
-					sideTouch = true;
 				}
 			}
 			
@@ -150,7 +148,6 @@ public class Player extends GameObject{
 	}
 	
 	public void collisionJumps(GameObject o) {
-		//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx;});
 		updatePosition(1);
 		
 		o = this.hits();
@@ -175,14 +172,12 @@ public class Player extends GameObject{
 			}
 			localX -= dx;
 			updatePosition(-1);
-			//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
 			o = this.hits(); //supposed to fix the collision issue when wall jumping 
 			if(o instanceof Platform) //TODO fix this
 			{
 				Platform p = (Platform)o;
 				localX += dx;//(p.x-x);
 				updatePosition(1);
-				//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= this.dx/*p.x-x*/;});
 			}
 		}
 		
@@ -219,13 +214,27 @@ public class Player extends GameObject{
 		if(o instanceof Portal)
 		{
 			y -= dy;
-			int move = (int)(((Portal)o).oPortal.x-this.w/2);
+			int move = (int)(((Portal)o).oPortal.x+((Portal)o).oPortal.w/2-this.w/2)-(int)x;
 			this.y = (((Portal)o).oPortal.y-this.h);
-			localX += move;
 			dy = -dy;
 			y += dy;
+			localX += move;
 			updatePosition(1, move);
-			//Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= move;});
+		}
+		
+		if(o instanceof Box)
+		{
+			if(System.currentTimeMillis() > healTimer)
+			{
+				if(this.HP <= maxHP-5)
+				{
+					this.HP += ((Box)o).heal/10;
+					((Box)o).heal -= 5;
+					if(((Box)o).heal <= 0)
+						Platformer.game.getHandeler().remove(o);
+				}
+				healTimer = System.currentTimeMillis() + 1000;
+			}
 		}
 		
 		o = this.hits();
@@ -268,7 +277,7 @@ public class Player extends GameObject{
 		Platformer.updateDistance((localX+30)/w);
 		
 		if(Platformer.level.stage.equals(Level.Stage.INFINITE))
-				Platformer.level.update(localX, y);
+				Platformer.level.update(localX+30, y);
 	}
 	public int getHP() {
 		return HP;

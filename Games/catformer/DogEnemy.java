@@ -8,8 +8,11 @@ public class DogEnemy extends Enemy{
 	
 	public DogEnemy(int x, int y) {
 		super(x, y, 2, 10);
-		w = 20;
-		h = 20;
+		w = 24;
+		h = 14;
+		try {
+			this.image = ImageIO.read(getClass().getResource("assets/Dog.png"));
+		} catch (Exception e) {e.printStackTrace();}
 	}
 	
 	public void move() {
@@ -38,9 +41,12 @@ public class DogEnemy extends Enemy{
 		}
 	}
 	
+	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.blue);
-		g.fillRect((int)x, (int)y, w, h);
+		if(dx < 0)
+			g.drawImage(image, (int)x, (int)y, w, h, null);
+		else
+			g.drawImage(image, (int)x+w, (int)y, -w, h, null);
 		move();
 	}
 }

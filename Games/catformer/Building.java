@@ -17,7 +17,15 @@ public class Building extends Platform {
 		for(int i = 0; i < w; i += 50) {
 			arr.add(new ArrayList<BuildingBlock>());
 			for(int j = 0; j <= h; j += 50) {
-				arr.get(i/50).add(new BuildingBlock((int)x+i, (int)y+j, 50, 50));
+				double r = Math.random();
+				if(r > .4)
+					arr.get(i/50).add(new BuildingBlock((int)x+i, (int)y+j, 50, 50, "assets/TestTile.png"));
+				else if(r > .13)
+					arr.get(i/50).add(new BuildingBlock((int)x+i, (int)y+j, 50, 50, "assets/WindowTile.png"));
+				else if(r > .08)
+					arr.get(i/50).add(new BuildingBlock((int)x+i, (int)y+j, 50, 50, "assets/WindowGrateTile.png"));
+				else
+					arr.get(i/50).add(new BuildingBlock((int)x+i, (int)y+j, 50, 50, "assets/WindowGratePersonTile.png"));
 			}
 		}
 	}
