@@ -32,8 +32,8 @@ public class Screen extends GameObject{
 			list = new ArrayList<Button>();
 			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2, 200, 40);
 			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 300, 100, 50, () -> {this.updateState(State.PLAYING);}));
-			list.add(new Button(Platformer.game.getWidth()/2-150, 300, 50, 50, "assets/LeftArrow.png", () -> {if(this.level > 1)this.level--;else this.level = Stage.maxLevel;}));
-			list.add(new Button(Platformer.game.getWidth()/2+100, 300, 50, 50, "assets/RightArrow.png", () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
+			list.add(new Button(Platformer.game.getWidth()/2-150, 300, 50, 50, getClass().getResource("assets/LeftArrow.png"), () -> {if(this.level > 1)this.level--;else this.level = Stage.maxLevel;}));
+			list.add(new Button(Platformer.game.getWidth()/2+100, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
 			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2, 380, 20);
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
 			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 500, 100, 50, () -> {this.updateState(State.CREDITS);}));

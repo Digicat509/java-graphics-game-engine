@@ -1,7 +1,5 @@
 package catformer;
 
-import java.awt.event.KeyEvent;
-
 import gameEngine.Text;
 
 public class Level {
@@ -14,7 +12,6 @@ public class Level {
 		this.stage = stage;
 		
 		if(stage == Stage.LEVEL1) {
-			new Background();
 			Platformer.player = new Player(30, 250);
 			//new Pipe(100, 450, 100);
 			new Building(-50, 400, 400);
@@ -53,14 +50,12 @@ public class Level {
 		}
 		
 		if(stage == Stage.LEVEL2) {
-			new Background();
 			Platformer.player = new Player(30, 250);
 			new Building(-50, 400, 400);
 			//new Building(-50, 400, 400);
 		}
 		if(stage == Stage.TEST)
 		{
-			new Background();
 			Platformer.player = new Player(30, 0);
 			Platformer.text = new Text(""+Platformer.distance+"m", Platformer.game.getWidth()-100, 30, 20);
 			new Building(-50, 300, 300);
@@ -69,7 +64,6 @@ public class Level {
 		}
 		if(stage == Stage.INFINITE)
 		{
-			new Background();
 			Platformer.text = new Text(""+Platformer.distance+"m", Platformer.game.getWidth()-100, 30, 20);
 			int width = (int)(Math.random()*3+1)*50;
 			height = ((int)(Math.random()*300)+100);

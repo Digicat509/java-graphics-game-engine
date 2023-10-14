@@ -3,6 +3,7 @@ package gameEngine;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashSet;
 
 import javax.imageio.ImageIO;
@@ -24,7 +25,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 		this(0);
 		try {
 			this.image = ImageIO.read(getClass().getResource(image));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
 		}
 	}
@@ -32,6 +33,22 @@ public abstract class GameObject implements Comparable<GameObject> {
 		this.layers = layers;
 		try {
 			this.image = ImageIO.read(getClass().getResource(image));
+		} catch (Exception e) {
+			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
+		}
+	}
+	public GameObject(URL image) {
+		this(0);
+		try {
+			this.image = ImageIO.read(image);
+		} catch (IOException e) {
+			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
+		}
+	}
+	public GameObject(int layers, URL image) {
+		this.layers = layers;
+		try {
+			this.image = ImageIO.read(image);
 		} catch (Exception e) {
 			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
 		}

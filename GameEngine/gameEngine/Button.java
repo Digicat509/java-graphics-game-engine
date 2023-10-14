@@ -3,6 +3,7 @@ package gameEngine;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.net.URL;
 import java.util.function.Consumer;
 
 public class Button extends GameObject{
@@ -35,9 +36,8 @@ public class Button extends GameObject{
 		Handler.addHand.put(this, false);
 	}
 	
-	public Button(int x, int y, int w, int h, String image, Runnable m) {
+	public Button(int x, int y, int w, int h, URL image, Runnable m) {
 		super(image);
-		System.out.println(image);
 		this.x = x;
 		this.y = y;
 		this.w = w;
@@ -63,7 +63,7 @@ public class Button extends GameObject{
 	public void clickBox(int mx, int my) {
 		if(clickBox.contains(mx, my) && System.currentTimeMillis() > timer) {
 			action.run();
-			timer = System.currentTimeMillis() + 200;
+			timer = System.currentTimeMillis() + 300;
 		}
 	}
 }

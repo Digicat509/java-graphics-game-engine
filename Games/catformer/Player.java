@@ -28,6 +28,7 @@ public class Player extends GameObject{
 	private long healTimer = 0;
 	private int HP;
 	int maxHP;
+	private Platform lastWall;
 	
 	public Player(int x, int y)
 	{
@@ -161,7 +162,7 @@ public class Player extends GameObject{
 				sliding = true;
 
 				//Wall jump if touching a wall
-				if(onGround == false && wallJump && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
+				if(onGround == false && wallJump && o != lastWall && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 				{
 					System.out.println("WallJump?");
 					wallJump = false;
@@ -169,6 +170,7 @@ public class Player extends GameObject{
 					dx *= 10;
 					sliding = false;
 					waitTime = System.currentTimeMillis()+200;
+					lastWall = (Platform)o;
 				}
 			}
 			localX -= dx;
@@ -186,6 +188,8 @@ public class Player extends GameObject{
 		else {
 			if(waitTime <= System.currentTimeMillis())
 				wallJump = true;
+			if(onGround)
+				lastWall = null;
 			sliding = false;
 		}
 	}
