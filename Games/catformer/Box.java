@@ -9,17 +9,12 @@ public class Box extends GameObject {
 	int heal;
 	public Box(int x, int y)
 	{
-		super(1);
+		super(1, "assets/Box.png");
 		this.x = x;
 		this.y = y;
-		w = 24;
-		h = 16;
+		w = 30;
+		h = 20;
 		heal = 50;
 		Platformer.game.getHandeler().add(this, true);
-	}
-	@Override
-	public void draw(Graphics g) {
-		g.setColor(new Color(115, 72, 2));
-		g.fillRect((int)x, (int)y, w, h);
 	}
 }

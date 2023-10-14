@@ -42,7 +42,7 @@ public class Level {
 			new DumbDroneEnemy(2035,490);
 			
 			new Building(2150, 500, 400);
-			new Box(2350-12,500-16);
+			new Box(2350-30,500-19);
 			
 			new Building(2650, 500, 450);
 			//new AnimalControlEnemy(2400, 100);

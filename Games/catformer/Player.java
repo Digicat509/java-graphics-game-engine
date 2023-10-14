@@ -160,8 +160,6 @@ public class Player extends GameObject{
 			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && dx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && dx < 0))
 			{
 				sliding = true;
-
-				//Wall jump if touching a wall
 				if(onGround == false && wallJump && o != lastWall && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 				{
 					System.out.println("WallJump?");
@@ -176,11 +174,11 @@ public class Player extends GameObject{
 			localX -= dx;
 			updatePosition(-1);
 			o = this.hits();
-			if(o instanceof Platform) //TODO fix this
+			if(o instanceof Platform)
 			{
 				Platform p = (Platform)o;
 				if(dx < 0)
-					dx = (p.x-x-w);//<--- this is the issue
+					dx = (p.x-x-w);
 				else if(dx > 0)
 					dx = (p.x+p.w-x);
 				localX += dx;
