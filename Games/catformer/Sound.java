@@ -6,25 +6,29 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.print.DocFlavor.URL;
-import javax.sound.sampled.AudioInputStream; 
-import javax.sound.sampled.AudioSystem; 
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl; 
+import javax.sound.sampled.*; 
+ 
 
 @SuppressWarnings("removal")
 class Sound 
 {
 	//public static final AudioClip COIN = Applet.newAudioClip(Sound.class.getResource("assets/smb_coin.wav"));
+	//public static final AudioClip MUSIC = Applet.newAudioClip(Sound.class.getResource("assets/platformer_music.wav"));
+
+	
 	AudioInputStream audioInputStream;
 	Clip audio;
-	public Sound()
+	public Sound() 
 	{
+		//Sound.COIN.play();
+		//System.out.println("one");
+		//Sound.MUSIC.play();
+		//System.out.println("two");
+		//String url = getClass().getResource("assets/smb_coin.wav").toString();
+		//System.out.println("URL: "+url);
+		
+		
 		try {
-//			InputStream is = this.getClass().getResourceAsStream("./platformer_music.wav");
-//			if (is == null) {
-//			  throw new IOException("Failed to find "+ "platformer_music");
-//			}
-//			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(is);
 			
 			File in = new File("C:\\Users\\alexa\\OneDrive\\Documents\\GitHub\\java-graphics-game-engine\\Games\\catformer\\assets\\platformer_music.wav");
 			

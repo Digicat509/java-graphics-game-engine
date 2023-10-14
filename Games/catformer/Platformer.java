@@ -1,7 +1,11 @@
 package catformer;
 
 
+import java.io.IOException;
+
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import gameEngine.GameEngine;
 import gameEngine.Text;
@@ -38,7 +42,7 @@ public class Platformer {
 		game.getHandeler().clear();
 		//new Credits();
 		if(sound == null)
-			sound = new Sound();
+				sound = new Sound();
 		else
 		{
 			sound.audio.stop();
