@@ -29,10 +29,7 @@ class Sound
 		
 		
 		try {
-			
-			File in = new File("C:\\Users\\alexa\\OneDrive\\Documents\\GitHub\\java-graphics-game-engine\\Games\\catformer\\assets\\platformer_music.wav");
-			
-		    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(in);
+		    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("assets/platformer_music.wav"));
 		    audio = AudioSystem.getClip();
 		    audio.open(audioInputStream);
 		    FloatControl volume= (FloatControl) audio.getControl(FloatControl.Type.MASTER_GAIN);

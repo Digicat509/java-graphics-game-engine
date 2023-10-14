@@ -21,19 +21,19 @@ public abstract class GameObject implements Comparable<GameObject> {
 		this.layers = layers;
 	}
 	public GameObject(String image) {
-		this(1);
+		this(0);
 		try {
 			this.image = ImageIO.read(getClass().getResource(image));
-		} catch (IOException e) {
-			System.out.println("No Image!!!");
+		} catch (Exception e) {
+			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
 		}
 	}
 	public GameObject(int layers, String image) {
 		this.layers = layers;
 		try {
 			this.image = ImageIO.read(getClass().getResource(image));
-		} catch (IOException e) {
-			System.out.println("No Image!!!");
+		} catch (Exception e) {
+			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
 		}
 	}
 	public int compareTo(GameObject other) {

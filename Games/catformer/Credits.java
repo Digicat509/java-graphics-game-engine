@@ -4,9 +4,11 @@ import java.util.Queue;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.File;
+import java.io.BufferedInputStream;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import gameEngine.GameEngine.State;
 import gameEngine.GameObject;
 import gameEngine.Text;
 
@@ -21,7 +23,7 @@ public class Credits extends GameObject {
 	}
 	private void make() throws IOException {
 		Queue<String> strs = new LinkedList<String>();
-		Scanner s = new Scanner(new File("C:\\Users\\alexa\\OneDrive\\Documents\\GitHub\\java-graphics-game-engine\\Games\\catformer\\assets\\credits.txt"));
+		Scanner s = new Scanner(new BufferedInputStream(getClass().getResource("assets/credits.txt").openStream()));
 		while(s.hasNextLine())
 			strs.add(s.nextLine());
 		int i = 0;
@@ -44,6 +46,9 @@ public class Credits extends GameObject {
 		if(temp)
 		{
 			Platformer.game.getHandeler().remove(credits.poll());
+			if(credits.size() == 0) {
+				Platformer.screen.updateState(State.TITLE);
+			}
 		}
 	}
 }

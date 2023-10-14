@@ -3,6 +3,8 @@ package gameEngine;
 import java.awt.*;
 import java.util.*;
 
+import catformer.Credits;
+
 public class GameEngine implements Runnable {
 	
 	public static void main(String[] args) {
@@ -77,6 +79,8 @@ public class GameEngine implements Runnable {
 	public enum State {
 		TITLE,
 		PLAYING,
+		CREDITS,
+		HELP,
 		STOP_PLAY
 	}
 	public void play() {
@@ -87,6 +91,12 @@ public class GameEngine implements Runnable {
 	}
 	public void title() {
 		state = State.TITLE;
+	}
+	public void credits() {
+		state = State.CREDITS;
+	}
+	public void help() {
+		state = State.HELP;
 	}
 	public State getState() {
 		return state;

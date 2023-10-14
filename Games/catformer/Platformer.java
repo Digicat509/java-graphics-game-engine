@@ -7,7 +7,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import catformer.Level.Stage;
 import gameEngine.GameEngine;
+import gameEngine.GameEngine.State;
 import gameEngine.Text;
 
 public class Platformer {
@@ -18,7 +20,8 @@ public class Platformer {
 	static Sound sound;
 	static int distance;
 	public static final float GRAVITY = .5f;
-	private Screen screen;
+	static Screen screen;
+	static int levelNum = 0;
 	
 	public static void main(String[] args)
 	{
@@ -31,26 +34,21 @@ public class Platformer {
 		game.setWidth((int)(game.getWidth()*1.5));
 		game.setScale(3f);
 		game.title();
-		screen = new Screen(game);
-		
-		screen.updateState(Platformer.game.state.TITLE);
-		//start();
+		sound = new Sound();
+		screen = new Screen();
+		screen.updateState(State.TITLE);
 		game.start();
 	}
-	public static void start()
+	public static void start(Stage stage)
 	{
 		game.getHandeler().clear();
-		//new Credits();
-		if(sound == null)
-				sound = new Sound();
+		if(stage != null)
+			level = new Level(stage);
 		else
 		{
-			sound.audio.stop();
-			sound.audio.setFramePosition(0);
+			level = new Level(Stage.get(levelNum));
 		}
-		level = new Level(Level.Stage.LEVEL1);
 		game.getHandeler().stopRender(1);
-		sound.audio.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	public static void updateDistance(int d)
 	{

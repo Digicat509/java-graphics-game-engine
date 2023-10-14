@@ -124,10 +124,23 @@ public class Level {
 	}
 	public enum Stage
 	{
-		TEST,
-		LEVEL1,
-		LEVEL2,
-		LEVEL3,
-		INFINITE
+		TEST(-1),
+		LEVEL1(1),
+		LEVEL2(2),
+		LEVEL3(3),
+		INFINITE(0);
+		int level;
+		static final int maxLevel = 3;
+		Stage(int i)
+		{
+			this.level = i;
+		}
+		public static Stage get(int i)
+		{
+			for(Stage s: Stage.values())
+				if(s.level == i)
+					return s;
+			return null;
+		}
 	}
 }

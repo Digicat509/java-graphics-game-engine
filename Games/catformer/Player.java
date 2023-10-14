@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 
 import javax.imageio.ImageIO;
 
+import gameEngine.GameEngine.State;
 import gameEngine.GameObject;
 
 public class Player extends GameObject{
@@ -207,7 +208,7 @@ public class Player extends GameObject{
 			if(HP <= 0)
 			{
 				Platformer.game.stop();
-				Platformer.start();
+				Platformer.screen.updateState(State.TITLE);
 			}
 		}
 		
@@ -266,12 +267,12 @@ public class Player extends GameObject{
 		
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
-			Platformer.start();
+			Platformer.screen.updateState(State.TITLE);
 		}
 		
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_R)){
 			Platformer.game.stop();
-			//Platformer.start();
+			Platformer.screen.updateState(State.TITLE);
 		}
 		
 		Platformer.updateDistance((localX+30)/w);
