@@ -175,11 +175,15 @@ public class Player extends GameObject{
 			}
 			localX -= dx;
 			updatePosition(-1);
-			o = this.hits(); //supposed to fix the collision issue when wall jumping 
+			o = this.hits();
 			if(o instanceof Platform) //TODO fix this
 			{
 				Platform p = (Platform)o;
-				localX += dx;//(p.x-x);
+				if(dx < 0)
+					dx = (p.x-x-w);//<--- this is the issue
+				else if(dx > 0)
+					dx = (p.x+p.w-x);
+				localX += dx;
 				updatePosition(1);
 			}
 		}
