@@ -38,7 +38,7 @@ public class Credits extends GameObject {
 		credits.add(new GameImage(getClass().getResource("assets/Candy.png"), (int)x+200, Platformer.game.getHeight()+300, 4));
 		credits.add(new GameImage(getClass().getResource("assets/Dog.png"), (int)x+300, Platformer.game.getHeight()+500, 4));
 		credits.add(new GameImage(getClass().getResource("assets/RollyPolly.png"), (int)x-350, Platformer.game.getHeight()+550, 4));
-		credits.add(new GameImage(getClass().getResource("assets/Candy.png"), (int)x+250, Platformer.game.getHeight()+950, 4));
+		credits.add(new GameImage(getClass().getResource("assets/AnimalControl.png"), (int)x+250, Platformer.game.getHeight()+950, 4));
 		credits.add(new GameImage(getClass().getResource("assets/Beetle.png"), (int)x+200, Platformer.game.getHeight()+700, 4));
 		credits.add(new GameImage(getClass().getResource("assets/WindowTile.png"), (int)x-400, Platformer.game.getHeight()+900, 4));
 		credits.add(new GameImage(getClass().getResource("assets/WindowGratePersonTile.png"), (int)x+300, Platformer.game.getHeight()+1200, 4));

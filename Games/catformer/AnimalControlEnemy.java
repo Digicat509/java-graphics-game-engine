@@ -3,6 +3,8 @@ package catformer;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.imageio.ImageIO;
+
 import gameEngine.GameObject;
 
 public class AnimalControlEnemy extends Enemy {
@@ -14,13 +16,10 @@ public class AnimalControlEnemy extends Enemy {
 		super(x, y, 0, 20);
 		this.w = 20;
 		this.h = 45;
+		try {
+			this.image = ImageIO.read(getClass().getResource("assets/AnimalControl.png"));
+		} catch (Exception e) {e.printStackTrace();}
 		delay = System.currentTimeMillis()+3000;
-	}
-	@Override
-	public void draw(Graphics g) {
-		g.setColor(Color.CYAN);
-		g.fillRect((int)x, (int)y, w, h);
-		move();
 	}
 	@Override
 	public void move() {

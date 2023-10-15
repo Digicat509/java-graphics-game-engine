@@ -37,8 +37,10 @@ public class DumbDroneEnemy extends Enemy {
 		if(o != null)
 		{
 			onGround = true;
-			if(Platformer.player.x < this.x && Platformer.player.x > this.x-RANGE && !rolling) {
+			if(Platformer.player.x > this.x-RANGE && !rolling) {
 				dx = -4;
+				if(Platformer.player.x > this.x)
+					dx = 4;
 				rolling = true;
 				try {
 					this.image = ImageIO.read(getClass().getResource("assets/RollingPolly.png"));
