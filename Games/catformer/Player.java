@@ -32,12 +32,12 @@ public class Player extends GameObject{
 	
 	public Player(int x, int y)
 	{
-		super(3, "assets/Cat.png");
+		super(3, "assets/GoodCat.png");
 		this.x = x;
 		localX = 0;
 		this.y = y;
-		w = 20;
-		h = 20;
+		w = 34;
+		h = 14;
 		dx = 0;
 		dy = 0;
 		HP = 100;
@@ -162,7 +162,6 @@ public class Player extends GameObject{
 				sliding = true;
 				if(onGround == false && wallJump && o != lastWall && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 				{
-					System.out.println("WallJump?");
 					wallJump = false;
 					dy = -jumpStrength;
 					dx *= 10;

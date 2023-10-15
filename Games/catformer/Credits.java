@@ -34,7 +34,7 @@ public class Credits extends GameObject {
 			credits.add(new Text(strs.remove(), (int)x, Platformer.game.getHeight()+i*50, 20));
 			i++;
 		}
-		credits.add(new GameImage(getClass().getResource("assets/Cat.png"), (int)x-350, Platformer.game.getHeight()+200, 4));
+		credits.add(new GameImage(getClass().getResource("assets/GoodCat.png"), (int)x-350, Platformer.game.getHeight()+200, 4));
 		credits.add(new GameImage(getClass().getResource("assets/Candy.png"), (int)x+200, Platformer.game.getHeight()+300, 4));
 		credits.add(new GameImage(getClass().getResource("assets/Dog.png"), (int)x+300, Platformer.game.getHeight()+500, 4));
 		credits.add(new GameImage(getClass().getResource("assets/RollyPolly.png"), (int)x-350, Platformer.game.getHeight()+550, 4));
