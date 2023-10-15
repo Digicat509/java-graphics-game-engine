@@ -24,8 +24,6 @@ public class DumbDroneEnemy extends Enemy {
 		} catch (Exception e) {e.printStackTrace();}
 	}
 	public void draw(Graphics g) {
-		//g.setColor(Color.MAGENTA);
-		//g.fillRect((int)x, (int)y, w, h);
 		g.drawImage(image, (int)x, (int)y, null);
 		move();
 	}
