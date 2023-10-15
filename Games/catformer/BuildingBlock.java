@@ -23,7 +23,7 @@ public class BuildingBlock extends GameObject{
 	
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
-		g2d.drawImage(image, (int)x, (int)y, 55, 55, null);
+		g2d.drawImage(image, (int)x, (int)y, w, h, null);
 	}
 
 	

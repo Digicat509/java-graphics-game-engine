@@ -21,7 +21,7 @@ public class Level {
 			new Building(550, 300, 100);
 			
 			new Building(750, 400, 150);
-			new FloatingPlatform(750, 100, 80, 200);
+			new FloatingPlatform(750, 100, 100, 200);
 			new Building(900, 100, 100);
 			new Building(1000, 500, 100);
 			
