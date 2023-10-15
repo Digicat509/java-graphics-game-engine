@@ -22,6 +22,14 @@ public class AnimalControlEnemy extends Enemy {
 		delay = System.currentTimeMillis()+3000;
 	}
 	@Override
+	public void draw(Graphics g) {
+		if(Platformer.player.x < x+w)
+			g.drawImage(image, (int)x, (int)y, w, h-1, null);
+		else
+			g.drawImage(image, (int)x+w, (int)y, -w, h-1, null);
+		move();
+	}
+	@Override
 	public void move() {
 		float yVel = 0;
 		int xDist = 0;
