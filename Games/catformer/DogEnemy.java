@@ -8,8 +8,8 @@ public class DogEnemy extends Enemy{
 	
 	public DogEnemy(int x, int y) {
 		super(x, y, 2, 10);
-		w = 24;
-		h = 15;
+		w = 32;
+		h = 20;
 		try {
 			this.image = ImageIO.read(getClass().getResource("assets/Dog.png"));
 		} catch (Exception e) {e.printStackTrace();}

@@ -24,11 +24,15 @@ public class Player extends GameObject{
 	public int scrollDistance = 300;
 	private int invincibilityFrames = 30;
 	private long frameTimer;
+	private long walkTimer;
+	private boolean walking;
 	private long timer = 0;
 	private long healTimer = 0;
 	private int HP;
 	int maxHP;
 	private Platform lastWall;
+	private Image walkImage;
+	private int frame;
 	
 	public Player(int x, int y)
 	{
@@ -42,6 +46,9 @@ public class Player extends GameObject{
 		dy = 0;
 		HP = 100;
 		maxHP = HP;
+		try {
+			this.walkImage = ImageIO.read(getClass().getResource("assets/GoodCatMidWalk.png"));
+		} catch (Exception e) {e.printStackTrace();}
 		new HPBar();
 		Platformer.game.getHandeler().add(this, true);
 	}
@@ -51,11 +58,44 @@ public class Player extends GameObject{
 	{
 		if(visible)
 		{
-			if(facing) {
-				g.drawImage(image,(int)x,(int)y, w, h, null);
+			if(walking && !sliding)
+			{
+				if(walkTimer < System.currentTimeMillis())
+				{
+					if(frame < 1)
+						frame++;
+					else 
+						frame = 0;
+					walkTimer = System.currentTimeMillis()+200;
+				}
+				switch(frame)
+				{
+					case 0:
+						if(facing) {
+							g.drawImage(image,(int)x,(int)y, w, h, null);
+						}
+						else {
+							g.drawImage(image,(int)x+w,(int)y, -w, h, null);
+						}
+						break;
+					case 1:
+						if(facing) {
+							g.drawImage(walkImage,(int)x,(int)y, w, h, null);
+						}
+						else {
+							g.drawImage(walkImage,(int)x+w,(int)y, -w, h, null);
+						}
+						break;
+				}
 			}
-			else {
-				g.drawImage(image,(int)x+w,(int)y, -w, h, null);
+			else
+			{
+				if(facing) {
+					g.drawImage(image,(int)x,(int)y, w, h, null);
+				}
+				else {
+					g.drawImage(image,(int)x+w,(int)y, -w, h, null);
+				}
 			}
 			if(System.currentTimeMillis() < timer)
 			{
@@ -89,41 +129,49 @@ public class Player extends GameObject{
 			dy = -jumpStrength;
 			
 		}
-		if(Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
-		{
-			facing = true;
-			if(localX > scrollDistance)
-				dx += speed;
-			else
-			{
-				dx += speed;
-				
-				GameObject o = this.hits();
-				if(o != null)
-				{
-					dx -= speed;
-				}
-			}
-			
-		}
 		
-		if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
+		if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT) || Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
 		{
-			facing = false;
-			if(localX > scrollDistance) 
-				dx -= speed;
-			
-			else if(x > 0)
+			walking = true;
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
 			{
-				dx -= speed;
-
-				GameObject o = this.hits();
-				if(o != null)
+				facing = true;
+				if(localX > scrollDistance)
+					dx += speed;
+				else
 				{
 					dx += speed;
+					
+					GameObject o = this.hits();
+					if(o != null)
+					{
+						dx -= speed;
+					}
+				}
+			}
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
+			{
+				facing = false;
+				if(localX > scrollDistance) 
+					dx -= speed;
+				
+				else if(x > 0)
+				{
+					dx -= speed;
+	
+					GameObject o = this.hits();
+					if(o != null)
+					{
+						dx += speed;
+					}
 				}
 			}
 		}
+		else
+		{
+			walking = false;
+		}
+		
 		y += dy;
 	}
 	

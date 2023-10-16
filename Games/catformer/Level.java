@@ -20,33 +20,33 @@ public class Level {
 			new Building(450, 400, 100);
 			new Building(550, 300, 100);
 			
-			new Building(750, 400, 150);
+			new Building(750, 400, 200);
 			new FloatingPlatform(750, 100, 100, 200);
-			new Building(900, 100, 100);
-			new Building(1000, 500, 100);
+			new Building(950, 100, 100);
+			new Building(1050, 500, 100);
 			
-			new DogEnemy(1250,525);
-			new Building(1150, 550, 350);
+			new DogEnemy(1300,525);
+			new Building(1200, 550, 350);
 			//new DogEnemy(1450,525);
 			//new Building(1400, 550, 100);
-			new Building(1600, 500, 50);
+			new Building(1650, 500, 50);
 			
-			new Pipe(1250, 100, 150);
-			new FloatingPlatform(1150, 50, 100, 300);
-			new Pipe(1550, 250, 100);
-			new FloatingPlatform(1650, 200, 100, 150);
+			new Pipe(1300, 100, 150);
+			new FloatingPlatform(1200, 50, 100, 300);
+			new Pipe(1600, 250, 100);
+			new FloatingPlatform(1700, 200, 100, 150);
 			
-			new Building(1750, 550, 150);
-			new DumbDroneEnemy(1870,540);
-			new Building(1900, 500, 150);
-			new DumbDroneEnemy(2035,490);
+			new Building(1800, 550, 150);
+			new DumbDroneEnemy(1920,540);
+			new Building(1950, 500, 150);
+			new DumbDroneEnemy(2085,490);
 			
-			new Building(2150, 500, 400);
-			new Box(2350-30,500-19);
+			new Building(2200, 500, 400);
+			new Box(2400-30,500-19);
 			
-			new Building(2650, 500, 450);
+			new Building(2700, 500, 450);
 			//new AnimalControlEnemy(2400, 100);
-			new Granny(2900, 100);
+			new Granny(2950, 100);
 		}
 		
 		if(stage == Stage.LEVEL2) {
