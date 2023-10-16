@@ -18,20 +18,21 @@ class Sound
 	
 	AudioInputStream audioInputStream;
 	Clip audio;
+	Clip creditsAudio;
 	public Sound() 
-	{
-		//Sound.COIN.play();
-		//System.out.println("one");
-		//Sound.MUSIC.play();
-		//System.out.println("two");
-		//String url = getClass().getResource("assets/smb_coin.wav").toString();
-		//System.out.println("URL: "+url);
-		
-		
+	{	
 		try {
 		    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("assets/platformer_music.wav"));
 		    audio = AudioSystem.getClip();
 		    audio.open(audioInputStream);
+		    FloatControl volume= (FloatControl) audio.getControl(FloatControl.Type.MASTER_GAIN);
+		    volume.setValue(1.0f); // Reduce volume by 10 decibols.
+		}catch (Exception e){e.printStackTrace();}
+		
+		try {
+		    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("assets/credits_music.wav"));
+		    creditsAudio = AudioSystem.getClip();
+		    creditsAudio.open(audioInputStream);
 		    FloatControl volume= (FloatControl) audio.getControl(FloatControl.Type.MASTER_GAIN);
 		    volume.setValue(1.0f); // Reduce volume by 10 decibols.
 		}catch (Exception e){e.printStackTrace();}

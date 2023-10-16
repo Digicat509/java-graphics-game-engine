@@ -42,7 +42,7 @@ public class Credits extends GameObject {
 		credits.add(new GameImage(getClass().getResource("assets/Beetle.png"), (int)x+200, Platformer.game.getHeight()+700, 4));
 		credits.add(new GameImage(getClass().getResource("assets/WindowTile.png"), (int)x-400, Platformer.game.getHeight()+900, 4));
 		credits.add(new GameImage(getClass().getResource("assets/WindowGratePersonTile.png"), (int)x+300, Platformer.game.getHeight()+1200, 4));
-		credits.add(new GameImage(getClass().getResource("assets/Candy.png"), (int)x-250, Platformer.game.getHeight()+1400, 4));
+		credits.add(new GameImage(getClass().getResource("assets/Granny.png"), (int)x-250, Platformer.game.getHeight()+1400, 4));
 	}
 	@Override
 	public void move() {
@@ -65,19 +65,3 @@ public class Credits extends GameObject {
 		}
 	}
 }
-/*if(i*50 > 1300)
-				credits.add(new GameImage(getClass().getResource("assets/Candy.png"), (int)x-250, Platformer.game.getHeight()+1300, 4));
-			else if(i*50 > 1200)
-				credits.add(new GameImage(getClass().getResource("assets/TestTile.png"), (int)x+300, Platformer.game.getHeight()+1200, 4));
-			else if(i*50 > 900)
-				credits.add(new GameImage(getClass().getResource("assets/WindowTile.png"), (int)x-400, Platformer.game.getHeight()+900, 4));
-			if(i*50 > 700)
-				credits.add(new GameImage(getClass().getResource("assets/Beetle.png"), (int)x+200, Platformer.game.getHeight()+700, 4));
-			if(i*50 > 200)
-				credits.add(new GameImage(getClass().getResource("assets/Cat.png"), (int)x-350, Platformer.game.getHeight()+200, 4));
-			if(i*50 > 300)
-				credits.add(new GameImage(getClass().getResource("assets/Candy.png"), (int)x+200, Platformer.game.getHeight()+300, 4));
-			if(i*50 > 500)
-				credits.add(new GameImage(getClass().getResource("assets/Dog.png"), (int)x+300, Platformer.game.getHeight()+500, 4));
-			if(i*50 > 600)
-				credits.add(new GameImage(getClass().getResource("assets/RollyPolly.png"), (int)x-350, Platformer.game.getHeight()+600, 4));*/
