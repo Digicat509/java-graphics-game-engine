@@ -202,6 +202,7 @@ public class Player extends GameObject{
 		
 		o = this.hits();
 
+		
 		if(o instanceof Platform)
 		{
 			//stops downward acceleration when sliding 
@@ -274,6 +275,11 @@ public class Player extends GameObject{
 			y += dy;
 			localX += move;
 			updatePosition(1, move);
+		}
+		
+		if(o instanceof LevelPortal){
+			System.out.println("NEW");
+			((LevelPortal) o).updateStage();
 		}
 		
 		if(o instanceof Box)

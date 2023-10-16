@@ -50,6 +50,7 @@ public class Platformer {
 		}
 		game.getHandeler().stopRender(1);
 	}
+	
 	public static void updateDistance(int d)
 	{
 		distance = d;

@@ -17,6 +17,7 @@ public class Portal extends GameObject{
 		oPortal = new Portal(ox, oy, this);
 		Platformer.game.getHandeler().add(this, true);
 	}
+	
 	private Portal(int x, int y, Portal p) {
 		super(1, "assets/Portal.png");
 		this.x = x;

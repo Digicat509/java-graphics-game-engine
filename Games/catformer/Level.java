@@ -47,6 +47,9 @@ public class Level {
 			new Building(2700, 500, 450);
 			//new AnimalControlEnemy(2400, 100);
 			new Granny(2950, 100);
+			
+			new Building(3200, 500, 350);
+			new LevelPortal(3555, 550, Stage.LEVEL2);
 		}
 		
 		if(stage == Stage.LEVEL2) {
