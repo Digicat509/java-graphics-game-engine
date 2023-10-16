@@ -282,7 +282,7 @@ public class Player extends GameObject{
 			{
 				if(this.HP <= maxHP-5)
 				{
-					this.HP += ((Box)o).heal/10;
+					this.HP += 5;
 					((Box)o).heal -= 5;
 					if(((Box)o).heal <= 0)
 						Platformer.game.getHandeler().remove(o);

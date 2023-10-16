@@ -99,7 +99,7 @@ public class Level {
 			else if (prob >= 22)
 				new AnimalControlEnemy(drawCurrX+rand+width/2, height-46);
 			else if(prob >= 21)
-				new Box(drawCurrX+rand+width/2, height-16);
+				new Box(drawCurrX+rand+width/2, height-19);
 			else if(prob >= 13 && rand > 75 && height > 100)
 				new Portal(drawCurrX+rand-75, height+30, drawCurrX+rand+150, height-130);
 			new Building(drawCurrX+rand, height, width);
