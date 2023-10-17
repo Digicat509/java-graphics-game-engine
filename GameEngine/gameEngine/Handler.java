@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 public class Handler {
-	static PriorityQueue <GameObject> hand = new PriorityQueue <GameObject>();
+	static ArrayList <GameObject> hand = new ArrayList <GameObject>();
 	static ArrayList <GameObject> hitsHand = new ArrayList <GameObject>();
 	static HashMap <GameObject, Boolean> addHand = new HashMap <GameObject, Boolean>();
 	static ArrayList<GameObject> removeHand = new ArrayList<GameObject>();
@@ -55,11 +55,14 @@ public class Handler {
 			hitsHand.remove(o);
 		}
 		removeHand.clear();
+		boolean temp = !addHand.isEmpty();
 		for(Entry<GameObject, Boolean> e: addHand.entrySet()) {
 			hand.add(e.getKey());
 			if(e.getValue())
 				hitsHand.add(e.getKey());
 		}
+		if(temp)
+			Collections.sort(hand);
 		addHand.clear();
 		if(render) {
 			for(GameObject o: hand) {

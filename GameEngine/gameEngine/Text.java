@@ -11,49 +11,114 @@ public class Text extends GameObject{
 	public String text;
 	int textSize;
 	String font;
+	Color color;
 	boolean centered;
+	
 	public Text(String s, int x, int y) {
 		text = s;
 		this.x = x;
 		this.y = y;
+		this.color = Color.white;
 		Handler.addHand.put(this, false);
 	}
+	
 	public Text(String s, int x, int y, int textSize) {
 		text = s;
 		this.x = x;
 		this.y = y;
 		this.textSize = textSize;
+		this.color = Color.white;
 		Handler.addHand.put(this, false);
 	}
+	
 	public Text(String s, int x, int y, int textSize, String font) {
 		text = s;
 		this.x = x;
 		this.y = y;
 		this.textSize = textSize;
 		this.font = font;
+		this.color = Color.white;
 		Handler.addHand.put(this, false);
 	}
+	
 	public Text(String s, Rectangle rect) {
 		text = s;
 		this.rect = rect;
+		this.color = Color.white;
 		Handler.addHand.put(this, false);
 	}
+	
 	public Text(String s, Rectangle rect, int textSize) {
 		text = s;
 		this.rect = rect;
 		this.textSize = textSize;
+		this.color = Color.white;
 		Handler.addHand.put(this, false);
 	}
+	
 	public Text(String s, Rectangle rect, int textSize, String font) {
 		text = s;
 		this.rect = rect;
 		this.textSize = textSize;
 		this.font = font;
+		this.color = Color.white;
 		Handler.addHand.put(this, false);
 	}
+	
+	public Text(String s, int x, int y, Color color) {
+		text = s;
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
+	
+	public Text(String s, int x, int y, int textSize, Color color) {
+		text = s;
+		this.x = x;
+		this.y = y;
+		this.textSize = textSize;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
+	
+	public Text(String s, int x, int y, int textSize, String font, Color color) {
+		text = s;
+		this.x = x;
+		this.y = y;
+		this.textSize = textSize;
+		this.font = font;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
+	
+	public Text(String s, Rectangle rect, Color color) {
+		text = s;
+		this.rect = rect;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
+	
+	public Text(String s, Rectangle rect, int textSize, Color color) {
+		text = s;
+		this.rect = rect;
+		this.textSize = textSize;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
+	
+	public Text(String s, Rectangle rect, int textSize, String font, Color color) {
+		text = s;
+		this.rect = rect;
+		this.textSize = textSize;
+		this.font = font;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
+	
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.white);
+		g.setColor(color);
 		if(font != null)
 			g.setFont(new Font(font, 0, g.getFont().getSize()));
 		if(textSize > 0)

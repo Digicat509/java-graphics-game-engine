@@ -1,8 +1,8 @@
-Programing
+Programming
 Cris Ovalle
 Alexander Snyder
 
-Charecter Design:
+Character Design:
 Charlotte Heinzerling 
 Cris Ovalle
 Alexander Snyder
@@ -13,7 +13,7 @@ Cris Ovalle
 Balancing:
 Alexander Snyder
 
-Charecter Art:
+Character Art:
 Cris Ovalle
 Alexander Snyder
 

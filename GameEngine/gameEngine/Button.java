@@ -12,6 +12,7 @@ public class Button extends GameObject{
 	String val;
 	RectangularHitbox clickBox;
 	Runnable action;
+	Color color;
 	private long timer = 0;
 	
 	public Button(String v, int x, int y, int w, int h, Runnable m) {
@@ -23,6 +24,7 @@ public class Button extends GameObject{
 		clickBox = new RectangularHitbox((int)x, (int)y, w, h);
 		text = new Text(val, new Rectangle(x, y, w, h), 20);
 		action = m;
+		this.color = Color.white;
 		Handler.addHand.put(this, false);
 	}
 	
@@ -33,6 +35,7 @@ public class Button extends GameObject{
 		this.h = h;
 		clickBox = new RectangularHitbox((int)x, (int)y, w, h);
 		action = m;
+		this.color = Color.white;
 		Handler.addHand.put(this, false);
 	}
 	
@@ -46,12 +49,36 @@ public class Button extends GameObject{
 		action = m;
 		Handler.addHand.put(this, false);
 	}
+	
+	public Button(String v, int x, int y, int w, int h, Color color, Runnable m) {
+		val = v;
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		clickBox = new RectangularHitbox((int)x, (int)y, w, h);
+		text = new Text(val, new Rectangle(x, y, w, h), 20, color);
+		action = m;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
+	
+	public Button(int x, int y, int w, int h, Color color, Runnable m) {
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		clickBox = new RectangularHitbox((int)x, (int)y, w, h);
+		action = m;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
 
 	@Override
 	public void draw(Graphics g) {
 		if(image == null)
 		{
-			g.setColor(Color.white);
+			g.setColor(color);
 			g.drawRect((int)x, (int)y, w, h);
 		}
 		else

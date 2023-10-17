@@ -15,8 +15,47 @@ public class GameImage extends GameObject {
 		this.scale = scale;
 		Handler.addHand.put(this, false);
 	}
-	@Override
-	public void draw(Graphics g) {
-		g.drawImage(image, (int)x, (int)y, (int)(image.getWidth(null)*scale), (int)(image.getHeight(null)*scale), null);
+	public GameImage(URL i, int x, int y) {
+		super(i);
+		this.x = x;
+		this.y = y;
+		this.w = (int)(image.getWidth(null));
+		this.h = (int)(image.getHeight(null));
+		this.scale = 1;
+		Handler.addHand.put(this, false);
+	}
+	public GameImage(URL i, int x, int y, int w, int h) {
+		super(i);
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		Handler.addHand.put(this, false);
+	}
+	public GameImage(int layer, URL i, int x, int y, double scale) {
+		super(layer, i);
+		this.x = x;
+		this.y = y;
+		this.w = (int)(image.getWidth(null)*scale);
+		this.h = (int)(image.getHeight(null)*scale);
+		this.scale = scale;
+		Handler.addHand.put(this, false);
+	}
+	public GameImage(int layer, URL i, int x, int y) {
+		super(layer, i);
+		this.x = x;
+		this.y = y;
+		this.w = (int)(image.getWidth(null));
+		this.h = (int)(image.getHeight(null));
+		this.scale = 1;
+		Handler.addHand.put(this, false);
+	}
+	public GameImage(int layer, URL i, int x, int y, int w, int h) {
+		super(layer, i);
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		Handler.addHand.put(this, false);
 	}
 }

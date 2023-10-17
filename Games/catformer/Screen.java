@@ -1,9 +1,11 @@
 package catformer;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 
 import catformer.Level.Stage;
@@ -11,6 +13,7 @@ import gameEngine.Button;
 //import catformer.Platformer.STATE;
 import gameEngine.GameEngine;
 import gameEngine.GameEngine.State;
+import gameEngine.GameImage;
 import gameEngine.GameObject;
 import gameEngine.Text;
 
@@ -18,7 +21,9 @@ public class Screen extends GameObject{
 	ArrayList<Button> list = new ArrayList<Button>();
 	int level = 1;
 	Text levelText;
+	Color color;
 	public Screen() {
+		color = new Color(0, 6, 110);
 		Platformer.game.getHandeler().add(this, false);
 	}
 	public void updateState(State state)
@@ -30,17 +35,19 @@ public class Screen extends GameObject{
 		Platformer.game.getHandeler().add(Platformer.screen, false);
 		if(state == State.TITLE) {
 			level = 1;
+			new GameImage(-1, getClass().getResource("assets/GameImage.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
-			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2, 200, 40);
-			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 300, 100, 50, () -> {this.updateState(State.PLAYING);}));
+			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2, 200, 40, color);
+			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 300, 100, 50, color, () -> {this.updateState(State.PLAYING);}));
 			list.add(new Button(Platformer.game.getWidth()/2-150, 300, 50, 50, getClass().getResource("assets/LeftArrow.png"), () -> {if(this.level > 1)this.level--;else this.level = Stage.maxLevel;}));
 			list.add(new Button(Platformer.game.getWidth()/2+100, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
-			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2, 380, 20);
-			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
-			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 500, 100, 50, () -> {this.updateState(State.CREDITS);}));
+			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2, 380, 20, color);
+			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
+			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 500, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
 		}
 		else if(state == State.PLAYING)
 		{
+			new GameImage(-1, getClass().getResource("assets/GameImage.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
 			Platformer.levelNum = level;
 			Platformer.start(null);
@@ -62,14 +69,19 @@ public class Screen extends GameObject{
 		Platformer.game.state = state;
 		Platformer.game.getHandeler().add(Platformer.screen, false);
 		if(state == State.TITLE) {
+			new GameImage(-1, getClass().getResource("assets/GameImage.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
-			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2, 200, 40);
-			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 280, 100, 50, () -> {this.updateState(State.PLAYING);}));
-			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 380, 100, 50, () -> {this.updateState(State.CREDITS);}));
-			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 480, 150, 50, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
+			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2, 200, 40, color);
+			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 300, 100, 50, color, () -> {this.updateState(State.PLAYING);}));
+			list.add(new Button(Platformer.game.getWidth()/2-150, 300, 50, 50, getClass().getResource("assets/LeftArrow.png"), () -> {if(this.level > 1)this.level--;else this.level = Stage.maxLevel;}));
+			list.add(new Button(Platformer.game.getWidth()/2+100, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
+			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2, 380, 20, color);
+			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
+			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 500, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
 		}
 		else if(state == State.PLAYING)
 		{
+			new GameImage(-1, getClass().getResource("assets/GameImage.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
 			Platformer.start(stage);
 			Platformer.sound.audio.setFramePosition(0);
