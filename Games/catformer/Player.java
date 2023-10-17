@@ -124,6 +124,13 @@ public class Player extends GameObject{
 	
 	public void arrowMovement() {
 		dx = 0;
+		
+		if(dy>10)
+			dy=10;
+		if(dy<-10) 
+			dy=-10;
+		
+		
 		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 		{
 			dy = -jumpStrength;
@@ -213,9 +220,9 @@ public class Player extends GameObject{
 				{
 					wallJump = false;
 					dy = -jumpStrength;
-					dx *= 10;
+					dx *= 25;
 					sliding = false;
-					waitTime = System.currentTimeMillis()+200;
+					waitTime = System.currentTimeMillis()+150;
 					lastWall = (Platform)o;
 				}
 			}

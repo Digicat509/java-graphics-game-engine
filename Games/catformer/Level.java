@@ -54,9 +54,44 @@ public class Level {
 		
 		if(stage == Stage.LEVEL2) {
 			Platformer.player = new Player(30, 250);
-			new Building(-50, 400, 400);
-			//new Building(-50, 400, 400);
+			new Building(-50, 400, 300);
+			new Building(350, 500, 300);
+			new Building(800, 600, 300);
+			new Building(1250, 650, 300);
 		}
+		
+		if(stage == Stage.LEVEL3) {
+			Platformer.player = new Player(30, 250);
+			new Building(-50, 500, 500);
+			new Building(500, 450, 300);
+			new DogEnemy(1000,350);
+			new Building(850, 400, 300);
+			new DogEnemy(1350,350);
+			new Building(1200, 400, 300);
+			new Building(1550, 500, 300);
+			new Building(1950, 600, 400);
+			
+			new FloatingPlatform(2150, 550, 50, 50);
+			new DumbDroneEnemy(2175, 500);
+			new FloatingPlatform(2250, 500, 50, 50);
+			new DumbDroneEnemy(2275, 450);
+			
+			new Building(2400, 500, 750);
+			new DumbDroneEnemy(2550, 450);
+			new DumbDroneEnemy(2600, 450);
+			new DumbDroneEnemy(2750, 450);
+			new DumbDroneEnemy(2800, 450);
+			new SmartDroneEnemy(2950,450);
+			
+			new FloatingPlatform(2750, 400, 50, 50);
+			new FloatingPlatform(2650, 400, 50, 50);
+			new FloatingPlatform(2850, 400, 50, 50);
+			new FloatingPlatform(2750, 300, 50, 50);
+			
+			new FloatingPlatform(2750, 300, 50, 50);
+			
+		}
+		
 		if(stage == Stage.TEST)
 		{
 			Platformer.player = new Player(30, 0);
