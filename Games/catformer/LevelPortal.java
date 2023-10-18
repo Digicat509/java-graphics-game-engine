@@ -24,14 +24,15 @@ public class LevelPortal extends GameObject{
 	
 	public void updateStage()
 	{
-		System.out.println("LEVEL");
-		Platformer.sound.audio.stop();
-		Platformer.sound.creditsAudio.stop();
-		Platformer.game.getHandeler().clear();
-		Platformer.game.getHandeler().add(Platformer.screen, false);
-		Platformer.start(stage);
-		Platformer.sound.audio.setFramePosition(0);
-		Platformer.sound.audio.loop(Clip.LOOP_CONTINUOUSLY);
+		Platformer.screen.updateState(State.PLAYING, stage);
+//		System.out.println("LEVEL");
+//		Platformer.sound.audio.stop();
+//		Platformer.sound.creditsAudio.stop();
+//		Platformer.game.getHandeler().clear();
+//		Platformer.game.getHandeler().add(Platformer.screen, false);
+//		Platformer.start(stage);
+//		Platformer.sound.audio.setFramePosition(0);
+//		Platformer.sound.audio.loop(Clip.LOOP_CONTINUOUSLY);
 
 	}
 	
