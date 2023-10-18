@@ -23,7 +23,7 @@ public class Screen extends GameObject{
 	Text levelText;
 	Color color;
 	public Screen() {
-		color = new Color(0, 6, 110);
+		color = new Color(181, 4, 39);
 		Platformer.game.getHandeler().add(this, false);
 	}
 	public void updateState(State state)
@@ -35,7 +35,7 @@ public class Screen extends GameObject{
 		Platformer.game.getHandeler().add(Platformer.screen, false);
 		if(state == State.TITLE) {
 			level = 1;
-			new GameImage(-1, getClass().getResource("assets/GameImage.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
+			new GameImage(-1, getClass().getResource("assets/GameImage1.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
 			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2, 200, 40, color);
 			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 300, 100, 50, color, () -> {this.updateState(State.PLAYING);}));
@@ -47,7 +47,7 @@ public class Screen extends GameObject{
 		}
 		else if(state == State.PLAYING)
 		{
-			new GameImage(-1, getClass().getResource("assets/GameImage.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
+			new GameImage(-1, getClass().getResource("assets/GameImage1.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
 			Platformer.levelNum = level;
 			Platformer.start(null);
@@ -69,7 +69,7 @@ public class Screen extends GameObject{
 		Platformer.game.state = state;
 		Platformer.game.getHandeler().add(Platformer.screen, false);
 		if(state == State.TITLE) {
-			new GameImage(-1, getClass().getResource("assets/GameImage.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
+			new GameImage(-1, getClass().getResource("assets/GameImage1.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
 			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2, 200, 40, color);
 			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 300, 100, 50, color, () -> {this.updateState(State.PLAYING);}));
@@ -81,7 +81,7 @@ public class Screen extends GameObject{
 		}
 		else if(state == State.PLAYING)
 		{
-			new GameImage(-1, getClass().getResource("assets/GameImage.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
+			new GameImage(-1, getClass().getResource("assets/GameImage1.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
 			Platformer.start(stage);
 			Platformer.sound.audio.setFramePosition(0);
