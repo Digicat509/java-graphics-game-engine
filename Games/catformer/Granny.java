@@ -17,6 +17,7 @@ public class Granny extends Enemy {
 	public static int speed = 3;
 	private int frame;
 	private Image frame1, frame2;
+	private boolean musicOn;
 	
 	public Granny(int x, int y) {
 		super(x, y, speed, 20);
@@ -70,11 +71,12 @@ public class Granny extends Enemy {
 		float yVel = 0;
 		int xDist = 0;
 		int yDist = 0;
-		if(x-Platformer.player.x-Platformer.player.w < Platformer.game.getWidth())
+		if(x-Platformer.player.x-Platformer.player.w < Platformer.game.getWidth()-400-RANGE && !musicOn)
 		{
 			Platformer.sound.audio.stop();
 			Platformer.sound.bossAudio.setFramePosition(0);
 			Platformer.sound.bossAudio.loop(Clip.LOOP_CONTINUOUSLY);
+			musicOn = true;
 		}
 		if(delay - 200 < System.currentTimeMillis())
 		{
