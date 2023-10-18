@@ -11,7 +11,7 @@ public class Level {
 	{
 		this.stage = stage;
 		
-		if(stage == Stage.LEVEL1) {
+		if(stage == Stage.LEVEL3) {
 			Platformer.player = new Player(30, 250);
 			//new Pipe(100, 450, 100);
 			new Building(-50, 400, 400);
@@ -49,32 +49,56 @@ public class Level {
 			new Granny(2950, 100);
 			
 			new Building(3200, 500, 350);
-			new LevelPortal(3555, 550, Stage.LEVEL2);
+			new LevelPortal(3555, 550, Stage.LEVEL1, true);
 		}
 		
 		if(stage == Stage.LEVEL2) {
 			Platformer.player = new Player(30, 250);
-			new Building(-50, 400, 1250);
-			
-			//new DogEnemy(200, 350);
-			//new DogEnemy(700, 350);
+			new Building(-50, 400, 1450);
+			new Building(1400, 500, 400);
 			
 			new Building(500, 350, 50);
 			new Building(600, 300, 50);
 			new Building(700, 250, 50);
 			new Building(800, 300, 50);
 			new Building(900, 350, 50);
+			new FloatingPlatform(900, 200, 50, 50);
 			new Spikes(550,390,50);
 			new Spikes(650,390,50);
 			new Spikes(750,390,50);
 			new Spikes(850,390,50);
 			
+			new FloatingPlatform(1150, 200, 150, 50);
+			new DumbDroneEnemy(1200, 150);
+			new FloatingPlatform(1400, 100, 100, 200);
+			new FloatingPlatform(1600, 300, 100, 50);
+			new DumbDroneEnemy(1650, 250);
+
+			new Building(1900, 400, 100);
+			new Building(2100, 300, 100);
+			new Building(2300, 400, 100);
+			new DogEnemy(1950, 350);
+			new DogEnemy(2350, 350);
+			new DogEnemy(2150, 250);
+			
+			new Building(2500, 500, 200);
+			new Building(2700, 450, 50);
+			new Building(2750, 400, 50);
+			new Building(2800, 350, 50);
+			
+			new Building(2950, 500, 700);
+			new FloatingPlatform(3050, 300, 50, 50);
+			new FloatingPlatform(3500, 300, 50, 50);
+			
+			new AnimalControlEnemy(3075, 250);
+			new AnimalControlEnemy(3525, 250);
+			new LevelPortal(3650, 500, Stage.LEVEL3, false);
 			//new Building(350, 500, 300);
 			//new Building(800, 600, 300);
 			//new Building(1250, 650, 300);
 		}
 		
-		if(stage == Stage.LEVEL3) {
+		if(stage == Stage.LEVEL1) {
 			Platformer.player = new Player(30, 250);
 			new Building(-50, 500, 500);
 			new Building(500, 450, 300);
@@ -113,7 +137,7 @@ public class Level {
 			new Building(3650, 450, 150);
 			new Building(3700, 400, 100);
 			new Building(3750, 350, 50);
-			new LevelPortal(3800, 500, Stage.LEVEL1);
+			new LevelPortal(3800, 500, Stage.LEVEL2, false);
 		}
 		
 		if(stage == Stage.TEST)

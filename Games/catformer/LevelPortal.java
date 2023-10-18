@@ -12,19 +12,24 @@ import gameEngine.GameEngine.State;
 public class LevelPortal extends GameObject{
 	
 	Stage stage;
-	public LevelPortal(int x, int y, Stage s){
+	boolean last = false;
+	public LevelPortal(int x, int y, Stage s, boolean l){
 		super(1, "assets/Portal.png");
 		this.x = x;
 		this.y = y;
 		w = 75*2;
 		h = 35*2;
+		last = l;
 		stage = s;
 		Platformer.game.getHandeler().add(this, true);
 	}
 	
 	public void updateStage()
 	{
-		Platformer.screen.updateState(State.PLAYING, stage);
+		if(last == false)
+			Platformer.screen.updateState(State.PLAYING, stage);
+		else
+			Platformer.screen.updateState(State.CREDITS);
 //		System.out.println("LEVEL");
 //		Platformer.sound.audio.stop();
 //		Platformer.sound.creditsAudio.stop();
