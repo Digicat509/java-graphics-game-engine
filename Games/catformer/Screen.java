@@ -30,6 +30,7 @@ public class Screen extends GameObject{
 	{
 		Platformer.sound.audio.stop();
 		Platformer.sound.creditsAudio.stop();
+		Platformer.sound.bossAudio.stop();
 		Platformer.game.getHandeler().clear();
 		Platformer.game.state = state;
 		Platformer.game.getHandeler().add(Platformer.screen, false);

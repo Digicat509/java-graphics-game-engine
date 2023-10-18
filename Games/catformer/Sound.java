@@ -19,6 +19,7 @@ class Sound
 	AudioInputStream audioInputStream;
 	Clip audio;
 	Clip creditsAudio;
+	Clip bossAudio;
 	public Sound() 
 	{	
 		try {
@@ -33,6 +34,14 @@ class Sound
 		    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("assets/credits_music.wav"));
 		    creditsAudio = AudioSystem.getClip();
 		    creditsAudio.open(audioInputStream);
+		    FloatControl volume= (FloatControl) audio.getControl(FloatControl.Type.MASTER_GAIN);
+		    volume.setValue(1.0f); // Reduce volume by 10 decibols.
+		}catch (Exception e){e.printStackTrace();}
+		
+		try {
+		    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("assets/boss_music.wav"));
+		    bossAudio = AudioSystem.getClip();
+		    bossAudio.open(audioInputStream);
 		    FloatControl volume= (FloatControl) audio.getControl(FloatControl.Type.MASTER_GAIN);
 		    volume.setValue(1.0f); // Reduce volume by 10 decibols.
 		}catch (Exception e){e.printStackTrace();}

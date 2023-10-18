@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 
 import gameEngine.GameObject;
 
@@ -69,6 +70,12 @@ public class Granny extends Enemy {
 		float yVel = 0;
 		int xDist = 0;
 		int yDist = 0;
+		if(x-Platformer.player.x-Platformer.player.w < Platformer.game.getWidth())
+		{
+			Platformer.sound.audio.stop();
+			Platformer.sound.bossAudio.setFramePosition(0);
+			Platformer.sound.bossAudio.loop(Clip.LOOP_CONTINUOUSLY);
+		}
 		if(delay - 200 < System.currentTimeMillis())
 		{
 			xDist = (int)(Platformer.player.x-x);
