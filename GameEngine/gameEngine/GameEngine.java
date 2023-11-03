@@ -70,7 +70,7 @@ public class GameEngine implements Runnable {
 				input.update();
 				window.update();
 				frames++;
-			}
+			}		
 			else {
 				try{Thread.sleep(1);}catch (Exception e){e.printStackTrace();}
 			}
@@ -81,6 +81,7 @@ public class GameEngine implements Runnable {
 		PLAYING,
 		CREDITS,
 		HELP,
+		LOADING,
 		STOP_PLAY
 	}
 	public void play() {

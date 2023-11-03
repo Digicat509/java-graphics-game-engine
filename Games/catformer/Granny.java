@@ -134,5 +134,7 @@ public class Granny extends Enemy {
 		{
 			dy += Platformer.GRAVITY;
 		}
+		
+		push();
 	}
 }

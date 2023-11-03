@@ -1,0 +1,4 @@
+Text (Hello, 8, 12)
+Text Weeeee, 8, 20
+Building (10, 10, 5)
+class catformer.Block 4, 4

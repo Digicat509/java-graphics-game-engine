@@ -56,9 +56,11 @@ public class DumbDroneEnemy extends Enemy {
 			onGround = false;
 			dy += Platformer.GRAVITY;
 		}
+		
 		HashSet<GameObject> arr = this.allHits();
 		x += dx;
 		HashSet<GameObject> narr = this.allHits();
+		push();
 		if(arr.size() < narr.size()) {
 			x -= dx;
 			if(arr.size() < narr.size() && onGround)
@@ -66,6 +68,7 @@ public class DumbDroneEnemy extends Enemy {
 				dx *= -1;
 			}
 		}
+		
 		if(y > Platformer.game.getHeight())
 			Platformer.game.getHandeler().remove(this);
 	}

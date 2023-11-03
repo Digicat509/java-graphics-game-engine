@@ -19,6 +19,7 @@ public class Text extends GameObject{
 		this.x = x;
 		this.y = y;
 		this.color = Color.white;
+		textSize = 20;
 		Handler.addHand.put(this, false);
 	}
 	
@@ -45,6 +46,7 @@ public class Text extends GameObject{
 		text = s;
 		this.rect = rect;
 		this.color = Color.white;
+		textSize = 20;
 		Handler.addHand.put(this, false);
 	}
 	
@@ -70,6 +72,7 @@ public class Text extends GameObject{
 		this.x = x;
 		this.y = y;
 		this.color = color;
+		textSize = 20;
 		Handler.addHand.put(this, false);
 	}
 	
@@ -96,6 +99,7 @@ public class Text extends GameObject{
 		text = s;
 		this.rect = rect;
 		this.color = color;
+		textSize = 20;
 		Handler.addHand.put(this, false);
 	}
 	

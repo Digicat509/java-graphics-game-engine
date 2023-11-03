@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import gameEngine.GameEngine.State;
 import gameEngine.GameObject;
 
-public class Player extends GameObject{
+public class Player extends GameObject implements Entity {
 	private float slidingGravity = 2f;
 	private float jumpStrength = 10f;
 	private float speed = 3;
@@ -182,7 +182,7 @@ public class Player extends GameObject{
 		y += dy;
 	}
 	
-	private void updatePosition(int direction)
+	void updatePosition(int direction)
 	{
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*this.dx;});
@@ -190,12 +190,60 @@ public class Player extends GameObject{
 			x += direction*dx;
 	}
 	
-	private void updatePosition(int direction, int amount)
+	void updatePosition(int direction, int amount)
+	{
+		if(localX > scrollDistance)
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
+		else
+			x += direction*amount;		
+	}
+	
+	private void updatePositionFinal(int direction)
+	{
+		if(localX > scrollDistance)
+			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*this.dx;});
+		else
+			x += direction*dx;
+		GameObject o = this.hits();
+		if(o != null && o instanceof Platform)
+		{
+			double changeX;
+			Platform p = (Platform)o;
+			if(dx < 0)
+				changeX = (p.x+p.w-x);
+			else if(dx > 0)
+				changeX = (p.x-x-w);
+			else 
+				changeX = 0;
+			if(localX > scrollDistance)
+				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= changeX;});
+			else
+				x += changeX;
+		}
+	}
+	
+	private void updatePositionFinal(int direction, int amount)
 	{
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
 		else
 			x += direction*amount;
+		GameObject o = this.hits();
+		if(o != null && o instanceof Platform)
+		{
+			double changeX;
+			Platform p = (Platform)o;
+			if(dx < 0)
+				changeX = (p.x+p.w-x);
+			else if(dx > 0)
+				changeX = (p.x-x-w);
+			else 
+				changeX = 0;
+			if(localX > scrollDistance)
+				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= changeX;});
+			else
+				x += changeX;
+		}
 	}
 	
 	public void scroll() {
@@ -205,14 +253,20 @@ public class Player extends GameObject{
 	}
 	
 	public void collisionJumps(GameObject o) {
+		localX += dx;
 		updatePosition(1);
 		
 		o = this.hits();
 
-		
-		if(o instanceof Platform)
+		if(o instanceof Enemy)
 		{
-			//stops downward acceleration when sliding 
+			if(dx > 0)
+				updatePositionFinal(1, (int)(o.x-x-w));
+			else if(dx < 0)
+				updatePositionFinal(1, (int)(o.x+o.w-x));
+		}
+		else if(o instanceof Platform)
+		{
 			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && dx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && dx < 0))
 			{
 				sliding = true;
@@ -220,28 +274,15 @@ public class Player extends GameObject{
 				{
 					wallJump = false;
 					dy = -jumpStrength;
-					dx *= 25;
+					dx = (Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) ? -speed*15:speed*15;
 					sliding = false;
 					waitTime = System.currentTimeMillis()+150;
 					lastWall = (Platform)o;
 				}
-			}
-			localX -= dx;
-			updatePosition(-1);
-			o = this.hits();
-			if(o instanceof Platform)
-			{
-				Platform p = (Platform)o;
-				if(dx < 0)
-					dx = (p.x-x-w);
-				else if(dx > 0)
-					dx = (p.x+p.w-x);
 				localX += dx;
-				updatePosition(1);
+				updatePositionFinal(1);
 			}
 		}
-		
-
 		else {
 			if(waitTime <= System.currentTimeMillis())
 				wallJump = true;
@@ -259,18 +300,9 @@ public class Player extends GameObject{
 		
 		if(o instanceof DangerThing)
 		{
-			if(System.currentTimeMillis() > timer)
-			{
-				this.HP -= ((DangerThing)o).damage;
-				timer = System.currentTimeMillis() + (int)(1000*((double)invincibilityFrames/60));
-			}
+			damage(o);
 			if(o instanceof Net)
 				Platformer.game.getHandeler().remove(o);
-			if(HP <= 0)
-			{
-				Platformer.game.stop();
-				Platformer.screen.updateState(State.TITLE);
-			}
 		}
 		
 		if(o instanceof Portal)
@@ -281,11 +313,10 @@ public class Player extends GameObject{
 			dy = -dy;
 			y += dy;
 			localX += move;
-			updatePosition(1, move);
+			updatePositionFinal(1, move);
 		}
 		
 		if(o instanceof LevelPortal){
-			System.out.println("NEW");
 			((LevelPortal) o).updateStage();
 		}
 		
@@ -307,12 +338,12 @@ public class Player extends GameObject{
 		o = this.hits();
 		if(o != null)
 		{
-			if(o.y>= this.y && x+w > o.x && x < o.x+o.w) {
+			if(dy > 0 && o.y <= y+h) {
 				dy = 0;
 				y = o.y-h;
 				onGround = true;
 			}
-			if(y >= o.y+o.h-5) {
+			if(dy < 0 && y <= o.y+o.h) {
 				dy = 0;
 				y = o.y+o.h;
 			}
@@ -324,7 +355,6 @@ public class Player extends GameObject{
 			if(sliding)
 				dy = slidingGravity;
 		}
-		localX += dx;
 		
 		collisionJumps(o);
 		
@@ -346,6 +376,20 @@ public class Player extends GameObject{
 		if(Platformer.level.stage.equals(Level.Stage.INFINITE))
 				Platformer.level.update(localX+30, y);
 	}
+	
+	void damage(GameObject o) {
+		if(System.currentTimeMillis() > timer)
+		{
+			this.HP -= ((DangerThing)o).damage;
+			timer = System.currentTimeMillis() + (int)(1000*((double)invincibilityFrames/60));
+		}
+		if(HP <= 0)
+		{
+			Platformer.game.stop();
+			Platformer.screen.updateState(State.TITLE);
+		}
+	}
+
 	public int getHP() {
 		return HP;
 	}

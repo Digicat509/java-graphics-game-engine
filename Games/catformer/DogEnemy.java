@@ -39,14 +39,16 @@ public class DogEnemy extends Enemy{
 		{
 			dy += Platformer.GRAVITY;
 		}
+		
+		push();
 	}
 	
 	@Override
 	public void draw(Graphics g) {
 		if(dx < 0)
-			g.drawImage(image, (int)x, (int)y, w, h-1, null);
+			g.drawImage(image, (int)x, (int)y, w, h, null);
 		else
-			g.drawImage(image, (int)x+w, (int)y, -w, h-1, null);
+			g.drawImage(image, (int)x+w, (int)y, -w, h, null);
 		move();
 	}
 }

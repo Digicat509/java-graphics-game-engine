@@ -45,20 +45,25 @@ public class SmartDroneEnemy extends Enemy {
 				x += dx;
 				facing = false;
 			}
-			if(x < o.x) {
-				x = o.x;
-			}
-			else if((x+w) > (o.x+o.w)){
-				x = o.x+o.w-w;
-			}
-			dy = 0;
-			if(o.y>= this.y) {
-				y = o.y-h;
+			if(o instanceof Platform)
+			{
+				if(x < o.x) {
+					x = o.x;
+				}
+				else if((x+w) > (o.x+o.w)){
+					x = o.x+o.w-w;
+				}
+				dy = 0;
+				if(o.y>= this.y) {
+					y = o.y-h;
+				}
 			}
 		}
 		else
 		{
 			dy += gravity;
 		}
+		
+		push();
 	}
 }

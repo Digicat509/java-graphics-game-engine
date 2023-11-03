@@ -3,7 +3,13 @@ package catformer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
@@ -19,9 +25,11 @@ import gameEngine.Text;
 
 public class Screen extends GameObject{
 	ArrayList<Button> list = new ArrayList<Button>();
+	HashSet<GameObject> editLevel;
 	int level = 1;
 	Text levelText;
 	Color color;
+	private boolean wrote;
 	public Screen() {
 		color = new Color(181, 4, 39);
 		Platformer.game.getHandeler().add(this, false);
@@ -44,7 +52,8 @@ public class Screen extends GameObject{
 			list.add(new Button(Platformer.game.getWidth()/2+100, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
 			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2, 380, 20, color);
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
-			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 500, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
+			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-60, 500, 120, 50, color, () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 580, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
 		}
 		else if(state == State.PLAYING)
 		{
@@ -58,6 +67,7 @@ public class Screen extends GameObject{
 		else if(state == State.CREDITS)
 		{
 			new Credits();
+			list = new ArrayList<Button>();
 			Platformer.sound.creditsAudio.setFramePosition(0);
 			Platformer.sound.creditsAudio.loop(Clip.LOOP_CONTINUOUSLY);
 		}
@@ -78,7 +88,15 @@ public class Screen extends GameObject{
 			list.add(new Button(Platformer.game.getWidth()/2+100, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
 			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2, 380, 20, color);
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
-			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 500, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
+			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-60, 500, 120, 50, color, () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 580, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
+		}
+		else if(state == State.PLAYING && stage == Stage.EDIT)
+		{
+			editLevel = new HashSet<GameObject>();
+			list = new ArrayList<Button>();
+			wrote = false;
+			Platformer.start(stage);
 		}
 		else if(state == State.PLAYING)
 		{
@@ -91,21 +109,59 @@ public class Screen extends GameObject{
 		else if(state == State.CREDITS)
 		{
 			new Credits();
+			list = new ArrayList<Button>();
 			Platformer.sound.creditsAudio.setFramePosition(0);
 			Platformer.sound.creditsAudio.loop(Clip.LOOP_CONTINUOUSLY);
 		}
 	}
 	public void draw(Graphics g) {
-		if(levelText != null)
-			levelText.text = "Level:\t"+level;
-		if(Platformer.game.getInput().isMouseClicked()) {
-			int mx = Platformer.game.getInput().getMouseX();
-			int my = Platformer.game.getInput().getMouseY();
-			for(Button b: list)
-			{
-				b.clickBox(mx, my);
-				
+		if(Platformer.game.state == State.TITLE)
+		{
+			if(levelText != null)
+				levelText.text = "Level:\t"+level;
+			if(Platformer.game.getInput().isMouseClicked()) {
+				int mx = Platformer.game.getInput().getMouseX();
+				int my = Platformer.game.getInput().getMouseY();
+				for(Button b: list)
+				{
+					b.clickBox(mx, my);
+					
+				}
 			}
 		}
+		if(Platformer.level != null && Platformer.level.stage == Stage.EDIT)
+		{
+			if(Platformer.game.getInput().isMouseClicked()) {
+				int mx = Platformer.game.getInput().getMouseX();
+				int my = Platformer.game.getInput().getMouseY();
+				if(mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				{
+					editLevel.add(new Block(mx/Grid.currGridSize, my/Grid.currGridSize));
+				}
+			}
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && !wrote)
+			{
+				try {
+					writeToSaveFile("\\C:\\Users\\alexa\\OneDrive\\Documents\\GitHub\\java-graphics-game-engine\\Games\\catformer\\assets\\level_editor.txt"/*"assets/level_editor.txt"*/);
+					wrote = true;
+				} 
+				catch(IOException e) {e.printStackTrace();}
+				catch(URISyntaxException e) {e.printStackTrace();}
+				Platformer.level = null;
+				updateState(State.TITLE);
+			}
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_Z))
+				Grid.currGridSize += Platformer.game.getInput().getScroll();
+		}
+	}
+	private void writeToSaveFile(String path) throws IOException, URISyntaxException{
+		FileWriter out = new FileWriter(new File(path/*getClass().getResource(path).toURI()*/), false);
+		for(GameObject o: editLevel)
+		{
+			out.write(""+o+"\n");
+			System.out.println(o);
+		}
+		editLevel = new HashSet<GameObject>();
+		out.flush();
 	}
 }

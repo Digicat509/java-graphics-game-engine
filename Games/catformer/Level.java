@@ -1,6 +1,11 @@
 package catformer;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.util.Scanner;
+
 import gameEngine.Text;
+import gameEngine.GameEngine.State;
 
 public class Level {
 	public Stage stage;
@@ -10,6 +15,11 @@ public class Level {
 	public Level(Stage stage)
 	{
 		this.stage = stage;
+		if(stage == Stage.CUSTOM)
+		{
+			Platformer.player = new Player(30, 250);
+			try {build("assets/level_editor.txt");}catch(Exception e) {e.printStackTrace();}
+		}
 		
 		if(stage == Stage.LEVEL3) {
 			Platformer.player = new Player(30, 250);
@@ -139,14 +149,13 @@ public class Level {
 			new Building(3750, 350, 50);
 			new LevelPortal(3800, 500, Stage.LEVEL2, false);
 		}
-		
+		if(stage == Stage.EDIT)
+		{
+			new Grid();
+		}
 		if(stage == Stage.TEST)
 		{
-			Platformer.player = new Player(30, 0);
-			Platformer.text = new Text(""+Platformer.distance+"m", Platformer.game.getWidth()-100, 30, 20);
-			new Building(-50, 300, 300);
-			
-			
+			try {build("assets/test_level.txt");}catch(Exception e) {e.printStackTrace();}
 		}
 		if(stage == Stage.INFINITE)
 		{
@@ -157,11 +166,47 @@ public class Level {
 			new Building(0, height, width);
 			currX += width;
 			drawCurrX += width;
-			generate();
+			Platformer.game.getHandeler().stopRender();
+			Platformer.game.state = State.LOADING;
+			generate(10);
+			Platformer.game.getHandeler().startRender();
 		}
 	}
 	private void generate() {
 		int dist = drawCurrX+Platformer.game.getWidth();
+		int width = (int)(Math.random()*3+1)*50;
+		new Building(drawCurrX, height, width);
+		currX += width;
+		drawCurrX += width;
+		while(drawCurrX < dist)
+		{
+			int rand = (int)(Math.random()*100);
+			int prob = (int)(Math.random()*40);
+			width = (int)(Math.random()*3+1)*50;
+			height = height + ((int)(Math.random()*200)-100);
+			while(height < 250)
+				height = height + ((int)(Math.random()*100));
+			while(height > Platformer.game.getHeight()-200)
+				height = height - ((int)(Math.random()*100));
+			if(prob >= 32) 
+				new DogEnemy(drawCurrX+rand+width/2, height-21);
+			else if(prob >= 28)
+				new DumbDroneEnemy(drawCurrX+rand+width/2, height-16);
+			else if(prob >= 24)
+				new SmartDroneEnemy(drawCurrX+rand+width/2, height-16);
+			else if (prob >= 22)
+				new AnimalControlEnemy(drawCurrX+rand+width/2, height-46);
+			else if(prob >= 21)
+				new Box(drawCurrX+rand+width/2, height-19);
+			else if(prob >= 13 && rand > 75 && height > 100)
+				new Portal(drawCurrX+rand-75, height+30, drawCurrX+rand+150, height-130);
+			new Building(drawCurrX+rand, height, width);
+			currX += rand+width;
+			drawCurrX += rand+width;
+		}
+	}
+	private void generate(double screens) {
+		int dist = drawCurrX+(int)(Platformer.game.getWidth()*screens);
 		int width = (int)(Math.random()*3+1)*50;
 		new Building(drawCurrX, height, width);
 		currX += width;
@@ -202,15 +247,61 @@ public class Level {
 			generate();
 		}
 	}
+	public void build(String path) throws IOException
+	{
+		Scanner s = new Scanner(new BufferedInputStream(getClass().getResource(path).openStream()));
+		while(s.hasNextLine())
+		{
+			String line = s.nextLine();
+			String name;
+			String temp;
+			Scanner ns = new Scanner(line);
+			if(line.substring(0, 5).equals("class"))
+			{
+				name = ns.next()+" "+ns.next();
+				temp = ns.nextLine().strip();
+				System.out.println(name+" "+temp);
+			}
+			else
+			{
+				name = ns.next();
+				temp = ns.nextLine().strip();
+				System.out.println(name+" "+temp);
+			}
+			if(name.length() > 0 && temp.length() > 0)
+			{
+				String[] parameters = temp.matches("\\(.*\\)")? temp.substring(temp.indexOf("(")+1, temp.lastIndexOf(")")).split("\\s*,\\s*"): temp.split("\\s*,\\s*");
+				for(int i = 0; i < parameters.length; i++)
+					parameters[i] = parameters[i].strip();
+				if(name.equalsIgnoreCase("block") || name.equalsIgnoreCase(""+Block.class))
+				{
+					new Block((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]));
+				}
+				else if(name.equalsIgnoreCase("text") || name.equalsIgnoreCase(""+Text.class))
+				{
+					if(parameters.length == 4)
+						new Text(parameters[0], (int)Double.parseDouble(parameters[1])*25, (int)Double.parseDouble(parameters[2])*25, Integer.parseInt(parameters[3]));
+					if(parameters.length == 3)
+						new Text(parameters[0], (int)Double.parseDouble(parameters[1])*25, (int)Double.parseDouble(parameters[2])*25);
+				}
+				else if(name.equalsIgnoreCase("building")  || name.equalsIgnoreCase(""+Building.class))
+				{
+					new Building((int)Double.parseDouble(parameters[0])*25, (int)Double.parseDouble(parameters[1])*25, Integer.parseInt(parameters[2])*25);
+				}
+			}
+		}
+	}
 	public enum Stage
 	{
-		TEST(-1),
+		TEST(-3),
+		EDIT(-1),
 		LEVEL1(1),
 		LEVEL2(2),
 		LEVEL3(3),
+		CUSTOM(4),
 		INFINITE(0);
 		int level;
-		static final int maxLevel = 3;
+		static final int maxLevel = 4;
 		Stage(int i)
 		{
 			this.level = i;

@@ -76,7 +76,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 		if(this.layers > 0) {
 			for(GameObject o: Handler.hitsHand) {
 					if(!this.equals(o))
-						if(this.layers >= o.layers)
+//						if(this.layers >= o.layers)
 							if(this.getHitbox().hits(o.getHitbox())) {
 								return o;
 							}
@@ -92,7 +92,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 		if(this.layers > 0) {
 			for(GameObject o: Handler.hitsHand) {
 					if(!this.equals(o))
-						if(this.layers >= o.layers)
+//						if(this.layers >= o.layers)
 							if(this.getHitbox().hits(o.getHitbox()))
 								hiting.add(o);
 			}
@@ -122,5 +122,9 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public void move() {
 		x += dx;
 		y += dy;
+	}
+	@Override
+	public String toString() {
+		return ""+this.getClass()+" "+x+", "+y;
 	}
 }

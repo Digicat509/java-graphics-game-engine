@@ -1,12 +1,5 @@
 package catformer;
 
-
-import java.io.IOException;
-
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 import catformer.Level.Stage;
 import gameEngine.GameEngine;
 import gameEngine.GameEngine.State;
@@ -37,7 +30,10 @@ public class Platformer {
 		sound = new Sound();
 		screen = new Screen();
 		screen.updateState(State.TITLE);
+		//level = new Level(Stage.TEST);
+		//screen.updateState(State.PLAYING, Stage.EDIT);
 		game.start();
+		//game.state = State.LOADING;
 	}
 	public static void start(Stage stage)
 	{
@@ -48,7 +44,6 @@ public class Platformer {
 		{
 			level = new Level(Stage.get(levelNum));
 		}
-		game.getHandeler().stopRender(1);
 	}
 	
 	public static void updateDistance(int d)

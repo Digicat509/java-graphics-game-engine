@@ -56,15 +56,15 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 			buttonsLast[i]=buttons[i];
 	}
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		scroll = e.getWheelRotation();
+		scroll = e.getUnitsToScroll();
 	}
 	public void mouseDragged(MouseEvent e) {
-		mouseX = (int)(e.getX()/* / ge.getScale()*/);
-		mouseY = (int)(e.getY() /*/ ge.getScale()*/);
+		mouseX = (int)(e.getX());
+		mouseY = (int)(e.getY());
 	}
 	public void mouseMoved(MouseEvent e) {
-		mouseX = (int)(e.getX()/* / ge.getScale()*/);
-		mouseY = (int)(e.getY()/* / ge.getScale()*/);
+		mouseX = (int)(e.getX());
+		mouseY = (int)(e.getY());
 	}
 	public void mouseEntered(MouseEvent e) {
 
@@ -83,7 +83,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	}
 	
 	public boolean isMouseClicked() {
-		//System.out.println(buttons[0]);
 		if(buttons[1]==true) {
 			return true;
 		}
@@ -101,5 +100,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	}
 	public int getMouseX(){return mouseX;}
 	public int getMouseY(){return mouseY;}
+	public int getScroll(){return scroll;}
 
 }
