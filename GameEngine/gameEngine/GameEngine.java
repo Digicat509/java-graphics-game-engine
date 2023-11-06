@@ -27,7 +27,7 @@ public class GameEngine implements Runnable {
 	public State state;
 	
 	public GameEngine() {
-		hand = new Handler();
+		hand = new Handler(this);
 	}
 	public void start() {
 		window = new Window(this);

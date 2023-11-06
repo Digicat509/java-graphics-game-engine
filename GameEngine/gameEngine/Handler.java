@@ -15,9 +15,10 @@ public class Handler {
 	private boolean markForClear = false;
 	private boolean render = true;
 	private long timer = 0;
+	private GameEngine ge;
 	//Constructor
-	public Handler() {
-		
+	public Handler(GameEngine ge) {
+		this.ge = ge;
 	}
 	//adds the game object to the rendering list and to the collision list if canCollide is true
 	public void add(GameObject o, boolean canCollide) {
@@ -73,7 +74,8 @@ public class Handler {
 		addHand.clear();
 		if(render) {
 			for(GameObject o: hand) {
-				o.draw(g);
+				if(o.x+o.w >= -ge.getWidth()/4 && o.y+o.h >= -ge.getHeight()/4 && o.x <= ge.getWidth()*1.25 && o.y <= ge.getHeight()*1.25)
+					o.draw(g);
 			}
 		}
 		else

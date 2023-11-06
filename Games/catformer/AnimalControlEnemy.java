@@ -36,8 +36,8 @@ public class AnimalControlEnemy extends Enemy {
 		int yDist = 0;
 		if(delay - 200 < System.currentTimeMillis())
 		{
-			xDist = (int)(Platformer.player.x-x);
-			yDist = (int)(Platformer.player.y-y);
+			xDist = (int)(Platformer.player.x+Platformer.player.w/2-x);
+			yDist = (int)(Platformer.player.y+Platformer.player.h/2-y);
 			double framesTillImpact = (double)Math.abs(xDist)/5;
 			yVel = (float)((yDist-.5*.5*Math.pow(framesTillImpact, 2))/framesTillImpact);
 		}

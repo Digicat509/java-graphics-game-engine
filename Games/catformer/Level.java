@@ -168,7 +168,7 @@ public class Level {
 			drawCurrX += width;
 			Platformer.game.getHandeler().stopRender();
 			Platformer.game.state = State.LOADING;
-			generate(10);
+			generate(1);
 			Platformer.game.getHandeler().startRender();
 		}
 	}

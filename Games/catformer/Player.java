@@ -200,21 +200,22 @@ public class Player extends GameObject implements Entity {
 	
 	private void updatePositionFinal(int direction)
 	{
+		localX += direction*dx;
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*this.dx;});
 		else
 			x += direction*dx;
 		GameObject o = this.hits();
-		if(o != null && o instanceof Platform)
+		if(o != null && (o instanceof Platform || o instanceof Box))
 		{
 			double changeX;
-			Platform p = (Platform)o;
 			if(dx < 0)
-				changeX = (p.x+p.w-x);
+				changeX = (o.x+o.w-x);
 			else if(dx > 0)
-				changeX = (p.x-x-w);
+				changeX = (o.x-x-w);
 			else 
 				changeX = 0;
+			localX += changeX;
 			if(localX > scrollDistance)
 				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= changeX;});
 			else
@@ -224,21 +225,22 @@ public class Player extends GameObject implements Entity {
 	
 	private void updatePositionFinal(int direction, int amount)
 	{
+		localX += direction*amount;
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
 		else
 			x += direction*amount;
 		GameObject o = this.hits();
-		if(o != null && o instanceof Platform)
+		if(o != null && (o instanceof Platform || o instanceof Box))
 		{
 			double changeX;
-			Platform p = (Platform)o;
 			if(dx < 0)
-				changeX = (p.x+p.w-x);
+				changeX = (o.x+o.w-x);
 			else if(dx > 0)
-				changeX = (p.x-x-w);
+				changeX = (o.x-x-w);
 			else 
 				changeX = 0;
+			localX += changeX;
 			if(localX > scrollDistance)
 				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= changeX;});
 			else
@@ -258,7 +260,7 @@ public class Player extends GameObject implements Entity {
 		
 		o = this.hits();
 
-		if(o instanceof Enemy)
+		if(o instanceof Entity)
 		{
 			if(dx > 0)
 				updatePositionFinal(1, (int)(o.x-x-w));
@@ -279,7 +281,6 @@ public class Player extends GameObject implements Entity {
 					waitTime = System.currentTimeMillis()+150;
 					lastWall = (Platform)o;
 				}
-				localX += dx;
 				updatePositionFinal(1);
 			}
 		}
@@ -312,7 +313,6 @@ public class Player extends GameObject implements Entity {
 			this.y = (((Portal)o).oPortal.y-this.h);
 			dy = -dy;
 			y += dy;
-			localX += move;
 			updatePositionFinal(1, move);
 		}
 		

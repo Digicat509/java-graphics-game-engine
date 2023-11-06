@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import gameEngine.GameObject;
 
-public class Box extends GameObject {
+public class Box extends GameObject implements Entity{
 	int heal;
 	public Box(int x, int y)
 	{

@@ -6,21 +6,21 @@ import java.util.Objects;
 
 import gameEngine.GameObject;
 
-public class Block extends GameObject{
+public class Block extends Platform{
+	int gridX, gridY = 0;
 	public Block(int x, int y)
 	{
-		super(1);
-		this.x = x;
-		this.y = y;
-		w = Grid.currGridSize;
-		h =	Grid.currGridSize;
-		Platformer.game.getHandeler().add(this, true);
+		super(x*Grid.currGridSize, y*Grid.currGridSize, Grid.currGridSize, Grid.currGridSize, 0);
+		gridX = x;
+		gridY = y;
 	}
 	
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.red);
-		g.fillRect((int)x*Grid.currGridSize, (int)y*Grid.currGridSize, Grid.currGridSize, Grid.currGridSize);
+//		x = gridX*Grid.currGridSize;
+//		y = gridY*Grid.currGridSize;
+		g.fillRect((int)x, (int)y, Grid.currGridSize, Grid.currGridSize);
 	}
 	
 	@Override
@@ -35,6 +35,6 @@ public class Block extends GameObject{
 	
 	@Override
 	public String toString() {
-		return ""+this.getClass()+" "+x/Grid.GRIDSIZE+", "+y/Grid.GRIDSIZE;
+		return ""+this.getClass()+" "+x+", "+y;
 	}
 }
