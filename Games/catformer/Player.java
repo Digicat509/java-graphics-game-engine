@@ -15,7 +15,7 @@ import gameEngine.Timer;
 public class Player extends GameObject implements Entity {
 	private float slidingGravity = 2f;
 	private float jumpStrength = 10f;
-	private float speed = 3;
+	private float xAcceleration = 0;
 	private int localX;
 	private boolean onGround = false;
 	private boolean wallJump = false;
@@ -128,7 +128,10 @@ public class Player extends GameObject implements Entity {
 			dy=10;
 		if(dy<-10) 
 			dy=-10;
-		
+		if(xAcceleration > 4.75)
+			xAcceleration = 4.75f;
+		if(xAcceleration < -4.75)
+			xAcceleration = -4.75f;
 		
 		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 		{
@@ -141,30 +144,21 @@ public class Player extends GameObject implements Entity {
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
 			{
 				facing = true;
-				if(localX > scrollDistance)
-					dx += speed;
-				else
-				{
-					dx += speed;
-				}
+				xAcceleration += .25;
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
 			{
 				facing = false;
-				if(localX > scrollDistance) 
-					dx -= speed;
-				
-				else if(x > 0)
-				{
-					dx -= speed;
-				}
+				xAcceleration -= .25;
 			}
 		}
 		else
 		{
 			walking = false;
+			xAcceleration += xAcceleration > 0 ? -.25 : xAcceleration < 0 ? .25 : 0;
 		}
 		
+		dx += xAcceleration;
 		y += dy;
 	}
 	
@@ -297,7 +291,7 @@ public class Player extends GameObject implements Entity {
 				{
 					wallJump = false;
 					dy = -jumpStrength;
-					dx = (Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) ? -speed*15:speed*15;
+					xAcceleration = (Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) ? -5:5;
 					sliding = false;
 					waitTime = System.currentTimeMillis()+150;
 					lastWall = (Platform)o;
