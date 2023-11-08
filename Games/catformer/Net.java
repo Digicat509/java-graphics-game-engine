@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 
 import gameEngine.GameObject;
 
-public class Net extends Enemy {
+public class Net extends Enemy implements Projectile{
 
 	public Net(int x, int y, int dx, float dy) {
 		super(x, y, dx, 10);

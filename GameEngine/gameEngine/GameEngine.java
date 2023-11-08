@@ -18,7 +18,8 @@ public class GameEngine implements Runnable {
 	private Input input;
 	private Thread thread;
 	private boolean running = false;
-	private final double UPDATE_CAP = 1.0/60;
+	private static final int MAXFPS = 60;
+	private final double UPDATE_CAP = 1.0/MAXFPS;
 	boolean render = false;
 	double frame_time = 0;
 	int fps = 0;
@@ -136,6 +137,9 @@ public class GameEngine implements Runnable {
 	public Handler getHandeler()
 	{
 		return hand;
+	}
+	public int getFps() {
+		return fps;
 	}
 	public void update(Graphics g) {
 		if(state == State.STOP_PLAY) {

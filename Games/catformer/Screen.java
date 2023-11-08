@@ -22,6 +22,7 @@ import gameEngine.GameEngine.State;
 import gameEngine.GameImage;
 import gameEngine.GameObject;
 import gameEngine.Text;
+import gameEngine.Timer;
 
 public class Screen extends GameObject{
 	ArrayList<Button> list = new ArrayList<Button>();
@@ -30,6 +31,7 @@ public class Screen extends GameObject{
 	Text levelText;
 	Color color;
 	private boolean wrote;
+	private Timer keyDelayTimer = new Timer(0);
 	public Screen() {
 		color = new Color(181, 4, 39);
 		Platformer.game.getHandeler().add(this, false);
@@ -126,6 +128,30 @@ public class Screen extends GameObject{
 				{
 					b.clickBox(mx, my);
 					
+				}
+			}
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
+				this.updateState(State.PLAYING);
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
+			{
+				if(keyDelayTimer.timeUp())
+				{
+					if(this.level > 1)
+						this.level--;
+					else 
+						this.level = Stage.maxLevel;
+					keyDelayTimer = new Timer(.2);
+				}
+			}
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
+			{
+				if(keyDelayTimer.timeUp())
+				{
+					if(this.level < Stage.maxLevel)
+						this.level++;
+					else 
+						this.level = 1;
+					keyDelayTimer = new Timer(.2);
 				}
 			}
 		}

@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import gameEngine.GameEngine.State;
 import gameEngine.GameObject;
+import gameEngine.Timer;
 
 public class Player extends GameObject implements Entity {
 	private float slidingGravity = 2f;
@@ -23,11 +24,11 @@ public class Player extends GameObject implements Entity {
 	private boolean facing = true;
 	public int scrollDistance = 300;
 	private int invincibilityFrames = 30;
-	private long frameTimer;
-	private long walkTimer;
+	private long frameTimer = 0;
+	private Timer walkTimer = new Timer(0);
 	private boolean walking;
-	private long timer = 0;
-	private long healTimer = 0;
+	private Timer timer = new Timer(0);
+	private Timer healTimer = new Timer(0);
 	private int HP;
 	int maxHP;
 	private Platform lastWall;
@@ -60,13 +61,13 @@ public class Player extends GameObject implements Entity {
 		{
 			if(walking && !sliding)
 			{
-				if(walkTimer < System.currentTimeMillis())
+				if(walkTimer.timeUp())
 				{
 					if(frame < 1)
 						frame++;
 					else 
 						frame = 0;
-					walkTimer = System.currentTimeMillis()+200;
+					walkTimer = new Timer(.2);
 				}
 				switch(frame)
 				{
@@ -97,7 +98,7 @@ public class Player extends GameObject implements Entity {
 					g.drawImage(image,(int)x+w,(int)y, -w, h, null);
 				}
 			}
-			if(System.currentTimeMillis() < timer)
+			if(!timer.timeUp())
 			{
 				if(frameTimer >= 5)
 				{
@@ -120,9 +121,7 @@ public class Player extends GameObject implements Entity {
 		
 	}
 	
-	
-	
-	public void arrowMovement() {
+	private void arrowMovement() {
 		dx = 0;
 		
 		if(dy>10)
@@ -134,7 +133,6 @@ public class Player extends GameObject implements Entity {
 		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 		{
 			dy = -jumpStrength;
-			
 		}
 		
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT) || Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
@@ -148,12 +146,6 @@ public class Player extends GameObject implements Entity {
 				else
 				{
 					dx += speed;
-					
-					GameObject o = this.hits();
-					if(o != null)
-					{
-						dx -= speed;
-					}
 				}
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
@@ -165,12 +157,6 @@ public class Player extends GameObject implements Entity {
 				else if(x > 0)
 				{
 					dx -= speed;
-	
-					GameObject o = this.hits();
-					if(o != null)
-					{
-						dx += speed;
-					}
 				}
 			}
 		}
@@ -248,18 +234,53 @@ public class Player extends GameObject implements Entity {
 		}
 	}
 	
-	public void scroll() {
-		if(this.x>800) {
-			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += this.dx;});
+	private void collisionEffects(GameObject o)
+	{
+		if(o instanceof DangerThing)
+		{
+			damage(o);
+			if(o instanceof Net)
+				Platformer.game.getHandeler().remove(o);
+		}
+		
+		if(o instanceof Portal)
+		{
+			y -= dy;
+			int move = (int)(((Portal)o).oPortal.x+((Portal)o).oPortal.w/2-this.w/2)-(int)x;
+			this.y = (((Portal)o).oPortal.y-this.h);
+			dy = -dy;
+			y += dy;
+			updatePositionFinal(1, move);
+		}
+		
+		if(o instanceof LevelPortal){
+			((LevelPortal) o).updateStage();
+		}
+		
+		if(o instanceof Box)
+		{
+			if(healTimer.timeUp())
+			{
+				if(this.HP <= maxHP-5)
+				{
+					this.HP += 5;
+					((Box)o).heal -= 5;
+					if(((Box)o).heal <= 0)
+						Platformer.game.getHandeler().remove(o);
+				}
+				healTimer  = new Timer(1);
+			}
 		}
 	}
 	
-	public void collisionJumps(GameObject o) {
+	private void collisionJumps(GameObject o) {
 		localX += dx;
 		updatePosition(1);
 		
 		o = this.hits();
-
+		
+		collisionEffects(o);
+		
 		if(o instanceof Entity)
 		{
 			if(dx > 0)
@@ -299,44 +320,10 @@ public class Player extends GameObject implements Entity {
 		
 		GameObject o = this.hits();
 		
-		if(o instanceof DangerThing)
-		{
-			damage(o);
-			if(o instanceof Net)
-				Platformer.game.getHandeler().remove(o);
-		}
-		
-		if(o instanceof Portal)
-		{
-			y -= dy;
-			int move = (int)(((Portal)o).oPortal.x+((Portal)o).oPortal.w/2-this.w/2)-(int)x;
-			this.y = (((Portal)o).oPortal.y-this.h);
-			dy = -dy;
-			y += dy;
-			updatePositionFinal(1, move);
-		}
-		
-		if(o instanceof LevelPortal){
-			((LevelPortal) o).updateStage();
-		}
-		
-		if(o instanceof Box)
-		{
-			if(System.currentTimeMillis() > healTimer)
-			{
-				if(this.HP <= maxHP-5)
-				{
-					this.HP += 5;
-					((Box)o).heal -= 5;
-					if(((Box)o).heal <= 0)
-						Platformer.game.getHandeler().remove(o);
-				}
-				healTimer = System.currentTimeMillis() + 1000;
-			}
-		}
+		collisionEffects(o);
 		
 		o = this.hits();
-		if(o != null)
+		if(o != null && !(o instanceof Projectile))
 		{
 			if(dy > 0 && o.y <= y+h) {
 				dy = 0;
@@ -378,10 +365,10 @@ public class Player extends GameObject implements Entity {
 	}
 	
 	void damage(GameObject o) {
-		if(System.currentTimeMillis() > timer)
+		if(timer.timeUp())
 		{
 			this.HP -= ((DangerThing)o).damage;
-			timer = System.currentTimeMillis() + (int)(1000*((double)invincibilityFrames/60));
+			timer = new Timer((double)invincibilityFrames/Platformer.game.getFps());
 		}
 		if(HP <= 0)
 		{

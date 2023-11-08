@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 
 import gameEngine.GameObject;
 
-public class GrannyCandy extends Enemy {
+public class GrannyCandy extends Enemy implements Projectile{
 
 	private long timer = 0;
 	private boolean candy = true;
@@ -37,7 +37,7 @@ public class GrannyCandy extends Enemy {
 			x += dx;
 			y += dy;
 			GameObject o = this.hits();
-			if(o != null && !(o instanceof Enemy))
+			if(o instanceof Platform)
 			{
 				y = o.y-h;
 				dy = 0;
