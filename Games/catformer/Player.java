@@ -122,16 +122,6 @@ public class Player extends GameObject implements Entity {
 	}
 	
 	private void arrowMovement() {
-		dx = 0;
-		
-		if(dy>10)
-			dy=10;
-		if(dy<-10) 
-			dy=-10;
-		if(xAcceleration > 4.75)
-			xAcceleration = 4.75f;
-		if(xAcceleration < -4.75)
-			xAcceleration = -4.75f;
 		
 		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 		{
@@ -144,19 +134,28 @@ public class Player extends GameObject implements Entity {
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
 			{
 				facing = true;
-				xAcceleration += .25;
+				xAcceleration = .25f;
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
 			{
 				facing = false;
-				xAcceleration -= .25;
+				xAcceleration = -.25f;
 			}
 		}
 		else
 		{
 			walking = false;
-			xAcceleration += xAcceleration > 0 ? -.25 : xAcceleration < 0 ? .25 : 0;
+			xAcceleration = dx > 0 ? -.25f : dx < 0 ? .25f : 0;
 		}
+		
+		if(dy>10)
+			dy=10;
+		if(dy<-10) 
+			dy=-10;
+		if(dx > 5)
+			dx = 5f;
+		if(dx < -5)
+			dx = -5f;
 		
 		dx += xAcceleration;
 		y += dy;
@@ -164,6 +163,7 @@ public class Player extends GameObject implements Entity {
 	
 	void updatePosition(int direction)
 	{
+		localX += direction*dx;
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*this.dx;});
 		else
@@ -172,6 +172,7 @@ public class Player extends GameObject implements Entity {
 	
 	void updatePosition(int direction, int amount)
 	{
+		localX += direction*amount;
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
 		else
@@ -268,7 +269,6 @@ public class Player extends GameObject implements Entity {
 	}
 	
 	private void collisionJumps(GameObject o) {
-		localX += dx;
 		updatePosition(1);
 		
 		o = this.hits();
@@ -277,10 +277,10 @@ public class Player extends GameObject implements Entity {
 		
 		if(o instanceof Entity)
 		{
-			if(dx > 0)
-				updatePositionFinal(1, (int)(o.x-x-w));
-			else if(dx < 0)
-				updatePositionFinal(1, (int)(o.x+o.w-x));
+//			if(dx > 0)
+//				updatePosition(1, (int)(o.x-x-w));
+//			else if(dx < 0)
+//				updatePosition(1, (int)(o.x+o.w-x));
 		}
 		else if(o instanceof Platform)
 		{
@@ -291,13 +291,17 @@ public class Player extends GameObject implements Entity {
 				{
 					wallJump = false;
 					dy = -jumpStrength;
-					xAcceleration = (Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) ? -5:5;
+					dx = (Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) ? 5:-5;
 					sliding = false;
 					waitTime = System.currentTimeMillis()+150;
 					lastWall = (Platform)o;
 				}
-				updatePositionFinal(1);
 			}
+			if(dx > 0)
+				updatePosition(1, (int)(o.x-x-w));
+			else if(dx < 0)
+				updatePosition(1, (int)(o.x+o.w-x));
+			dx = 0;
 		}
 		else {
 			if(waitTime <= System.currentTimeMillis())
