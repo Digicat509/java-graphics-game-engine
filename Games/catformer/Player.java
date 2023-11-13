@@ -343,8 +343,10 @@ public class Player extends GameObject implements Entity {
 		
 		collisionJumps(o);
 		
-		if(x < 0)
+		if(x < 0) {
 			x = 0;
+			localX = 0;
+		}
 		
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
