@@ -24,6 +24,9 @@ public class Handler {
 	public void add(GameObject o, boolean canCollide) {
 		addHand.put(o, canCollide);
 	}
+	public boolean contains(GameObject o){
+		return hand.contains(o);
+	}
 	public void remove(GameObject o) {
 		removeHand.add(o);
 	}

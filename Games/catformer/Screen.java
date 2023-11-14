@@ -26,7 +26,13 @@ import gameEngine.Timer;
 
 public class Screen extends GameObject{
 	ArrayList<Button> list = new ArrayList<Button>();
+	SelectorWheel sw = null;
+	private boolean selectorWheelHeld = false;
 	HashSet<GameObject> editLevel;
+	EditTool et = EditTool.BLOCK;
+	Building editBuilding = null;
+	boolean drag = false;
+	int mx = 0, my = 0;
 	int level = 1;
 	Text levelText;
 	Color color;
@@ -95,6 +101,7 @@ public class Screen extends GameObject{
 		}
 		else if(state == State.PLAYING && stage == Stage.EDIT)
 		{
+			sw = null;
 			editLevel = new HashSet<GameObject>();
 			list = new ArrayList<Button>();
 			wrote = false;
@@ -158,12 +165,58 @@ public class Screen extends GameObject{
 		if(Platformer.level != null && Platformer.level.stage == Stage.EDIT)
 		{
 			if(Platformer.game.getInput().isMouseClicked()) {
-				int mx = Platformer.game.getInput().getMouseX();
-				int my = Platformer.game.getInput().getMouseY();
-				if(mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				mx = Platformer.game.getInput().getMouseX();
+				my = Platformer.game.getInput().getMouseY();
+				if(et.equals(EditTool.BLOCK) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
 				{
 					editLevel.add(new Block(mx/Grid.currGridSize, my/Grid.currGridSize));
 				}
+			}
+			if(Math.abs(Platformer.game.getInput().getMouseDragX()) > 1 || Math.abs(Platformer.game.getInput().getMouseDragY()) > 1)
+			{
+				if(!drag && et.equals(EditTool.BUILDING))
+				{
+					editBuilding = new Building((Platformer.game.getInput().getMouseX()/25)*25, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+					  drag = true;
+				}
+				else if(et.equals(EditTool.BUILDING) && Platformer.game.getInput().getMouseDragX() >= 50 && Platformer.game.getInput().getMouseDragX()%50 == 0)
+				{
+					editBuilding = new Building((int)editBuilding.x, (int)editBuilding.y, Platformer.game.getInput().getMouseDragX());
+				}
+			}
+			if(!Platformer.game.getInput().isButton(1) && drag)
+			{
+				if(et.equals(EditTool.BUILDING) && editBuilding != null && editBuilding.w > 0)
+				{
+					editLevel.add(editBuilding);
+					editBuilding = null;
+				}
+				else if(editBuilding != null)
+				{
+					editBuilding = null;
+				}
+				drag = false;
+			}
+			if(Platformer.game.getInput().isButton(3) && !selectorWheelHeld)
+			{
+				selectorWheelHeld = true;
+				if(sw == null)
+					sw = new SelectorWheel(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
+				else 
+				{
+					sw.show();
+					sw.recenter(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
+				}
+			}
+			else if(sw != null && !Platformer.game.getInput().isButton(3) && selectorWheelHeld)
+			{
+				selectorWheelHeld = false;
+				sw.selectFinal(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
+				System.out.println(et);
+				sw.hide();
+			}
+			if(selectorWheelHeld){
+				sw.select(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && !wrote)
 			{
@@ -189,5 +242,23 @@ public class Screen extends GameObject{
 		}
 		editLevel = new HashSet<GameObject>();
 		out.flush();
+	}
+	enum EditTool
+	{
+		PLAYER(0), BUILDING(1), BLOCK(2), ENEMY(3), PORTAL(4);
+		private int i;
+		EditTool(int i)
+		{
+			this.i = i;
+		}
+		public static EditTool choseTool(int i)
+		{
+			for(EditTool e : EditTool.values())
+			{
+				if(e.i == i)
+					return e;
+			}
+			return null;
+		}
 	}
 }

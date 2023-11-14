@@ -53,6 +53,6 @@ public class Building extends Platform {
 //			}
 	}
 	public String toString() {
-		return x +", "+ y;
+		return ""+this.getClass()+" "+x/25+", "+y/25+", "+w/25;
 	}
 }

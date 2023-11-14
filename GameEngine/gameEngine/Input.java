@@ -15,7 +15,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	private boolean[] buttons = new boolean[5];
 	private boolean[] buttonsLast = new boolean[5];
 
-	private int mouseX,mouseY;
+	private int mouseX,mouseY,mouseDragX = -1,mouseDragY;
 	private int scroll;
 
 	private GameEngine ge;
@@ -59,6 +59,10 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 		scroll = e.getUnitsToScroll();
 	}
 	public void mouseDragged(MouseEvent e) {
+		if(mouseDragX == -1)
+			mouseDragX = 0;
+		mouseDragX += e.getX() - mouseX;
+		mouseDragY += e.getY() - mouseY;
 		mouseX = (int)(e.getX());
 		mouseY = (int)(e.getY());
 	}
@@ -77,6 +81,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	}
 	public void mouseReleased(MouseEvent e) {
 		buttons[e.getButton()] = false;
+		mouseDragX = -1;
 	}
 	public void mouseClicked(MouseEvent e) {
 
@@ -100,6 +105,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	}
 	public int getMouseX(){return mouseX;}
 	public int getMouseY(){return mouseY;}
+	public int getMouseDragX(){return mouseDragX;}
+	public int getMouseDragY(){return mouseDragY;}
 	public int getScroll(){return scroll;}
 
 }
