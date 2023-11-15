@@ -16,6 +16,7 @@ public class Player extends GameObject implements Entity {
 	private float slidingGravity = 2f;
 	private float jumpStrength = 10f;
 	private float xAcceleration = 0;
+	private float realdx = 0;
 	private int localX;
 	private boolean onGround = false;
 	private boolean wallJump = false;
@@ -122,7 +123,7 @@ public class Player extends GameObject implements Entity {
 	}
 	
 	private void arrowMovement() {
-		
+		dx = 0;
 		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 		{
 			dy = -jumpStrength;
@@ -145,19 +146,21 @@ public class Player extends GameObject implements Entity {
 		else
 		{
 			walking = false;
-			xAcceleration = dx > 0 ? -.25f : dx < 0 ? .25f : 0;
+			xAcceleration = realdx > 0 ? -.25f : realdx < 0 ? .25f : 0;
 		}
+		
+		realdx += xAcceleration;
 		
 		if(dy>10)
 			dy=10;
 		if(dy<-10) 
 			dy=-10;
-		if(dx > 5)
-			dx = 5f;
-		if(dx < -5)
-			dx = -5f;
+		if(realdx > 5)
+			realdx = 5f;
+		if(realdx < -5)
+			realdx = -5f;
 		
-		dx += xAcceleration;
+		dx = (int)realdx;
 		y += dy;
 	}
 	
@@ -172,6 +175,7 @@ public class Player extends GameObject implements Entity {
 	
 	void updatePosition(int direction, int amount)
 	{
+		realdx = 0;
 		localX += direction*amount;
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
@@ -215,9 +219,9 @@ public class Player extends GameObject implements Entity {
 		if(o != null && (o instanceof Platform || o instanceof Box))
 		{
 			double changeX;
-			if(dx < 0)
+			if(direction*amount < 0)
 				changeX = (o.x+o.w-x);
-			else if(dx > 0)
+			else if(direction*amount > 0)
 				changeX = (o.x-x-w);
 			else 
 				changeX = 0;
@@ -277,31 +281,30 @@ public class Player extends GameObject implements Entity {
 		
 		if(o instanceof Entity)
 		{
-//			if(dx > 0)
-//				updatePosition(1, (int)(o.x-x-w));
-//			else if(dx < 0)
-//				updatePosition(1, (int)(o.x+o.w-x));
+			if(realdx > 0)
+				updatePosition(1, (int)(o.x-x-w));
+			else if(realdx < 0)
+				updatePosition(1, (int)(o.x+o.w-x));
 		}
 		else if(o instanceof Platform)
 		{
-			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && dx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && dx < 0))
+			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && realdx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && realdx < 0))
 			{
 				sliding = true;
 				if(onGround == false && wallJump && o != lastWall && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 				{
 					wallJump = false;
 					dy = -jumpStrength;
-					dx = (Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) ? 5:-5;
+					realdx = (Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) ? 5:-5;
 					sliding = false;
 					waitTime = System.currentTimeMillis()+150;
 					lastWall = (Platform)o;
 				}
 			}
-			if(dx > 0)
+			if(realdx > 0 && o.x <= x+w)
 				updatePosition(1, (int)(o.x-x-w));
-			else if(dx < 0)
+			else if(realdx < 0 && x <= o.x+o.w)
 				updatePosition(1, (int)(o.x+o.w-x));
-			dx = 0;
 		}
 		else {
 			if(waitTime <= System.currentTimeMillis())
