@@ -15,7 +15,8 @@ import gameEngine.Timer;
 public class Player extends GameObject implements Entity {
 	private float slidingGravity = 2f;
 	private float jumpStrength = 10f;
-	private float speed = 3;
+	private float xAcceleration = 0;
+	private float realdx = 0;
 	private int localX;
 	private boolean onGround = false;
 	private boolean wallJump = false;
@@ -123,13 +124,6 @@ public class Player extends GameObject implements Entity {
 	
 	private void arrowMovement() {
 		dx = 0;
-		
-		if(dy>10)
-			dy=10;
-		if(dy<-10) 
-			dy=-10;
-		
-		
 		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 		{
 			dy = -jumpStrength;
@@ -141,35 +135,38 @@ public class Player extends GameObject implements Entity {
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
 			{
 				facing = true;
-				if(localX > scrollDistance)
-					dx += speed;
-				else
-				{
-					dx += speed;
-				}
+				xAcceleration = (realdx < 1 && realdx >= 0) ? 1: .25f;
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
 			{
 				facing = false;
-				if(localX > scrollDistance) 
-					dx -= speed;
-				
-				else if(x > 0)
-				{
-					dx -= speed;
-				}
+				xAcceleration = (realdx > -1 && realdx <= 0) ? -1: -.25f;
 			}
 		}
 		else
 		{
 			walking = false;
+			xAcceleration = realdx > 0 ? -.25f : realdx < 0 ? .25f : 0;
 		}
 		
+		realdx += xAcceleration;
+		
+		if(dy>10)
+			dy=10;
+		if(dy<-10) 
+			dy=-10;
+		if(realdx > 5)
+			realdx = 5f;
+		if(realdx < -5)
+			realdx = -5f;
+		
+		dx = (int)realdx;
 		y += dy;
 	}
 	
 	void updatePosition(int direction)
 	{
+		localX += direction*dx;
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*this.dx;});
 		else
@@ -178,6 +175,7 @@ public class Player extends GameObject implements Entity {
 	
 	void updatePosition(int direction, int amount)
 	{
+		localX += direction*amount;
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
 		else
@@ -220,9 +218,9 @@ public class Player extends GameObject implements Entity {
 		if(o != null && (o instanceof Platform || o instanceof Box))
 		{
 			double changeX;
-			if(dx < 0)
+			if(direction*amount < 0)
 				changeX = (o.x+o.w-x);
-			else if(dx > 0)
+			else if(direction*amount > 0)
 				changeX = (o.x-x-w);
 			else 
 				changeX = 0;
@@ -274,7 +272,6 @@ public class Player extends GameObject implements Entity {
 	}
 	
 	private void collisionJumps(GameObject o) {
-		localX += dx;
 		updatePosition(1);
 		
 		o = this.hits();
@@ -283,27 +280,33 @@ public class Player extends GameObject implements Entity {
 		
 		if(o instanceof Entity)
 		{
-			if(dx > 0)
-				updatePositionFinal(1, (int)(o.x-x-w));
-			else if(dx < 0)
-				updatePositionFinal(1, (int)(o.x+o.w-x));
+			if(realdx > 0)
+				updatePosition(1, (int)(o.x-x-w));
+			else if(realdx < 0)
+				updatePosition(1, (int)(o.x+o.w-x));
+			realdx = 0;
 		}
 		else if(o instanceof Platform)
 		{
-			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && dx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && dx < 0))
+			float temp = realdx;
+			realdx = 0;
+			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))))
 			{
 				sliding = true;
 				if(onGround == false && wallJump && o != lastWall && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 				{
 					wallJump = false;
 					dy = -jumpStrength;
-					dx = (Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) ? -speed*15:speed*15;
+					realdx = (temp > 0) ? -3:3;
 					sliding = false;
 					waitTime = System.currentTimeMillis()+150;
 					lastWall = (Platform)o;
 				}
-				updatePositionFinal(1);
 			}
+			if(temp > 0 && o.x <= x+w)
+				updatePosition(1, (int)(o.x-x-w));
+			else if(temp < 0 && x <= o.x+o.w)
+				updatePosition(1, (int)(o.x+o.w-x));
 		}
 		else {
 			if(waitTime <= System.currentTimeMillis())
@@ -345,8 +348,10 @@ public class Player extends GameObject implements Entity {
 		
 		collisionJumps(o);
 		
-		if(x < 0)
+		if(x < 0) {
 			x = 0;
+			localX = 0;
+		}
 		
 		if(y > Platformer.game.getHeight()) {
 			Platformer.game.stop();
