@@ -135,12 +135,12 @@ public class Player extends GameObject implements Entity {
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
 			{
 				facing = true;
-				xAcceleration = .25f;
+				xAcceleration = (realdx < 1 && realdx >= 0) ? 1: .25f;
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
 			{
 				facing = false;
-				xAcceleration = -.25f;
+				xAcceleration = (realdx > -1 && realdx <= 0) ? -1: -.25f;
 			}
 		}
 		else
@@ -175,7 +175,6 @@ public class Player extends GameObject implements Entity {
 	
 	void updatePosition(int direction, int amount)
 	{
-		realdx = 0;
 		localX += direction*amount;
 		if(localX > scrollDistance)
 			Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= direction*amount;});
@@ -285,25 +284,28 @@ public class Player extends GameObject implements Entity {
 				updatePosition(1, (int)(o.x-x-w));
 			else if(realdx < 0)
 				updatePosition(1, (int)(o.x+o.w-x));
+			realdx = 0;
 		}
 		else if(o instanceof Platform)
 		{
-			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) && realdx > 0) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT)) && realdx < 0))
+			float temp = realdx;
+			realdx = 0;
+			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))))
 			{
 				sliding = true;
 				if(onGround == false && wallJump && o != lastWall && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
 				{
 					wallJump = false;
 					dy = -jumpStrength;
-					realdx = (Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT)) ? 5:-5;
+					realdx = (temp > 0) ? -3:3;
 					sliding = false;
 					waitTime = System.currentTimeMillis()+150;
 					lastWall = (Platform)o;
 				}
 			}
-			if(realdx > 0 && o.x <= x+w)
+			if(temp > 0 && o.x <= x+w)
 				updatePosition(1, (int)(o.x-x-w));
-			else if(realdx < 0 && x <= o.x+o.w)
+			else if(temp < 0 && x <= o.x+o.w)
 				updatePosition(1, (int)(o.x+o.w-x));
 		}
 		else {
