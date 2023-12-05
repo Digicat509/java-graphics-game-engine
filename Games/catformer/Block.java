@@ -35,6 +35,6 @@ public class Block extends Platform{
 	
 	@Override
 	public String toString() {
-		return ""+this.getClass()+" "+x+", "+y;
+		return ""+this.getClass()+" "+x/25+", "+y/25;
 	}
 }

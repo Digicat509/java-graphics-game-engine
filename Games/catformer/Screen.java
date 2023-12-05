@@ -221,7 +221,7 @@ public class Screen extends GameObject{
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && !wrote)
 			{
 				try {
-					writeToSaveFile("\\C:\\Users\\alexa\\OneDrive\\Documents\\GitHub\\java-graphics-game-engine\\Games\\catformer\\assets\\level_editor.txt"/*"assets/level_editor.txt"*/);
+					writeToSaveFile("assets/level_editor.txt");
 					wrote = true;
 				} 
 				catch(IOException e) {e.printStackTrace();}
@@ -234,7 +234,7 @@ public class Screen extends GameObject{
 		}
 	}
 	private void writeToSaveFile(String path) throws IOException, URISyntaxException{
-		FileWriter out = new FileWriter(new File(path/*getClass().getResource(path).toURI()*/), false);
+		FileWriter out = new FileWriter(new File(getClass().getResource(path).getPath()), false);
 		for(GameObject o: editLevel)
 		{
 			out.write(""+o+"\n");
