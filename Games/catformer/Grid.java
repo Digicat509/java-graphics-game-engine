@@ -16,8 +16,8 @@ public class Grid extends GameObject {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.gray);
-		for(int x = 0; x < Platformer.game.getWidth(); x+= currGridSize)
-			for(int y = 0; y < Platformer.game.getHeight(); y += currGridSize)
+		for(int x = (int)this.x-currGridSize; x < Platformer.game.getWidth()+currGridSize; x+= currGridSize)
+			for(int y = (int)this.y-currGridSize; y < Platformer.game.getHeight()+currGridSize; y += currGridSize)
 				g.drawRect(x, y, currGridSize, currGridSize);
 	}
 }

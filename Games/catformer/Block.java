@@ -10,7 +10,7 @@ public class Block extends Platform{
 	int gridX, gridY = 0;
 	public Block(int x, int y)
 	{
-		super(x*Grid.currGridSize, y*Grid.currGridSize, Grid.currGridSize, Grid.currGridSize, 0);
+		super(x, y, Grid.currGridSize, Grid.currGridSize, 0);
 		gridX = x;
 		gridY = y;
 	}

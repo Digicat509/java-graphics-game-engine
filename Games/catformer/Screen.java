@@ -34,6 +34,8 @@ public class Screen extends GameObject{
 	boolean drag = false;
 	int mx = 0, my = 0;
 	int level = 1;
+	int lastX = 0;
+	int editOffsetX = 0;
 	Text levelText;
 	Color color;
 	private boolean wrote;
@@ -164,19 +166,19 @@ public class Screen extends GameObject{
 		}
 		if(Platformer.level != null && Platformer.level.stage == Stage.EDIT)
 		{
-			if(Platformer.game.getInput().isMouseClicked()) {
+			if(Platformer.game.getInput().isMouseClicked() && !Platformer.game.getInput().isButton(2)) {
 				mx = Platformer.game.getInput().getMouseX();
 				my = Platformer.game.getInput().getMouseY();
 				if(et.equals(EditTool.BLOCK) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
 				{
-					editLevel.add(new Block(mx/Grid.currGridSize, my/Grid.currGridSize));
+					editLevel.add(new Block((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25));
 				}
 			}
 			if(Math.abs(Platformer.game.getInput().getMouseDragX()) > 1 || Math.abs(Platformer.game.getInput().getMouseDragY()) > 1)
 			{
 				if(!drag && et.equals(EditTool.BUILDING))
 				{
-					editBuilding = new Building((Platformer.game.getInput().getMouseX()/25)*25, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+					editBuilding = new Building((Platformer.game.getInput().getMouseX()/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
 					  drag = true;
 				}
 				else if(et.equals(EditTool.BUILDING) && Platformer.game.getInput().getMouseDragX() >= 50 && Platformer.game.getInput().getMouseDragX()%50 == 0)
@@ -196,6 +198,25 @@ public class Screen extends GameObject{
 					editBuilding = null;
 				}
 				drag = false;
+			}
+			if(Platformer.game.getInput().isButton(2) && Platformer.game.getInput().draging())
+			{
+				if(lastX == 0)
+					lastX = Platformer.game.getInput().getMouseX();
+				int temp = (Platformer.game.getInput().getMouseX()-lastX);
+				if(editOffsetX + temp > 0)
+				{
+					editOffsetX += temp;
+					Platformer.level.grid.x -= temp;
+					if(Platformer.level.grid.x <= -Grid.currGridSize || Platformer.level.grid.x >= Grid.currGridSize) {
+						Platformer.level.grid.x %= 25;
+					}
+					Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= temp;});
+				}
+				lastX = Platformer.game.getInput().getMouseX();
+			}
+			if(!Platformer.game.getInput().draging()) {
+				lastX = 0;
 			}
 			if(Platformer.game.getInput().isButton(3) && !selectorWheelHeld)
 			{
@@ -220,6 +241,7 @@ public class Screen extends GameObject{
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && !wrote)
 			{
+				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += editOffsetX;});
 				try {
 					writeToSaveFile("assets/level_editor.txt");
 					wrote = true;

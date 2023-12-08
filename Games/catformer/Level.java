@@ -12,6 +12,7 @@ public class Level {
 	int currX = 0;
 	private int drawCurrX = 0;
 	int height;
+	Grid grid;
 	public Level(Stage stage)
 	{
 		this.stage = stage;
@@ -151,7 +152,7 @@ public class Level {
 		}
 		if(stage == Stage.EDIT)
 		{
-			new Grid();
+			grid = new Grid();
 		}
 		if(stage == Stage.TEST)
 		{
@@ -275,7 +276,7 @@ public class Level {
 					parameters[i] = parameters[i].strip();
 				if(name.equalsIgnoreCase("block") || name.equalsIgnoreCase(""+Block.class))
 				{
-					new Block((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]));
+					new Block((int)Double.parseDouble(parameters[0])*25, (int)Double.parseDouble(parameters[1])*25);
 				}
 				else if(name.equalsIgnoreCase("text") || name.equalsIgnoreCase(""+Text.class))
 				{
