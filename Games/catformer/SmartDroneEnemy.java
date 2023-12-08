@@ -38,12 +38,15 @@ public class SmartDroneEnemy extends Enemy {
 		if(o != null)
 		{
 			if(Platformer.player.x < this.x && Platformer.player.x > this.x-RANGE) {
-				x -= dx;
+				dx = -3;
 				facing = true;
 			}
-			if(Platformer.player.x > this.x && Platformer.player.x < this.x+this.w+RANGE) {
-				x += dx;
+			else if(Platformer.player.x > this.x && Platformer.player.x < this.x+this.w+RANGE) {
+				dx = 3;
 				facing = false;
+			}
+			else {
+				dx = 0;
 			}
 			if(o instanceof Platform)
 			{
@@ -58,6 +61,7 @@ public class SmartDroneEnemy extends Enemy {
 					y = o.y-h;
 				}
 			}
+			x += dx;
 		}
 		else
 		{

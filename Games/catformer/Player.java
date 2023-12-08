@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -354,13 +355,11 @@ public class Player extends GameObject implements Entity {
 		}
 		
 		if(y > Platformer.game.getHeight()) {
-			Platformer.game.stop();
-			Platformer.screen.updateState(State.TITLE);
+			restart();
 		}
 		
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_R)){
-			Platformer.game.stop();
-			Platformer.screen.updateState(State.TITLE);
+			restart();
 		}
 		
 		Platformer.updateDistance((localX+30)/w);
@@ -377,11 +376,19 @@ public class Player extends GameObject implements Entity {
 		}
 		if(HP <= 0)
 		{
-			Platformer.game.stop();
-			Platformer.screen.updateState(State.TITLE);
+			restart();
 		}
 	}
-
+	private void restart() {
+		try {
+			if(Platformer.level.stage.equals(Level.Stage.INFINITE))
+				Platformer.screen.addLeaderboard((localX+30)/w);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Platformer.game.stop();
+		Platformer.screen.updateState(State.TITLE);
+	}
 	public int getHP() {
 		return HP;
 	}

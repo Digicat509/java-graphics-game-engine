@@ -5,11 +5,14 @@ import java.awt.Graphics;
 import java.awt.event.*;
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
@@ -64,6 +67,16 @@ public class Screen extends GameObject{
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
 			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-60, 500, 120, 50, color, () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
 			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 580, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
+			new Text("Leaderboard: ", 75, 75, 18, Color.white);
+			try {
+				int[] leaderboard = readLeaderboard();
+				if(leaderboard != null)
+					for(int i = 0; i < 10; i++)
+						if(i < leaderboard.length)
+							new Text(""+leaderboard[i]+"m", 75, 125+(i)*50, 18, Color.white);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		else if(state == State.PLAYING)
 		{
@@ -100,6 +113,16 @@ public class Screen extends GameObject{
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
 			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-60, 500, 120, 50, color, () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
 			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 580, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
+			new Text("Leaderboard: ", 75, 75, 18, Color.white);
+			try {
+				int[] leaderboard = readLeaderboard();
+				if(leaderboard != null)
+					for(int i = 0; i < 10; i++)
+						if(i < leaderboard.length)
+							new Text(""+leaderboard[i]+"m", 75, 125+(leaderboard.length-i-1)*50, 18, Color.white);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		else if(state == State.PLAYING && stage == Stage.EDIT)
 		{
@@ -247,7 +270,6 @@ public class Screen extends GameObject{
 					wrote = true;
 				} 
 				catch(IOException e) {e.printStackTrace();}
-				catch(URISyntaxException e) {e.printStackTrace();}
 				Platformer.level = null;
 				updateState(State.TITLE);
 			}
@@ -255,7 +277,7 @@ public class Screen extends GameObject{
 				Grid.currGridSize += Platformer.game.getInput().getScroll();
 		}
 	}
-	private void writeToSaveFile(String path) throws IOException, URISyntaxException{
+	private void writeToSaveFile(String path) throws IOException{
 		FileWriter out = new FileWriter(new File(getClass().getResource(path).getPath()), false);
 		for(GameObject o: editLevel)
 		{
@@ -263,6 +285,35 @@ public class Screen extends GameObject{
 			System.out.println(o);
 		}
 		editLevel = new HashSet<GameObject>();
+		out.flush();
+	}
+	private int[] readLeaderboard() throws IOException {
+		Scanner in = new Scanner(new File(getClass().getResource("assets/leaderboard.txt").getPath()));
+		if(in.hasNextLine()) {
+			String[] arr = in.nextLine().split(" ");
+			int[] temp = new int[arr.length];
+			for(int i = 0; i < arr.length; i++)
+				temp[i] = Integer.parseInt(arr[i]);
+			return temp;
+		}
+		return null;
+	}
+	public void addLeaderboard(int ... i) throws IOException {
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		int[] arr = readLeaderboard();
+		if(arr != null)
+			for(int n: arr)
+				temp.add(n);
+		for(int n: i)
+			temp.add(n);
+		Collections.sort(temp, Collections.reverseOrder());
+		FileWriter out = new FileWriter(new File(getClass().getResource("assets/leaderboard.txt").getPath()), false);
+		for(int j = 0; j < 10; j++) {
+			if(j < temp.size()-1)
+				out.write(temp.get(j)+" ");
+			else
+				out.write(""+temp.get(j));
+		}
 		out.flush();
 	}
 	enum EditTool
