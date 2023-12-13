@@ -249,6 +249,8 @@ public class Player extends GameObject implements Entity {
 			this.y = (((Portal)o).oPortal.y-this.h);
 			dy = -dy;
 			y += dy;
+//			if(Platformer.level.stage.equals(Level.Stage.INFINITE))
+//				Platformer.level.update(localX+move, y);
 			updatePositionFinal(1, move);
 		}
 		

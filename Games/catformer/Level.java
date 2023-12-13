@@ -175,15 +175,11 @@ public class Level {
 	}
 	private void generate() {
 		int dist = drawCurrX+Platformer.game.getWidth();
-		int width = (int)(Math.random()*3+1)*50;
-		new Building(drawCurrX, height, width);
-		currX += width;
-		drawCurrX += width;
 		while(drawCurrX < dist)
 		{
 			int rand = (int)(Math.random()*100);
 			int prob = (int)(Math.random()*40);
-			width = (int)(Math.random()*3+1)*50;
+			int width = (int)(Math.random()*3+1)*50;
 			height = height + ((int)(Math.random()*200)-100);
 			while(height < 250)
 				height = height + ((int)(Math.random()*100));
@@ -243,7 +239,7 @@ public class Level {
 	{
 		if(currX < x+Platformer.game.getWidth())
 		{
-			System.out.println("update level");
+//			System.out.println("update level");
 			drawCurrX = (int)Platformer.player.x+Platformer.game.getWidth();
 			generate();
 		}

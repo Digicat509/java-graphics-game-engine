@@ -311,7 +311,7 @@ public class Screen extends GameObject{
 		for(int j = 0; j < 10; j++) {
 			if(j < temp.size()-1)
 				out.write(temp.get(j)+" ");
-			else
+			else if(j < temp.size())
 				out.write(""+temp.get(j));
 		}
 		out.flush();
