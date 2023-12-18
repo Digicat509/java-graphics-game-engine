@@ -19,8 +19,8 @@ public class Granny extends Enemy {
 	private Image frame1, frame2;
 	private boolean musicOn;
 	
-	public Granny(int x, int y) {
-		super(x, y, speed, 20);
+	public Granny(int x, int y, boolean disabled) {
+		super(x, y, speed, 20, disabled);
 		w = 22;
 		h = 44;
 		try {
@@ -63,7 +63,8 @@ public class Granny extends Enemy {
 					g.drawImage(frame1, (int)x+w, (int)y, -w, h-1, null);
 				break;
 		}
-		move();
+		if(!disabled)
+			move();
 	}
 	
 	@Override

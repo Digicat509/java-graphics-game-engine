@@ -13,8 +13,8 @@ public class SmartDroneEnemy extends Enemy {
 	private static final int RANGE = 200;
 	private boolean facing = true;
 	
-	public SmartDroneEnemy(int x, int y) {
-		super(x, y, 3, 20);
+	public SmartDroneEnemy(int x, int y, boolean disabled) {
+		super(x, y, 3, 20, disabled);
 		w = 28;
 		h = 15;
 		try {
@@ -28,7 +28,8 @@ public class SmartDroneEnemy extends Enemy {
 			g.drawImage(image,(int)x, (int)y, w, h, null);
 		else 
 			g.drawImage(image,(int)x+w, (int)y, -w, h, null);
-		move();
+		if(!disabled)
+			move();
 	}
 	@Override
 	public void move() {

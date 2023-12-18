@@ -6,8 +6,8 @@ import gameEngine.GameObject;
 
 public class DogEnemy extends Enemy{
 	
-	public DogEnemy(int x, int y) {
-		super(x, y, 2, 10);
+	public DogEnemy(int x, int y, boolean disabled) {
+		super(x, y, 2, 10, disabled);
 		w = 32;
 		h = 20;
 		try {
@@ -49,6 +49,12 @@ public class DogEnemy extends Enemy{
 			g.drawImage(image, (int)x, (int)y, w, h, null);
 		else
 			g.drawImage(image, (int)x+w, (int)y, -w, h, null);
-		move();
+		if(!disabled)
+			move();
+	}
+	
+	@Override
+	public String toString() {
+		return ""+this.getClass()+" "+x/25+", "+y/25;
 	}
 }

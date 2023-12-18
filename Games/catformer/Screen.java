@@ -42,6 +42,7 @@ public class Screen extends GameObject{
 	Text levelText;
 	Color color;
 	private boolean wrote;
+	private boolean playerPlaced = false;
 	private Timer keyDelayTimer = new Timer(0);
 	public Screen() {
 		color = new Color(181, 4, 39);
@@ -130,6 +131,7 @@ public class Screen extends GameObject{
 			editLevel = new HashSet<GameObject>();
 			list = new ArrayList<Button>();
 			wrote = false;
+			playerPlaced = false;
 			Platformer.start(stage);
 		}
 		else if(state == State.PLAYING)
@@ -189,27 +191,40 @@ public class Screen extends GameObject{
 		}
 		if(Platformer.level != null && Platformer.level.stage == Stage.EDIT)
 		{
-			if(Platformer.game.getInput().isMouseClicked() && !Platformer.game.getInput().isButton(2)) {
+			if(Platformer.game.getInput().isMouseClicked() && !Platformer.game.getInput().isButton(2) && et != null) {
 				mx = Platformer.game.getInput().getMouseX();
 				my = Platformer.game.getInput().getMouseY();
 				if(et.equals(EditTool.BLOCK) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
 				{
 					editLevel.add(new Block((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25));
 				}
+				else if(et.equals(EditTool.PLAYER) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1 && !playerPlaced)
+				{
+					editLevel.add(new Player((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+					playerPlaced = true;
+				}
+				else if(et.equals(EditTool.ENEMY) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				{
+					editLevel.add(new DogEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+				}
+				else if(et.equals(EditTool.PORTAL) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				{
+					editLevel.add(new Portal((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, (mx/25+4)*25+(int)Platformer.level.grid.x, (my/25-4)*25));
+				}
 			}
-			if(Math.abs(Platformer.game.getInput().getMouseDragX()) > 1 || Math.abs(Platformer.game.getInput().getMouseDragY()) > 1)
+			if((Math.abs(Platformer.game.getInput().getMouseDragX()) > 1 || Math.abs(Platformer.game.getInput().getMouseDragY()) > 1 )&& et != null)
 			{
 				if(!drag && et.equals(EditTool.BUILDING))
 				{
 					editBuilding = new Building((Platformer.game.getInput().getMouseX()/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
-					  drag = true;
+					drag = true;
 				}
 				else if(et.equals(EditTool.BUILDING) && Platformer.game.getInput().getMouseDragX() >= 50 && Platformer.game.getInput().getMouseDragX()%50 == 0)
 				{
 					editBuilding = new Building((int)editBuilding.x, (int)editBuilding.y, Platformer.game.getInput().getMouseDragX());
 				}
 			}
-			if(!Platformer.game.getInput().isButton(1) && drag)
+			if(!Platformer.game.getInput().isButton(1) && drag && et != null)
 			{
 				if(et.equals(EditTool.BUILDING) && editBuilding != null && editBuilding.w > 0)
 				{

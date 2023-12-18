@@ -15,8 +15,8 @@ public class DumbDroneEnemy extends Enemy {
 	private static final int RANGE = 150;
 	private boolean rolling = false;
 	
-	public DumbDroneEnemy(int x, int y) {
-		super(x, y, 0, 30);
+	public DumbDroneEnemy(int x, int y, boolean disabled) {
+		super(x, y, 0, 30, disabled);
 		w = 22;
 		h = 12;
 		try {
@@ -25,7 +25,8 @@ public class DumbDroneEnemy extends Enemy {
 	}
 	public void draw(Graphics g) {
 		g.drawImage(image, (int)x, (int)y, null);
-		move();
+		if(!disabled)
+			move();
 	}
 	@Override
 	public void move() {

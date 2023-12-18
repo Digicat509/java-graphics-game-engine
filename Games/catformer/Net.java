@@ -10,7 +10,7 @@ import gameEngine.GameObject;
 public class Net extends Enemy implements Projectile{
 
 	public Net(int x, int y, int dx, float dy) {
-		super(x, y, dx, 10);
+		super(x, y, dx, 10, false);
 		this.dy = dy;
 		w = 10;
 		h = 10;

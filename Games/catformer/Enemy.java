@@ -1,14 +1,20 @@
 package catformer;
 
+import java.util.Objects;
+
 import gameEngine.GameObject;
 
 public abstract class Enemy extends DangerThing  implements Entity {
-	public Enemy(int x, int y, int dx, int damage)
+	
+	protected boolean disabled = false;
+	
+	public Enemy(int x, int y, int dx, int damage, boolean disabled)
 	{
 		super(damage);
 		this.x = x;
 		this.y = y;
 		this.dx = dx;
+		this.disabled = disabled;
 		Platformer.game.getHandeler().add(this, true);
 	}
 	
@@ -37,5 +43,15 @@ public abstract class Enemy extends DangerThing  implements Entity {
 					o.x= x-o.w;
 			}
 		}
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Block ? x == ((Block)obj).x && y == ((Block)obj).y: super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y);
 	}
 }

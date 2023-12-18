@@ -36,10 +36,12 @@ public class Player extends GameObject implements Entity {
 	private Platform lastWall;
 	private Image walkImage;
 	private int frame;
+	private boolean disabled = false;
 	
-	public Player(int x, int y)
+	public Player(int x, int y, boolean disabled)
 	{
 		super(3, "assets/GoodCat.png");
+		this.disabled = disabled;
 		this.x = x;
 		localX = 0;
 		this.y = y;
@@ -52,7 +54,8 @@ public class Player extends GameObject implements Entity {
 		try {
 			this.walkImage = ImageIO.read(getClass().getResource("assets/GoodCatMidWalk.png"));
 		} catch (Exception e) {e.printStackTrace();}
-		new HPBar();
+		if(!disabled)
+			new HPBar();
 		Platformer.game.getHandeler().add(this, true);
 	}
 	
@@ -119,8 +122,8 @@ public class Player extends GameObject implements Entity {
 			}
 			frameTimer ++;
 		}
-		move();
-		
+		if(!disabled)
+			move();
 	}
 	
 	private void arrowMovement() {
@@ -393,5 +396,10 @@ public class Player extends GameObject implements Entity {
 	}
 	public int getHP() {
 		return HP;
+	}
+	
+	@Override
+	public String toString() {
+		return ""+this.getClass()+" "+x/25+", "+y/25;
 	}
 }

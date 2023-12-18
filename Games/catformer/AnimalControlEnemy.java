@@ -12,8 +12,8 @@ public class AnimalControlEnemy extends Enemy {
 	private long delay = 0;
 	private static final int RANGE = 400;
 	
-	public AnimalControlEnemy(int x, int y) {
-		super(x, y, 0, 20);
+	public AnimalControlEnemy(int x, int y, boolean disabled) {
+		super(x, y, 0, 20, disabled);
 		this.w = 20;
 		this.h = 45;
 		try {
@@ -27,7 +27,8 @@ public class AnimalControlEnemy extends Enemy {
 			g.drawImage(image, (int)x, (int)y, w, h-1, null);
 		else
 			g.drawImage(image, (int)x+w, (int)y, -w, h-1, null);
-		move();
+		if(!disabled)
+			move();
 	}
 	@Override
 	public void move() {

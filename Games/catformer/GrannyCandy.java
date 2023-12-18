@@ -13,7 +13,7 @@ public class GrannyCandy extends Enemy implements Projectile{
 	private boolean candy = true;
 	
 	public GrannyCandy(int x, int y, int dx, float dy) {
-		super(x, y, dx, 30);
+		super(x, y, dx, 30, false);
 		this.dy = dy;
 		w = 19;
 		h = 11;
