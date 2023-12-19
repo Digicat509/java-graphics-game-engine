@@ -20,34 +20,37 @@ public abstract class Enemy extends DangerThing  implements Entity {
 	
 	public void push()
 	{
-		GameObject o = this.hits();
-		if(o != null)
+		if(!(this instanceof Projectile))
 		{
-			if(o instanceof Player)
+			GameObject o = this.hits();
+			if(o != null)
 			{
-				int move;
-				if(dx > 0 && o.x < x+w)
-					move = (int)(x+w-o.x);
-				else if(dx < 0 && o.x+o.w > x)
-					move = (int)(x-o.x-o.w);
-				else
-					move = 0;
-				((Player)o).updatePosition(1, move);
-				((Player)o).damage(this);
-			}
-			else if(o instanceof Entity)
-			{
-				if(dx > 0)
-					o.x = x+w;
-				else if(dx < 0)
-					o.x= x-o.w;
+				if(o instanceof Player)
+				{
+					int move;
+					if(dx > 0 && o.x < x+w)
+						move = (int)(x+w-o.x);
+					else if(dx < 0 && o.x+o.w > x)
+						move = (int)(x-o.x-o.w);
+					else
+						move = 0;
+					((Player)o).updatePosition(1, move);
+					((Player)o).damage(this);
+				}
+				else if(o instanceof Entity)
+				{
+					if(dx > 0)
+						o.x = x+w;
+					else if(dx < 0)
+						o.x= x-o.w;
+				}
 			}
 		}
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof Block ? x == ((Block)obj).x && y == ((Block)obj).y: super.equals(obj);
+		return obj instanceof Enemy ? x == ((Enemy)obj).x && y == ((Enemy)obj).y: super.equals(obj);
 	}
 	
 	@Override

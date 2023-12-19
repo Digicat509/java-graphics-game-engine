@@ -25,6 +25,7 @@ public class RectangularHitbox extends Hitbox {
 
 	}
 	
+	@Override
 	public boolean contains(int x, int y) {
 		return this.getBounds().contains(x, y);
 	}

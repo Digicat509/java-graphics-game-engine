@@ -12,5 +12,6 @@ public abstract class Hitbox {
 	}
 	public abstract boolean hits(Hitbox other);
 	public abstract boolean contains(Hitbox other);
+	public abstract boolean contains(int x, int y);
 	public abstract Rectangle2D getBounds();
 }

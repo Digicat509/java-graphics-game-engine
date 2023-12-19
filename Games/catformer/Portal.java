@@ -31,7 +31,7 @@ public class Portal extends GameObject{
 	
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof Block ? x == ((Block)obj).x && y == ((Block)obj).y: super.equals(obj);
+		return obj instanceof Portal ? x == ((Portal)obj).x && y == ((Portal)obj).y: super.equals(obj);
 	}
 	
 	@Override

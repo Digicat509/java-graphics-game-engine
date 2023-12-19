@@ -284,7 +284,7 @@ public class Player extends GameObject implements Entity {
 		
 		collisionEffects(o);
 		
-		if(o instanceof Entity)
+		if(o instanceof Entity && !(o instanceof Projectile))
 		{
 			if(realdx > 0)
 				updatePosition(1, (int)(o.x-x-w));
