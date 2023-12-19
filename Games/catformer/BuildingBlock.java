@@ -18,7 +18,6 @@ public class BuildingBlock extends GameObject{
 		try {
 			image = ImageIO.read(getClass().getResource(path));
 		} catch (IOException e) {}
-		Platformer.game.getHandeler().add(this, false);
 	}
 	
 	public void draw(Graphics g) {

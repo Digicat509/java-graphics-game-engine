@@ -38,6 +38,7 @@ public class Building extends Platform {
 			for(int j = 0; j <= h; j += 50) {
 				arr.get(i/50).get(j/50).x = x+i;
 				arr.get(i/50).get(j/50).y = y+j;
+				arr.get(i/50).get(j/50).draw(g);
 			}
 		}
 //		for(int i = 0; i < w; i += 10) //draws 10X10 rects change this to tiles when tile png is made
