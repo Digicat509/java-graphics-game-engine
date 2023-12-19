@@ -46,7 +46,6 @@ public class Credits extends GameObject {
 	}
 	@Override
 	public void move() {
-		super.move();
 		GameObject temp = null;
 		for(GameObject t: credits)
 		{
