@@ -4,9 +4,11 @@ import catformer.Level.Stage;
 import gameEngine.GameEngine;
 import gameEngine.GameEngine.State;
 import gameEngine.Text;
+import gameEngine.GameData;
 
 public class Platformer {
 	static GameEngine game;
+	static GameData gameData;
 	static Level level;
 	static Player player;
 	static Text text;
@@ -18,8 +20,10 @@ public class Platformer {
 	
 	public static void main(String[] args)
 	{
+		gameData = new GameData();
 		Platformer platformer = new Platformer();
 	}
+	
 	public Platformer()
 	{
 		game = new GameEngine();

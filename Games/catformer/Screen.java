@@ -3,24 +3,17 @@ package catformer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
-
-import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 
 import catformer.Level.Stage;
 import gameEngine.Button;
-//import catformer.Platformer.STATE;
-import gameEngine.GameEngine;
 import gameEngine.GameEngine.State;
 import gameEngine.GameImage;
 import gameEngine.GameObject;
@@ -312,17 +305,18 @@ public class Screen extends GameObject{
 		}
 	}
 	private void writeToSaveFile(String path) throws IOException{
-		FileWriter out = new FileWriter(new File(getClass().getResource(path).getPath()), false);
+		//FileWriter out = new FileWriter(new File(getClass().getResource(path).getPath()), false);
+		String s = "";
 		for(GameObject o: editLevel)
 		{
-			out.write(""+o+"\n");
+			s += ""+o+"\n";
 			System.out.println(o);
 		}
 		editLevel = new HashSet<GameObject>();
-		out.flush();
+		Platformer.gameData.addData(path, s);
 	}
 	private int[] readLeaderboard() throws IOException {
-		Scanner in = new Scanner(new File(getClass().getResource("assets/leaderboard.txt").getPath()));
+		Scanner in = new Scanner(Platformer.gameData.getData("assets/leaderboard.txt") == null? "":Platformer.gameData.getData("assets/leaderboard.txt")/*new File(getClass().getResource("assets/leaderboard.txt").getPath())*/);
 		if(in.hasNextLine()) {
 			String[] arr = in.nextLine().split(" ");
 			int[] temp = new int[arr.length];
@@ -341,14 +335,15 @@ public class Screen extends GameObject{
 		for(int n: i)
 			temp.add(n);
 		Collections.sort(temp, Collections.reverseOrder());
-		FileWriter out = new FileWriter(new File(getClass().getResource("assets/leaderboard.txt").getPath()), false);
+		//FileWriter out = new FileWriter(new File(getClass().getResource("assets/leaderboard.txt").getPath()), false);
+		String s = "";
 		for(int j = 0; j < 10; j++) {
 			if(j < temp.size()-1)
-				out.write(temp.get(j)+" ");
+				s += temp.get(j)+" ";
 			else if(j < temp.size())
-				out.write(""+temp.get(j));
+				s += ""+temp.get(j);
 		}
-		out.flush();
+		Platformer.gameData.addData("assets/leaderboard.txt", s);
 	}
 	enum EditTool
 	{

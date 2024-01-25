@@ -245,7 +245,7 @@ public class Level {
 	}
 	public void build(String path) throws IOException
 	{
-		Scanner s = new Scanner(new BufferedInputStream(getClass().getResource(path).openStream()));
+		Scanner s = new Scanner(Platformer.gameData.getData(path) == null? "": Platformer.gameData.getData(path)/*new BufferedInputStream(getClass().getResource(path).openStream())*/);
 		while(s.hasNextLine())
 		{
 			String line = s.nextLine();
