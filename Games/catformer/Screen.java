@@ -18,6 +18,7 @@ import gameEngine.GameEngine.State;
 import gameEngine.GameImage;
 import gameEngine.GameObject;
 import gameEngine.Text;
+import gameEngine.TextBar;
 import gameEngine.Timer;
 
 public class Screen extends GameObject{
@@ -34,10 +35,12 @@ public class Screen extends GameObject{
 	int lastX = 0;
 	int editOffsetX = 0;
 	Text levelText;
+	TextBar textBar;
 	Color color;
 	private boolean wrote;
 	private boolean playerPlaced = false;
 	private Timer keyDelayTimer = new Timer(0);
+	boolean inputText;
 	public Screen() {
 		color = new Color(181, 4, 39);
 		Platformer.game.getHandeler().add(this, false);
@@ -145,10 +148,16 @@ public class Screen extends GameObject{
 		}
 	}
 	public void draw(Graphics g) {
+		if(Platformer.game.getInput().isKey(KeyEvent.VK_R) && !inputText){
+			Platformer.game.stop();
+			Platformer.screen.updateState(State.TITLE);
+			Platformer.level = null;
+		}
+		
 		if(Platformer.game.state == State.TITLE)
 		{
 			if(levelText != null)
-				levelText.text = "Level:\t"+level;
+				levelText.setText("Level:\t"+level);
 			if(Platformer.game.getInput().isMouseClicked()) {
 				int mx = Platformer.game.getInput().getMouseX();
 				int my = Platformer.game.getInput().getMouseY();
@@ -180,6 +189,27 @@ public class Screen extends GameObject{
 					else 
 						this.level = 1;
 					keyDelayTimer = new Timer(.2);
+				}
+			}
+		}
+		if(Platformer.level != null && Platformer.level.stage == Stage.CUSTOM)
+		{
+			if(inputText)
+			{
+				if(textBar == null)
+					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15);
+				String k = Platformer.game.getInput().getLastKeyTyped();
+				if(k != null)
+				{
+					textBar.add(k);
+				}
+				if(Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
+				{
+					inputText = false;
+					String s = textBar.enterString();
+					Platformer.game.getHandeler().remove(textBar);
+					textBar = null;
+					try{Platformer.level.build(s);}catch(Exception e) {e.printStackTrace();}
 				}
 			}
 		}
@@ -291,14 +321,35 @@ public class Screen extends GameObject{
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && !wrote)
 			{
-				Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += editOffsetX;});
-				try {
-					writeToSaveFile("assets/level_editor.txt");
-					wrote = true;
-				} 
-				catch(IOException e) {e.printStackTrace();}
-				Platformer.level = null;
-				updateState(State.TITLE);
+				inputText = true;
+			}
+			if(inputText)
+			{
+				if(textBar == null)
+					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15);
+				String k = Platformer.game.getInput().getLastKeyTyped();
+				if(k != null)
+				{
+					textBar.add(k);
+				}
+				if(Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
+				{
+					String s = textBar.enterString();
+					if(s != "")
+					{
+						inputText = false;
+						Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += editOffsetX;});
+						try {
+							Platformer.gameData.addData("assets/level_editor.txt", s);
+							writeToSaveFile(s);
+							wrote = true;
+						} 
+						catch(IOException e) {e.printStackTrace();}
+						textBar = null;
+						Platformer.level = null;
+						updateState(State.TITLE);
+					}
+				}
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_Z))
 				Grid.currGridSize += Platformer.game.getInput().getScroll();

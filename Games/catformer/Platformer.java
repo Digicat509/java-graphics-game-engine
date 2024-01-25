@@ -54,6 +54,6 @@ public class Platformer {
 	{
 		distance = d;
 		if(text != null)
-			text.text = ""+distance+"m";
+			text.setText(""+distance+"m");
 	}
 }

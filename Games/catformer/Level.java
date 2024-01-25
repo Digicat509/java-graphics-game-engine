@@ -1,5 +1,6 @@
 package catformer;
 
+import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.Scanner;
@@ -18,7 +19,7 @@ public class Level {
 		this.stage = stage;
 		if(stage == Stage.CUSTOM)
 		{
-			try {build("assets/level_editor.txt");}catch(Exception e) {e.printStackTrace();}
+			Platformer.screen.inputText = true;
 		}
 		
 		if(stage == Stage.LEVEL3) {
@@ -235,10 +236,9 @@ public class Level {
 		}
 	}
 	public void update(float x, float y)
-	{
+	{	
 		if(currX < x+Platformer.game.getWidth())
 		{
-//			System.out.println("update level");
 			drawCurrX = (int)Platformer.player.x+Platformer.game.getWidth();
 			generate();
 		}

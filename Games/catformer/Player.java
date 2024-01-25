@@ -363,13 +363,9 @@ public class Player extends GameObject implements Entity {
 			restart();
 		}
 		
-		if(Platformer.game.getInput().isKey(KeyEvent.VK_R)){
-			restart();
-		}
-		
 		Platformer.updateDistance((localX+30)/w);
 		
-		if(Platformer.level.stage.equals(Level.Stage.INFINITE))
+		if(Platformer.level != null && Platformer.level.stage.equals(Level.Stage.INFINITE))
 				Platformer.level.update(localX+30, y);
 	}
 	

@@ -18,6 +18,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	private int mouseX,mouseY,mouseDragX = -1,mouseDragY;
 	private int scroll;
 	private boolean draging = false;
+	private String lastKeyTyped;
+	private boolean gotKeyTyped;
 
 	private GameEngine ge;
 
@@ -104,7 +106,15 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 		keys[e.getKeyCode()]=false;
 	}
 	public void keyTyped(KeyEvent e) {
-
+		lastKeyTyped = ""+e.getKeyChar();
+		gotKeyTyped = false;
+	}
+	public String getLastKeyTyped() {
+		if(!gotKeyTyped) {
+			gotKeyTyped = true;
+			return lastKeyTyped;
+		}
+		return null;
 	}
 	public int getMouseX(){return mouseX;}
 	public int getMouseY(){return mouseY;}
