@@ -8,8 +8,7 @@ import java.net.URL;
 public class TextBar extends GameObject {
 	String str = "";
 	Text text;
-	public TextBar(int x, int y)
-	{
+	public TextBar(int x, int y) {
 		this.x = x;
 		this.y = y;
 		w = 200;
@@ -17,25 +16,24 @@ public class TextBar extends GameObject {
 		layers = 5;
 		Handler.addHand.put(this, false);
 	}
-	public void add(String s)
-	{
+	public void add(String s) {
 		if(s.matches("[\\w]"))
 			str += s;
-		else if(s.matches("\b"))
-		{
+		else if(s.matches("\b")) {
 			if(str.length() > 0)
 				str = str.length() > 1 ? str.substring(0, str.length()-1) : "";
 		}
 	}
-	public String enterString()
-	{
+	public String getString() {
+		return str;
+	}
+	public String enterString() {
 		String s = str;
 		Handler.removeHand.add(text);
 		str = "";
 		return s;
 	}
-	public void draw(Graphics g)
-	{
+	public void draw(Graphics g) {
 		g.setColor(Color.gray);
 		g.fillRect((int)x, (int)y, w, h);
 		if(text == null)

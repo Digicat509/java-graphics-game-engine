@@ -34,8 +34,6 @@ public class Platformer {
 		sound = new Sound();
 		screen = new Screen();
 		screen.updateState(State.TITLE);
-		//level = new Level(Stage.TEST);
-		//screen.updateState(State.PLAYING, Stage.EDIT);
 		game.start();
 		//game.state = State.LOADING;
 	}
@@ -43,9 +41,15 @@ public class Platformer {
 	{
 		game.getHandeler().clear();
 		if(stage != null)
+		{
+			if(stage == Stage.CUSTOM)
+				screen.inputText = true;
 			level = new Level(stage);
+		}
 		else
 		{
+			if(Stage.get(levelNum) == Stage.CUSTOM)
+				screen.inputText = true;
 			level = new Level(Stage.get(levelNum));
 		}
 	}

@@ -13,4 +13,7 @@ public class GameData {
 	public String getData(String refrence) {
 		return prefs.get(refrence, null);
 	}
+	public void removeData(String refrence) {
+		prefs.remove(refrence);
+	}
 }

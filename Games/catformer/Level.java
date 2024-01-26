@@ -24,9 +24,7 @@ public class Level {
 		
 		if(stage == Stage.LEVEL3) {
 			Platformer.player = new Player(30, 250, false);
-			//new Pipe(100, 450, 100);
 			new Building(-50, 400, 400);
-			//new Building(200, 400, 150);
 			
 			new Building(450, 400, 100);
 			new Building(550, 300, 100);
@@ -38,8 +36,6 @@ public class Level {
 			
 			new DogEnemy(1300,525, false);
 			new Building(1200, 550, 350);
-			//new DogEnemy(1450,525);
-			//new Building(1400, 550, 100);
 			new Building(1650, 500, 50);
 			
 			new Pipe(1300, 100, 150);
@@ -56,7 +52,6 @@ public class Level {
 			new Box(2400-30,500-19);
 			
 			new Building(2700, 500, 450);
-			//new AnimalControlEnemy(2400, 100);
 			new Granny(2950, 100, false);
 			
 			new Building(3200, 500, 350);
@@ -104,9 +99,6 @@ public class Level {
 			new AnimalControlEnemy(3075, 250, false);
 			new AnimalControlEnemy(3525, 250, false);
 			new LevelPortal(3650, 500, Stage.LEVEL3, false);
-			//new Building(350, 500, 300);
-			//new Building(800, 600, 300);
-			//new Building(1250, 650, 300);
 		}
 		
 		if(stage == Stage.LEVEL1) {

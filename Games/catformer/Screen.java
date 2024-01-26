@@ -196,14 +196,22 @@ public class Screen extends GameObject{
 		{
 			if(inputText)
 			{
-				if(textBar == null)
+				if(textBar == null) {
 					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15);
+					try {
+						String[] temp = readLevelIndex();
+						for(String s: temp)
+							System.out.println(s+" ");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				String k = Platformer.game.getInput().getLastKeyTyped();
 				if(k != null)
 				{
 					textBar.add(k);
 				}
-				if(Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
+				if(textBar.getString().length() > 0 && Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
 				{
 					inputText = false;
 					String s = textBar.enterString();
@@ -340,7 +348,7 @@ public class Screen extends GameObject{
 						inputText = false;
 						Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += editOffsetX;});
 						try {
-							Platformer.gameData.addData("assets/level_editor.txt", s);
+							addToLevelIndex(s);
 							writeToSaveFile(s);
 							wrote = true;
 						} 
@@ -377,6 +385,14 @@ public class Screen extends GameObject{
 		}
 		return null;
 	}
+	private String[] readLevelIndex() throws IOException {
+		Scanner in = new Scanner(Platformer.gameData.getData("assets/level_editor.txt") == null? "":Platformer.gameData.getData("assets/level_editor.txt")/*new File(getClass().getResource("assets/leaderboard.txt").getPath())*/);
+		if(in.hasNextLine()) {
+			String[] arr = in.nextLine().split(" ");
+			return arr;
+		}
+		return null;
+	}
 	public void addLeaderboard(int ... i) throws IOException {
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		int[] arr = readLeaderboard();
@@ -395,6 +411,24 @@ public class Screen extends GameObject{
 				s += ""+temp.get(j);
 		}
 		Platformer.gameData.addData("assets/leaderboard.txt", s);
+	}
+	public void addToLevelIndex(String str) throws IOException {
+		ArrayList<String> temp = new ArrayList<String>();
+		String[] arr = readLevelIndex();
+		if(arr != null)
+			for(String n: arr)
+				if(!n.equals(str))
+					temp.add(n);
+		temp.add(str);
+		//FileWriter out = new FileWriter(new File(getClass().getResource("assets/leaderboard.txt").getPath()), false);
+		String s = "";
+		for(int j = 0; j < 10; j++) {
+			if(j < temp.size()-1)
+				s += temp.get(j)+" ";
+			else if(j < temp.size())
+				s += ""+temp.get(j);
+		}
+		Platformer.gameData.addData("assets/level_editor.txt", s);
 	}
 	enum EditTool
 	{
