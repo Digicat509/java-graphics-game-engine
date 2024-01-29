@@ -432,20 +432,37 @@ public class Screen extends GameObject{
 	}
 	enum EditTool
 	{
-		PLAYER(0), BUILDING(1), BLOCK(2), ENEMY(3), PORTAL(4), ERASER(5);
+		PLAYER(0, null), BUILDING(1, null), BLOCK(2, null), ENEMY(3, null), PORTAL(4, null), ERASER(5, null), DUMB(0, ENEMY), SMART(1, ENEMY), ANIMAL_CONTROL(2, ENEMY), DOG(3, ENEMY), GRANNY(4, ENEMY), BACK(5, ENEMY);
 		private int i;
-		EditTool(int i)
+		private EditTool parent;
+		private boolean hasChildren;
+		EditTool(int i, EditTool parent)
 		{
 			this.i = i;
+			this.parent = parent;
+			if(parent != null)
+				parent.hasChildren = true;
 		}
-		public static EditTool choseTool(int i)
+		public static EditTool choseTool(int i, EditTool parent)
 		{
 			for(EditTool e : EditTool.values())
 			{
-				if(e.i == i)
+				if((parent != null && parent.hasChildren && parent.equals(e.parent) && e.i == i) || (parent == null && e.i == i) || (parent != null && !parent.hasChildren && e.i == i))
 					return e;
 			}
-			return null;
+			return parent;
+		}
+		public boolean hasChildren() {
+			return hasChildren;
+		}
+		public boolean hasParent() {
+			return parent != null;
+		}
+		public EditTool getParent() {
+			return parent;
+		}
+		public int getIndex() {
+			return i;
 		}
 	}
 }

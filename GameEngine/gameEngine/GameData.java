@@ -1,5 +1,6 @@
 package gameEngine;
 
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 public class GameData {
@@ -15,5 +16,8 @@ public class GameData {
 	}
 	public void removeData(String refrence) {
 		prefs.remove(refrence);
+	}
+	public void clearData() throws BackingStoreException {
+		prefs.clear();
 	}
 }
