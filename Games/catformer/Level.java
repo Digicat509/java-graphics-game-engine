@@ -282,7 +282,23 @@ public class Level {
 				}
 				else if(name.equalsIgnoreCase("dog enemy")  || name.equalsIgnoreCase(""+DogEnemy.class))
 				{
-					new DogEnemy((int)Double.parseDouble(parameters[0])*25, (int)Double.parseDouble(parameters[1])*2, false);
+					new DogEnemy((int)Double.parseDouble(parameters[0])*25, (int)Double.parseDouble(parameters[1])*25, false);
+				}
+				else if(name.equalsIgnoreCase("smart drone enemy")  || name.equalsIgnoreCase(""+SmartDroneEnemy.class))
+				{
+					new SmartDroneEnemy((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), false);
+				}
+				else if(name.equalsIgnoreCase("dumb drone enemy")  || name.equalsIgnoreCase(""+DumbDroneEnemy.class))
+				{
+					new DumbDroneEnemy((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), false);
+				}
+				else if(name.equalsIgnoreCase("granny")  || name.equalsIgnoreCase(""+Granny.class))
+				{
+					new Granny((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), false);
+				}
+				else if(name.equalsIgnoreCase("animal control enemy")  || name.equalsIgnoreCase(""+AnimalControlEnemy.class))
+				{
+					new AnimalControlEnemy((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), false);
 				}
 				else if(name.equalsIgnoreCase("portal")  || name.equalsIgnoreCase(""+Portal.class))
 				{

@@ -45,6 +45,7 @@ public class SelectorWheel extends GameObject {
 			selectionSprites[4][2] = ImageIO.read(getClass().getResource("assets/AnimalControl.png"));
 			selectionSprites[4][3] = ImageIO.read(getClass().getResource("assets/Dog.png"));
 			selectionSprites[4][4] = ImageIO.read(getClass().getResource("assets/Granny.png"));
+			selectionSprites[4][5] = ImageIO.read(getClass().getResource("assets/back.png"));
 		} catch (IOException e) {
 			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
 		}

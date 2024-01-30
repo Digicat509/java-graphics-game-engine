@@ -246,6 +246,26 @@ public class Screen extends GameObject{
 				{
 					editLevel.add(new DogEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
 				}
+				else if(et.equals(EditTool.DOG) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				{
+					editLevel.add(new DogEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+				}
+				else if(et.equals(EditTool.ANIMAL_CONTROL) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				{
+					editLevel.add(new AnimalControlEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+				}
+				else if(et.equals(EditTool.SMART) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				{
+					editLevel.add(new SmartDroneEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+				}
+				else if(et.equals(EditTool.DUMB) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				{
+					editLevel.add(new DumbDroneEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+				}
+				else if(et.equals(EditTool.GRANNY) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				{
+					editLevel.add(new Granny((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+				}
 				else if(et.equals(EditTool.PORTAL) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
 				{
 					editLevel.add(new Portal((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, (mx/25+4)*25+(int)Platformer.level.grid.x, (my/25-4)*25));

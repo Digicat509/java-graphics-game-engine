@@ -39,25 +39,25 @@ public class Granny extends Enemy {
 		switch(frame)
 		{
 			case 0:
-				if(Platformer.player.x < x+w)
+				if(Platformer.player != null && Platformer.player.x < x+w)
 					g.drawImage(image, (int)x, (int)y, w, h-1, null);
 				else
 					g.drawImage(image, (int)x+w, (int)y, -w, h-1, null);
 				break;
 			case 1:
-				if(Platformer.player.x < x+w)
+				if(Platformer.player != null && Platformer.player.x < x+w)
 					g.drawImage(frame1, (int)x, (int)y, w, h-1, null);
 				else
 					g.drawImage(frame1, (int)x+w, (int)y, -w, h-1, null);
 				break;
 			case 2:
-				if(Platformer.player.x < x+w)
+				if(Platformer.player != null && Platformer.player.x < x+w)
 					g.drawImage(frame2, (int)x, (int)y, w, h-1, null);
 				else
 					g.drawImage(frame2, (int)x+w, (int)y, -w, h-1, null);
 				break;
 			case 3:
-				if(Platformer.player.x < x+w)
+				if(Platformer.player != null && Platformer.player.x < x+w)
 					g.drawImage(frame1, (int)x, (int)y, w, h-1, null);
 				else
 					g.drawImage(frame1, (int)x+w, (int)y, -w, h-1, null);
@@ -72,27 +72,27 @@ public class Granny extends Enemy {
 		float yVel = 0;
 		int xDist = 0;
 		int yDist = 0;
-		if(x-Platformer.player.x-Platformer.player.w < Platformer.game.getWidth()-400-RANGE && !musicOn)
+		if(Platformer.player != null && x-Platformer.player.x-Platformer.player.w < Platformer.game.getWidth()-400-RANGE && !musicOn)
 		{
 			Platformer.sound.audio.stop();
 			Platformer.sound.bossAudio.setFramePosition(0);
 			Platformer.sound.bossAudio.loop(Clip.LOOP_CONTINUOUSLY);
 			musicOn = true;
 		}
-		if(delay - 200 < System.currentTimeMillis())
+		if(Platformer.player != null && delay - 200 < System.currentTimeMillis())
 		{
 			xDist = (int)(Platformer.player.x-x);
 			yDist = (int)(Platformer.player.y-y);
 			double framesTillImpact = (double)Math.abs(xDist)/5;
 			yVel = (float)((yDist-.5*.5*Math.pow(framesTillImpact, 2))/framesTillImpact);
 		}
-		if(Platformer.player.x < x-Platformer.player.w && delay < System.currentTimeMillis() && Math.abs(xDist) < RANGE)
+		if(Platformer.player != null && Platformer.player.x < x-Platformer.player.w && delay < System.currentTimeMillis() && Math.abs(xDist) < RANGE)
 		{
 			new GrannyCandy((int)(x-10), (int)(y+10), -5, yVel);
 			delay = System.currentTimeMillis()+1000;
 			frameTimer = System.currentTimeMillis()+333;
 		}
-		if(Platformer.player.x > x+w && delay < System.currentTimeMillis() && Math.abs(xDist) < Platformer.player.scrollDistance+35+w)
+		if(Platformer.player != null && Platformer.player.x > x+w && delay < System.currentTimeMillis() && Math.abs(xDist) < Platformer.player.scrollDistance+35+w)
 		{
 			new GrannyCandy((int)(x-10), (int)(y+10), 5, yVel);
 			delay = System.currentTimeMillis()+1000;
