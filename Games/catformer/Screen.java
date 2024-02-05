@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 
 import catformer.Level.Stage;
@@ -37,6 +39,7 @@ public class Screen extends GameObject{
 	Text levelText;
 	TextBar textBar;
 	Color color;
+	private boolean soundOn = true;
 	private boolean wrote;
 	private boolean playerPlaced = false;
 	private Timer keyDelayTimer = new Timer(0);
@@ -65,6 +68,7 @@ public class Screen extends GameObject{
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
 			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-60, 500, 120, 50, color, () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
 			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 580, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
+			list.add(new Button(Platformer.game.getWidth()-100, 20, 50, 50, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{this.image = soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png"));}catch(IOException e) {}}));
 			new Text("Leaderboard: ", 75, 75, 18, Color.white);
 			try {
 				int[] leaderboard = readLeaderboard();
@@ -111,6 +115,7 @@ public class Screen extends GameObject{
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
 			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-60, 500, 120, 50, color, () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
 			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 580, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
+			list.add(new Button(Platformer.game.getWidth()-100, 20, 50, 50, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{this.image = soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png"));}catch(IOException e) {}}));
 			new Text("Leaderboard: ", 75, 75, 18, Color.white);
 			try {
 				int[] leaderboard = readLeaderboard();
@@ -148,6 +153,9 @@ public class Screen extends GameObject{
 		}
 	}
 	public void draw(Graphics g) {
+		if(!soundOn) {
+			Platformer.sound.stopAll();
+		}
 		if(Platformer.game.getInput().isKey(KeyEvent.VK_R) && !inputText){
 			Platformer.game.stop();
 			Platformer.screen.updateState(State.TITLE);

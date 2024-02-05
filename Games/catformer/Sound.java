@@ -46,4 +46,9 @@ class Sound
 		    volume.setValue(1.0f); // Reduce volume by 10 decibols.
 		}catch (Exception e){e.printStackTrace();}
 	}
+	public void stopAll() {
+		audio.stop();
+		creditsAudio.stop();
+		bossAudio.stop();
+	}
 }
