@@ -15,7 +15,7 @@ public class Net extends Enemy implements Projectile{
 		w = 10;
 		h = 10;
 		try {
-			this.image = ImageIO.read(getClass().getResource("assets/Net.png"));
+			this.setImage(ImageIO.read(getClass().getResource("assets/Net.png")));
 		} catch (Exception e) {e.printStackTrace();}
 	}
 	@Override

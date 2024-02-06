@@ -24,7 +24,7 @@ public class Granny extends Enemy {
 		w = 22;
 		h = 44;
 		try {
-			this.image = ImageIO.read(getClass().getResource("assets/Granny.png"));
+			this.setImage(ImageIO.read(getClass().getResource("assets/Granny.png")));
 		} catch (Exception e) {e.printStackTrace();}
 		try {
 			this.frame1 = ImageIO.read(getClass().getResource("assets/GrannyThrow1.png"));
@@ -40,9 +40,9 @@ public class Granny extends Enemy {
 		{
 			case 0:
 				if(Platformer.player != null && Platformer.player.x < x+w)
-					g.drawImage(image, (int)x, (int)y, w, h-1, null);
+					g.drawImage(getImage(), (int)x, (int)y, w, h-1, null);
 				else
-					g.drawImage(image, (int)x+w, (int)y, -w, h-1, null);
+					g.drawImage(getImage(), (int)x+w, (int)y, -w, h-1, null);
 				break;
 			case 1:
 				if(Platformer.player != null && Platformer.player.x < x+w)

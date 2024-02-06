@@ -21,7 +21,7 @@ public class SelectorWheel extends GameObject {
 			try {
 				sprites[i-1] = ImageIO.read(getClass().getResource("assets/SelectorWheel"+i+".png"));
 			} catch (IOException e) {
-				System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
+				System.out.println("No Image for "+getImage()+" "+this.getClass()+"!!!");
 			}
 		}
 		loadSelectionImages();
@@ -29,7 +29,7 @@ public class SelectorWheel extends GameObject {
 		h = 200;
 		this.x = x-w/2;
 		this.y = y-h/2;
-		currImage = image;
+		currImage = getImage();
 		Platformer.game.getHandeler().add(this, false);
 	}
 	
@@ -47,7 +47,7 @@ public class SelectorWheel extends GameObject {
 			selectionSprites[4][4] = ImageIO.read(getClass().getResource("assets/Granny.png"));
 			selectionSprites[4][5] = ImageIO.read(getClass().getResource("assets/back.png"));
 		} catch (IOException e) {
-			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
+			System.out.println("No Image for "+getImage()+" "+this.getClass()+"!!!");
 		}
 	}
 
@@ -85,7 +85,7 @@ public class SelectorWheel extends GameObject {
 		}
 		else
 		{
-			currImage = image;
+			currImage = getImage();
 		}
 	}
 	public void selectFinal(int mouseX, int mouseY) {

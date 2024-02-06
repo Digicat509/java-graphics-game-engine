@@ -18,7 +18,7 @@ public class GrannyCandy extends Enemy implements Projectile{
 		w = 19;
 		h = 11;
 		try {
-			this.image = ImageIO.read(getClass().getResource("assets/Candy.png"));
+			this.setImage(ImageIO.read(getClass().getResource("assets/Candy.png")));
 		} catch (Exception e) {e.printStackTrace();}
 	}
 	@Override
@@ -27,7 +27,7 @@ public class GrannyCandy extends Enemy implements Projectile{
 		if(!candy)
 			g.fillRect((int)x, (int)y, w, h);
 		else
-			g.drawImage(image, (int)x, (int)y, w, h, null);
+			g.drawImage(getImage(), (int)x, (int)y, w, h, null);
 		move();
 	}
 	@Override

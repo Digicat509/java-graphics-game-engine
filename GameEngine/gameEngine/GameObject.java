@@ -13,7 +13,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public int w,h;
 	public double theta;
 	protected int layers;
-	protected Image image;
+	private Image image;
 	protected boolean visible = true;
 	public GameObject() {
 		this(0);
@@ -24,7 +24,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public GameObject(String image) {
 		this(0);
 		try {
-			this.image = ImageIO.read(getClass().getResource(image));
+			this.setImage(ImageIO.read(getClass().getResource(image)));
 		} catch (IOException e) {
 			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
 		}
@@ -32,7 +32,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public GameObject(int layers, String image) {
 		this.layers = layers;
 		try {
-			this.image = ImageIO.read(getClass().getResource(image));
+			this.setImage(ImageIO.read(getClass().getResource(image)));
 		} catch (Exception e) {
 			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
 		}
@@ -40,7 +40,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public GameObject(URL image) {
 		this(0);
 		try {
-			this.image = ImageIO.read(image);
+			this.setImage(ImageIO.read(image));
 		} catch (IOException e) {
 			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
 		}
@@ -48,7 +48,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public GameObject(int layers, URL image) {
 		this.layers = layers;
 		try {
-			this.image = ImageIO.read(image);
+			this.setImage(ImageIO.read(image));
 		} catch (Exception e) {
 			System.out.println("No Image for "+image+" "+this.getClass()+"!!!");
 		}
@@ -110,7 +110,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 		if(visible) {
 			Graphics2D g2d = (Graphics2D)g;
 			try {
-				g2d.drawImage(image, (int)x, (int)y, (int)w, (int)h, null);
+				g2d.drawImage(getImage(), (int)x, (int)y, (int)w, (int)h, null);
 			}
 			catch(Exception e) {
 				g2d.setColor(Color.white);
@@ -126,5 +126,11 @@ public abstract class GameObject implements Comparable<GameObject> {
 	@Override
 	public String toString() {
 		return ""+this.getClass()+" "+x+", "+y;
+	}
+	public Image getImage() {
+		return image;
+	}
+	public void setImage(Image image) {
+		this.image = image;
 	}
 }

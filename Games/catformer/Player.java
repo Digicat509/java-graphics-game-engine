@@ -78,10 +78,10 @@ public class Player extends GameObject implements Entity {
 				{
 					case 0:
 						if(facing) {
-							g.drawImage(image,(int)x,(int)y, w, h, null);
+							g.drawImage(getImage(),(int)x,(int)y, w, h, null);
 						}
 						else {
-							g.drawImage(image,(int)x+w,(int)y, -w, h, null);
+							g.drawImage(getImage(),(int)x+w,(int)y, -w, h, null);
 						}
 						break;
 					case 1:
@@ -97,10 +97,10 @@ public class Player extends GameObject implements Entity {
 			else
 			{
 				if(facing) {
-					g.drawImage(image,(int)x,(int)y, w, h, null);
+					g.drawImage(getImage(),(int)x,(int)y, w, h, null);
 				}
 				else {
-					g.drawImage(image,(int)x+w,(int)y, -w, h, null);
+					g.drawImage(getImage(),(int)x+w,(int)y, -w, h, null);
 				}
 			}
 			if(!timer.timeUp())

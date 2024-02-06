@@ -12,7 +12,7 @@ public class Building extends Platform {
 	public Building(int x, int y, int w) {
 		super(x, y, w, Platformer.game.getHeight()-y, 0);
 		try {
-			image = ImageIO.read(getClass().getResource("assets/TestTile.png"));
+			setImage(ImageIO.read(getClass().getResource("assets/TestTile.png")));
 		} catch (IOException e) {}
 		for(int i = 0; i < w; i += 50) {
 			arr.add(new ArrayList<BuildingBlock>());

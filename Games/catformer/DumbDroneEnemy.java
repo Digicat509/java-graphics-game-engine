@@ -20,11 +20,11 @@ public class DumbDroneEnemy extends Enemy {
 		w = 22;
 		h = 12;
 		try {
-			this.image = ImageIO.read(getClass().getResource("assets/RollyPolly.png"));
+			this.setImage(ImageIO.read(getClass().getResource("assets/RollyPolly.png")));
 		} catch (Exception e) {e.printStackTrace();}
 	}
 	public void draw(Graphics g) {
-		g.drawImage(image, (int)x, (int)y, null);
+		g.drawImage(getImage(), (int)x, (int)y, null);
 		if(!disabled)
 			move();
 	}
@@ -42,7 +42,7 @@ public class DumbDroneEnemy extends Enemy {
 					dx = 4;
 				rolling = true;
 				try {
-					this.image = ImageIO.read(getClass().getResource("assets/RollingPolly.png"));
+					this.setImage(ImageIO.read(getClass().getResource("assets/RollingPolly.png")));
 					w = 15;
 					h = 15;
 				} catch (Exception e) {e.printStackTrace();}

@@ -10,8 +10,8 @@ public class GameImage extends GameObject {
 		super(i);
 		this.x = x;
 		this.y = y;
-		this.w = (int)(image.getWidth(null)*scale);
-		this.h = (int)(image.getHeight(null)*scale);
+		this.w = (int)(getImage().getWidth(null)*scale);
+		this.h = (int)(getImage().getHeight(null)*scale);
 		this.scale = scale;
 		Handler.addHand.put(this, false);
 	}
@@ -19,8 +19,8 @@ public class GameImage extends GameObject {
 		super(i);
 		this.x = x;
 		this.y = y;
-		this.w = (int)(image.getWidth(null));
-		this.h = (int)(image.getHeight(null));
+		this.w = (int)(getImage().getWidth(null));
+		this.h = (int)(getImage().getHeight(null));
 		this.scale = 1;
 		Handler.addHand.put(this, false);
 	}
@@ -36,8 +36,8 @@ public class GameImage extends GameObject {
 		super(layer, i);
 		this.x = x;
 		this.y = y;
-		this.w = (int)(image.getWidth(null)*scale);
-		this.h = (int)(image.getHeight(null)*scale);
+		this.w = (int)(getImage().getWidth(null)*scale);
+		this.h = (int)(getImage().getHeight(null)*scale);
 		this.scale = scale;
 		Handler.addHand.put(this, false);
 	}
@@ -45,8 +45,8 @@ public class GameImage extends GameObject {
 		super(layer, i);
 		this.x = x;
 		this.y = y;
-		this.w = (int)(image.getWidth(null));
-		this.h = (int)(image.getHeight(null));
+		this.w = (int)(getImage().getWidth(null));
+		this.h = (int)(getImage().getHeight(null));
 		this.scale = 1;
 		Handler.addHand.put(this, false);
 	}

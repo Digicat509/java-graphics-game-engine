@@ -18,16 +18,16 @@ public class SmartDroneEnemy extends Enemy {
 		w = 28;
 		h = 15;
 		try {
-			this.image = ImageIO.read(getClass().getResource("assets/Beetle.png"));
+			this.setImage(ImageIO.read(getClass().getResource("assets/Beetle.png")));
 		} catch (Exception e) {e.printStackTrace();}
 	}
 	public void draw(Graphics g) {
 		//g.setColor(Color.pink);
 		//g.fillRect((int)x, (int)y, w, h);
 		if(facing)
-			g.drawImage(image,(int)x, (int)y, w, h, null);
+			g.drawImage(getImage(),(int)x, (int)y, w, h, null);
 		else 
-			g.drawImage(image,(int)x+w, (int)y, -w, h, null);
+			g.drawImage(getImage(),(int)x+w, (int)y, -w, h, null);
 		if(!disabled)
 			move();
 	}

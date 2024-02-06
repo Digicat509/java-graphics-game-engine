@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.net.URL;
-import java.util.function.Consumer;
 
 public class Button extends GameObject{
 	
@@ -73,17 +72,58 @@ public class Button extends GameObject{
 		this.color = color;
 		Handler.addHand.put(this, false);
 	}
+	
+	public Button(String v, int x, int y, int w, int h, Color color, URL image, Runnable m) {
+		super(image);
+		val = v;
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		clickBox = new RectangularHitbox((int)x, (int)y, w, h);
+		text = new Text(val, new Rectangle(x, y, w, h), 20, color);
+		action = m;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
+	
+	public Button(String v, int x, int y, int w, int h, String font, Runnable m) {
+		val = v;
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		clickBox = new RectangularHitbox((int)x, (int)y, w, h);
+		text = new Text(val, new Rectangle(x, y, w, h), 20, font);
+		action = m;
+		this.color = Color.white;
+		Handler.addHand.put(this, false);
+	}
+	
+	public Button(String v, int x, int y, int w, int h, String font, Color color, URL image, Runnable m) {
+		super(image);
+		val = v;
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		clickBox = new RectangularHitbox((int)x, (int)y, w, h);
+		text = new Text(val, new Rectangle(x, y, w, h), 20, font, color);
+		action = m;
+		this.color = color;
+		Handler.addHand.put(this, false);
+	}
 
 	@Override
 	public void draw(Graphics g) {
-		if(image == null)
+		if(getImage() == null)
 		{
 			g.setColor(color);
 			g.drawRect((int)x, (int)y, w, h);
 		}
 		else
 		{
-			g.drawImage(image, (int)x, (int)y, w, h, null);
+			g.drawImage(getImage(), (int)x, (int)y, w, h, null);
 		}
 	}
 	

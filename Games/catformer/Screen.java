@@ -30,6 +30,7 @@ public class Screen extends GameObject{
 	HashSet<GameObject> editLevel;
 	ArrayList<GameObject> editRemove = new ArrayList<GameObject>();
 	EditTool et = EditTool.BLOCK;
+	Button soundButton = new Button(0, 0, 0, 0, ()->{});
 	Building editBuilding = null;
 	boolean drag = false;
 	int mx = 0, my = 0;
@@ -39,13 +40,16 @@ public class Screen extends GameObject{
 	Text levelText;
 	TextBar textBar;
 	Color color;
+	String font;
 	private boolean soundOn = true;
 	private boolean wrote;
 	private boolean playerPlaced = false;
-	private Timer keyDelayTimer = new Timer(0);
+	private Timer keyPressDelayTimer = new Timer(0);
+	private Timer keyWaitTimer = new Timer(0);
 	boolean inputText;
 	public Screen() {
-		color = new Color(181, 4, 39);
+		color = new Color(164, 143, 181);
+		font = "roboto";
 		Platformer.game.getHandeler().add(this, false);
 	}
 	public void updateState(State state)
@@ -57,25 +61,27 @@ public class Screen extends GameObject{
 		Platformer.game.state = state;
 		Platformer.game.getHandeler().add(Platformer.screen, false);
 		if(state == State.TITLE) {
+			keyWaitTimer = new Timer(1);
 			level = 1;
 			new GameImage(-1, getClass().getResource("assets/GameImage1.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
-			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2, 200, 40, color);
-			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 300, 100, 50, color, () -> {this.updateState(State.PLAYING);}));
-			list.add(new Button(Platformer.game.getWidth()/2-150, 300, 50, 50, getClass().getResource("assets/LeftArrow.png"), () -> {if(this.level > 1)this.level--;else this.level = Stage.maxLevel;}));
-			list.add(new Button(Platformer.game.getWidth()/2+100, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
-			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2, 380, 20, color);
-			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
-			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-60, 500, 120, 50, color, () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
-			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 580, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
-			list.add(new Button(Platformer.game.getWidth()-100, 20, 50, 50, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{this.image = soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png"));}catch(IOException e) {}}));
-			new Text("Leaderboard: ", 75, 75, 18, Color.white);
+			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2-25, 200, 40, font, new Color(36, 31, 41));
+			list.add(new Button("Play", Platformer.game.getWidth()/2-75, 300, 100, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING);}));
+			list.add(new Button(Platformer.game.getWidth()/2-175, 300, 50, 50, getClass().getResource("assets/LeftArrow.png"), () -> {if(this.level > 1)this.level--;else this.level = Stage.maxLevel;}));
+			list.add(new Button(Platformer.game.getWidth()/2+75, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
+			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2-25, 380, 20, font, color);
+			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-100, 420, 150, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
+			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-85, 500, 120, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Credits", Platformer.game.getWidth()/2-75, 580, 100, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
+			soundButton = new Button(Platformer.game.getWidth()-125, 20, 75, 75, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{soundButton.setImage(soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png")));}catch(IOException e) {}});
+			list.add(soundButton);
+			new Text("Leaderboard: ", 75, 75, 18, font, Color.white);
 			try {
 				int[] leaderboard = readLeaderboard();
 				if(leaderboard != null)
 					for(int i = 0; i < 10; i++)
 						if(i < leaderboard.length)
-							new Text(""+leaderboard[i]+"m", 75, 125+(i)*50, 18, Color.white);
+							new Text(""+leaderboard[i]+"m", 75, 125+(i)*50, 18, font, Color.white);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -105,17 +111,19 @@ public class Screen extends GameObject{
 		Platformer.game.state = state;
 		Platformer.game.getHandeler().add(Platformer.screen, false);
 		if(state == State.TITLE) {
+			keyWaitTimer = new Timer(1);
 			new GameImage(-1, getClass().getResource("assets/GameImage1.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
-			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2, 200, 40, color);
-			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 300, 100, 50, color, () -> {this.updateState(State.PLAYING);}));
-			list.add(new Button(Platformer.game.getWidth()/2-150, 300, 50, 50, getClass().getResource("assets/LeftArrow.png"), () -> {if(this.level > 1)this.level--;else this.level = Stage.maxLevel;}));
-			list.add(new Button(Platformer.game.getWidth()/2+100, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
-			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2, 380, 20, color);
-			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-75, 420, 150, 50, color, () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
-			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-60, 500, 120, 50, color, () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
-			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 580, 100, 50, color, () -> {this.updateState(State.CREDITS);}));
-			list.add(new Button(Platformer.game.getWidth()-100, 20, 50, 50, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{this.image = soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png"));}catch(IOException e) {}}));
+			new Text(Platformer.game.getTitle(), Platformer.game.getWidth()/2-25, 200, 40, new Color(36, 31, 41));
+			list.add(new Button("Play", Platformer.game.getWidth()/2-75, 300, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING);}));
+			list.add(new Button(Platformer.game.getWidth()/2-175, 300, 50, 50, getClass().getResource("assets/LeftArrow.png"), () -> {if(this.level > 1)this.level--;else this.level = Stage.maxLevel;}));
+			list.add(new Button(Platformer.game.getWidth()/2+75, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
+			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2-25, 380, 20, color);
+			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-100, 420, 150, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
+			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-85, 500, 120, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Credits", Platformer.game.getWidth()/2-75, 580, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
+			soundButton = new Button(Platformer.game.getWidth()-125, 20, 75, 75, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{soundButton.setImage(soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png")));}catch(IOException e) {}});
+			list.add(soundButton);
 			new Text("Leaderboard: ", 75, 75, 18, Color.white);
 			try {
 				int[] leaderboard = readLeaderboard();
@@ -177,26 +185,26 @@ public class Screen extends GameObject{
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
 				this.updateState(State.PLAYING);
-			if(Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_LEFT) && keyWaitTimer.timeUp())
 			{
-				if(keyDelayTimer.timeUp())
+				if(keyPressDelayTimer.timeUp())
 				{
 					if(this.level > 1)
 						this.level--;
 					else 
 						this.level = Stage.maxLevel;
-					keyDelayTimer = new Timer(.2);
+					keyPressDelayTimer = new Timer(.2);
 				}
 			}
-			if(Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT) && keyWaitTimer.timeUp())
 			{
-				if(keyDelayTimer.timeUp())
+				if(keyPressDelayTimer.timeUp())
 				{
 					if(this.level < Stage.maxLevel)
 						this.level++;
 					else 
 						this.level = 1;
-					keyDelayTimer = new Timer(.2);
+					keyPressDelayTimer = new Timer(.2);
 				}
 			}
 		}

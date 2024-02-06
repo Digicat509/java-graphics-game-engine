@@ -17,16 +17,16 @@ public class AnimalControlEnemy extends Enemy {
 		this.w = 20;
 		this.h = 45;
 		try {
-			this.image = ImageIO.read(getClass().getResource("assets/AnimalControl.png"));
+			this.setImage(ImageIO.read(getClass().getResource("assets/AnimalControl.png")));
 		} catch (Exception e) {e.printStackTrace();}
 		delay = System.currentTimeMillis()+3000;
 	}
 	@Override
 	public void draw(Graphics g) {
 		if(Platformer.player != null && Platformer.player.x < x+w)
-			g.drawImage(image, (int)x, (int)y, w, h-1, null);
+			g.drawImage(getImage(), (int)x, (int)y, w, h-1, null);
 		else
-			g.drawImage(image, (int)x+w, (int)y, -w, h-1, null);
+			g.drawImage(getImage(), (int)x+w, (int)y, -w, h-1, null);
 		if(!disabled)
 			move();
 	}

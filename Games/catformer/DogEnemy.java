@@ -11,7 +11,7 @@ public class DogEnemy extends Enemy{
 		w = 32;
 		h = 20;
 		try {
-			this.image = ImageIO.read(getClass().getResource("assets/Dog.png"));
+			this.setImage(ImageIO.read(getClass().getResource("assets/Dog.png")));
 		} catch (Exception e) {e.printStackTrace();}
 	}
 	
@@ -46,9 +46,9 @@ public class DogEnemy extends Enemy{
 	@Override
 	public void draw(Graphics g) {
 		if(dx < 0)
-			g.drawImage(image, (int)x, (int)y, w, h, null);
+			g.drawImage(getImage(), (int)x, (int)y, w, h, null);
 		else
-			g.drawImage(image, (int)x+w, (int)y, -w, h, null);
+			g.drawImage(getImage(), (int)x+w, (int)y, -w, h, null);
 		if(!disabled)
 			move();
 	}

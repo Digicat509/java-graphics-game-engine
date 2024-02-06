@@ -16,7 +16,7 @@ public class FloatingPlatform extends Platform {
 	{
 		super(x, y, w, h, 0);
 		try {
-			image = ImageIO.read(getClass().getResource("assets/TestTile.png"));
+			setImage(ImageIO.read(getClass().getResource("assets/TestTile.png")));
 		} catch (IOException e) {}
 		for(int i = 0; i < w; i += 50) {
 			arr.add(new ArrayList<BuildingBlock>());
