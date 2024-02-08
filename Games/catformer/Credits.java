@@ -19,8 +19,8 @@ public class Credits extends GameObject {
 	public Credits() {
 		credits = new ArrayList<GameObject>();
 		x = Platformer.game.getWidth()/2;
-		dy = 1;
 		try{make();}catch(Exception e) {e.printStackTrace();}
+		dy = 1;
 		Platformer.game.getHandeler().add(this, false);
 	}
 	private void make() throws IOException {
@@ -31,7 +31,12 @@ public class Credits extends GameObject {
 		int i = 0;
 		while(strs.size() > 0)
 		{
-			credits.add(new Text(strs.remove(), (int)x, Platformer.game.getHeight()+i*50, 20));
+			if(strs.peek().matches("\\S+.*")) {
+					credits.add(new Text(strs.poll(), (int)x, Platformer.game.getHeight()+i*50, 20));
+			}
+			else {
+				strs.remove();
+			}
 			i++;
 		}
 		credits.add(new GameImage(getClass().getResource("assets/GoodCat.png"), (int)x-350, Platformer.game.getHeight()+200, 4));

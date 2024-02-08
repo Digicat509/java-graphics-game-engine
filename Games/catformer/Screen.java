@@ -73,7 +73,7 @@ public class Screen extends GameObject{
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-100, 420, 150, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
 			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-85, 500, 120, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
 			list.add(new Button("Credits", Platformer.game.getWidth()/2-75, 580, 100, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
-			soundButton = new Button(Platformer.game.getWidth()-125, 20, 75, 75, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{soundButton.setImage(soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png")));}catch(IOException e) {}});
+			soundButton = new Button(Platformer.game.getWidth()-125, 20, 75, 75, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{soundButton.setImage(soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png")));}catch(Exception e) {e.printStackTrace();}});
 			list.add(soundButton);
 			new Text("Leaderboard: ", 75, 75, 18, font, Color.white);
 			try {
@@ -122,7 +122,7 @@ public class Screen extends GameObject{
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-100, 420, 150, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
 			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-85, 500, 120, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
 			list.add(new Button("Credits", Platformer.game.getWidth()/2-75, 580, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
-			soundButton = new Button(Platformer.game.getWidth()-125, 20, 75, 75, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{soundButton.setImage(soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png")));}catch(IOException e) {}});
+			soundButton = new Button(Platformer.game.getWidth()-125, 20, 75, 75, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{soundButton.setImage(soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png")));}catch(Exception e) {e.printStackTrace();}});
 			list.add(soundButton);
 			new Text("Leaderboard: ", 75, 75, 18, Color.white);
 			try {
