@@ -8,16 +8,18 @@ import java.net.URL;
 public class TextBar extends GameObject {
 	String str = "";
 	Text text;
-	public TextBar(int x, int y) {
+	int maxSize;
+	public TextBar(int x, int y, int maxSize) {
 		this.x = x;
 		this.y = y;
+		this.maxSize = maxSize;
 		w = 200;
 		h = 30;
 		layers = 5;
 		Handler.addHand.put(this, false);
 	}
 	public void add(String s) {
-		if(s.matches("[\\w]"))
+		if(s.matches("[\\w]") && str.length() < maxSize)
 			str += s;
 		else if(s.matches("\b")) {
 			if(str.length() > 0)

@@ -8,8 +8,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.prefs.BackingStoreException;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
@@ -77,11 +81,15 @@ public class Screen extends GameObject{
 			list.add(soundButton);
 			new Text("Leaderboard: ", 75, 75, 18, font, Color.white);
 			try {
-				int[] leaderboard = readLeaderboard();
+				TreeMap<Integer, String> leaderboard = readLeaderboard();
+				int i = 0;
 				if(leaderboard != null)
-					for(int i = 0; i < 10; i++)
-						if(i < leaderboard.length)
-							new Text(""+leaderboard[i]+"m", 75, 125+(i)*50, 18, font, Color.white);
+					for(Entry<Integer, String> e: leaderboard.entrySet()) {
+						if(i >= 10)
+							break;
+						new Text(e.getValue()+" "+e.getKey()+"m", 75, 125+i*50, 18, Color.white);
+						i++;
+					}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -126,11 +134,15 @@ public class Screen extends GameObject{
 			list.add(soundButton);
 			new Text("Leaderboard: ", 75, 75, 18, Color.white);
 			try {
-				int[] leaderboard = readLeaderboard();
+				TreeMap<Integer, String> leaderboard = readLeaderboard();
+				int i = 0;
 				if(leaderboard != null)
-					for(int i = 0; i < 10; i++)
-						if(i < leaderboard.length)
-							new Text(""+leaderboard[i]+"m", 75, 125+(leaderboard.length-i-1)*50, 18, Color.white);
+					for(Entry e: leaderboard.entrySet()) {
+						if(i >= 10)
+							break;
+						new Text(e.getValue()+" "+e.getKey()+"m", 75, 125+i*50, 18, Color.white);
+						i++;
+					}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -183,7 +195,7 @@ public class Screen extends GameObject{
 					
 				}
 			}
-			if(Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
+			if(Platformer.game.getInput().isKey(KeyEvent.VK_ENTER) && keyWaitTimer.timeUp())
 				this.updateState(State.PLAYING);
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_LEFT) && keyWaitTimer.timeUp())
 			{
@@ -208,16 +220,52 @@ public class Screen extends GameObject{
 				}
 			}
 		}
+		if(Platformer.level != null && Platformer.level.stage == Stage.INFINITE) {
+			if(inputText)
+			{
+				if(textBar == null) {
+					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15, 3);
+					try {
+						String[] temp = readLevelIndex();
+						if(temp != null)
+							for(String s: temp)
+								System.out.println(s+" ");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				String k = Platformer.game.getInput().getLastKeyTyped();
+				if(k != null)
+				{
+					textBar.add(k);
+				}
+				if(textBar.getString().length() > 0 && Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
+				{
+					try {
+						inputText = false;
+						String s = textBar.enterString();
+						Platformer.game.getHandeler().remove(textBar);
+						addLeaderboard(s, (Platformer.player.localX+30)/Platformer.player.w);
+						Platformer.game.stop();
+						Platformer.screen.updateState(State.TITLE);
+//						Platformer.player = null;
+						textBar = null;
+					}
+					catch(IOException e) {}
+				}
+			}
+		}
 		if(Platformer.level != null && Platformer.level.stage == Stage.CUSTOM)
 		{
 			if(inputText)
 			{
 				if(textBar == null) {
-					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15);
+					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15, 30);
 					try {
 						String[] temp = readLevelIndex();
-						for(String s: temp)
-							System.out.println(s+" ");
+						if(temp != null)
+							for(String s: temp)
+								System.out.println(s+" ");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -370,7 +418,7 @@ public class Screen extends GameObject{
 			if(inputText)
 			{
 				if(textBar == null)
-					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15);
+					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15, 30);
 				String k = Platformer.game.getInput().getLastKeyTyped();
 				if(k != null)
 				{
@@ -410,16 +458,15 @@ public class Screen extends GameObject{
 		editLevel = new HashSet<GameObject>();
 		Platformer.gameData.addData(path, s);
 	}
-	private int[] readLeaderboard() throws IOException {
+	private TreeMap<Integer, String> readLeaderboard() throws IOException {
 		Scanner in = new Scanner(Platformer.gameData.getData("assets/leaderboard.txt") == null? "":Platformer.gameData.getData("assets/leaderboard.txt")/*new File(getClass().getResource("assets/leaderboard.txt").getPath())*/);
-		if(in.hasNextLine()) {
+		TreeMap<Integer, String> temp = new TreeMap<Integer, String>(Comparator.reverseOrder());
+		while(in.hasNextLine()) {
 			String[] arr = in.nextLine().split(" ");
-			int[] temp = new int[arr.length];
-			for(int i = 0; i < arr.length; i++)
-				temp[i] = Integer.parseInt(arr[i]);
-			return temp;
+			temp.put(Integer.parseInt(arr[0]), arr[1]);
 		}
-		return null;
+		System.out.println(temp.size());
+		return temp.size() > 0 ? temp : null;
 	}
 	private String[] readLevelIndex() throws IOException {
 		Scanner in = new Scanner(Platformer.gameData.getData("assets/level_editor.txt") == null? "":Platformer.gameData.getData("assets/level_editor.txt")/*new File(getClass().getResource("assets/leaderboard.txt").getPath())*/);
@@ -429,24 +476,22 @@ public class Screen extends GameObject{
 		}
 		return null;
 	}
-	public void addLeaderboard(int ... i) throws IOException {
-		ArrayList<Integer> temp = new ArrayList<Integer>();
-		int[] arr = readLeaderboard();
+	public void addLeaderboard(String s, int i) throws IOException {
+		TreeMap<Integer, String> temp = new TreeMap<Integer, String>(Comparator.reverseOrder());
+		TreeMap<Integer, String> arr = readLeaderboard();
 		if(arr != null)
-			for(int n: arr)
-				temp.add(n);
-		for(int n: i)
-			temp.add(n);
-		Collections.sort(temp, Collections.reverseOrder());
+			temp.putAll(arr);
+		temp.put(i, s);
+//		Collections.sort(temp, Collections.reverseOrder());
 		//FileWriter out = new FileWriter(new File(getClass().getResource("assets/leaderboard.txt").getPath()), false);
-		String s = "";
+		String str = "";
 		for(int j = 0; j < 10; j++) {
-			if(j < temp.size()-1)
-				s += temp.get(j)+" ";
-			else if(j < temp.size())
-				s += ""+temp.get(j);
+			if(temp.size() > 0) {
+				Entry<Integer, String> e = temp.pollFirstEntry();
+				str += e.getKey()+" "+e.getValue()+"\n";
+			}
 		}
-		Platformer.gameData.addData("assets/leaderboard.txt", s);
+		Platformer.gameData.addData("assets/leaderboard.txt", str);
 	}
 	public void addToLevelIndex(String str) throws IOException {
 		ArrayList<String> temp = new ArrayList<String>();

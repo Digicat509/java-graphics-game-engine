@@ -18,7 +18,7 @@ public class Player extends GameObject implements Entity {
 	private float jumpStrength = 10f;
 	private float xAcceleration = 0;
 	private float realdx = 0;
-	private int localX;
+	int localX;
 	private boolean onGround = false;
 	private boolean wallJump = false;
 	private boolean sliding = false;
@@ -128,7 +128,7 @@ public class Player extends GameObject implements Entity {
 	
 	private void arrowMovement() {
 		dx = 0;
-		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
+		if(onGround && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP) || Platformer.game.getInput().isKey(KeyEvent.VK_SPACE)))
 		{
 			dy = -jumpStrength;
 		}
@@ -299,7 +299,7 @@ public class Player extends GameObject implements Entity {
 			if(((Platformer.game.getInput().isKey(KeyEvent.VK_D) || Platformer.game.getInput().isKey(KeyEvent.VK_RIGHT))) || ((Platformer.game.getInput().isKey(KeyEvent.VK_A) || Platformer.game.getInput().isKey(KeyEvent.VK_LEFT))))
 			{
 				sliding = true;
-				if(onGround == false && wallJump && o != lastWall && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP)))
+				if(onGround == false && wallJump && o != lastWall && (Platformer.game.getInput().isKey(KeyEvent.VK_W) || Platformer.game.getInput().isKey(KeyEvent.VK_UP) || Platformer.game.getInput().isKey(KeyEvent.VK_SPACE)))
 				{
 					wallJump = false;
 					dy = -jumpStrength;
@@ -381,14 +381,14 @@ public class Player extends GameObject implements Entity {
 		}
 	}
 	private void restart() {
-		try {
-			if(Platformer.level.stage.equals(Level.Stage.INFINITE))
-				Platformer.screen.addLeaderboard((localX+30)/w);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(Platformer.level.stage.equals(Level.Stage.INFINITE)) {
+			Platformer.screen.inputText = true;
+			Platformer.game.getHandeler().remove(this);
 		}
-		Platformer.game.stop();
-		Platformer.screen.updateState(State.TITLE);
+		else {
+			Platformer.game.stop();
+			Platformer.screen.updateState(State.TITLE);
+		}
 	}
 	public int getHP() {
 		return HP;
