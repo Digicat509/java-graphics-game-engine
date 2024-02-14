@@ -32,6 +32,7 @@ public class AnimalControlEnemy extends Enemy {
 	}
 	@Override
 	public void move() {
+		super.move();
 		float yVel = 0;
 		int xDist = 0;
 		int yDist = 0;

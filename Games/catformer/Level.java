@@ -69,10 +69,10 @@ public class Level {
 			new Building(800, 300, 50);
 			new Building(900, 350, 50);
 			new FloatingPlatform(900, 200, 50, 50);
-			new Spikes(550,390,50);
-			new Spikes(650,390,50);
-			new Spikes(750,390,50);
-			new Spikes(850,390,50);
+			new Spikes(550,376,50);
+			new Spikes(650,376,50);
+			new Spikes(750,376,50);
+			new Spikes(850,376,50);
 			
 			new FloatingPlatform(1150, 200, 150, 50);
 			new DumbDroneEnemy(1200, 150, false);

@@ -4,15 +4,24 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import javax.imageio.ImageIO;
+
 public class Spikes extends Hazard{
 
 	public Spikes(int x, int y, int w) {
-		super(x, y, w, 10, 40);
+		super(x, y, w, 24, 40);
+		try {
+			this.setImage(ImageIO.read(getClass().getResource("assets/Spikes.png")));
+		} catch (Exception e) {e.printStackTrace();}
 	}
 	public void draw(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D)g;
-		g2d.setColor(Color.DARK_GRAY);
-		g2d.fillRect((int)x, (int)y, w, h);
+		for(int i = 0; i < w; i+=16) {
+			if(i < w-16)
+				g2d.drawImage(getImage(), (int)x+i, (int)y, 16, h, null);
+			else 
+				g2d.drawImage(getImage(), (int)x+i, (int)y, w-i, h, null);
+		}
 	}
 }

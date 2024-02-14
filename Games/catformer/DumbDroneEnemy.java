@@ -30,6 +30,8 @@ public class DumbDroneEnemy extends Enemy {
 	}
 	@Override
 	public void move() {
+		super.move();
+		
 		y+=dy;
 		
 		GameObject o = this.hits();

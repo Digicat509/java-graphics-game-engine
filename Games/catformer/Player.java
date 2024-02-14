@@ -49,7 +49,7 @@ public class Player extends GameObject implements Entity {
 		h = 14;
 		dx = 0;
 		dy = 0;
-		HP = 100;
+		HP = 10000;
 		maxHP = HP;
 		try {
 			this.walkImage = ImageIO.read(getClass().getResource("assets/GoodCatMidWalk.png"));

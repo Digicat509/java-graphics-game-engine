@@ -36,6 +36,7 @@ public class Granny extends Enemy {
 	
 	@Override
 	public void draw(Graphics g) {
+		super.move();
 		switch(frame)
 		{
 			case 0:

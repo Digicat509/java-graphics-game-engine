@@ -20,7 +20,8 @@ public class Net extends Enemy implements Projectile{
 	}
 	@Override
 	public void move() {
-		super.move();
+		x += dx;
+		y += dy;
 		dy += Platformer.GRAVITY;
 		GameObject o = this.hits();
 		if(o instanceof Platform)
