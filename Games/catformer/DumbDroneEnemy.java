@@ -37,6 +37,8 @@ public class DumbDroneEnemy extends Enemy {
 		GameObject o = this.hits();
 		if(o != null)
 		{
+			if(o instanceof Player)
+				((Player)o).damage(this);
 			onGround = true;
 			if(Platformer.player.x > this.x-RANGE && !rolling) {
 				dx = -4;
