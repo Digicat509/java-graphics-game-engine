@@ -40,6 +40,7 @@ public class SelectorWheel extends GameObject {
 			selectionSprites[0][2] = ImageIO.read(getClass().getResource("assets/TestTile.png"));
 			selectionSprites[0][3] = ImageIO.read(getClass().getResource("assets/Dog.png"));
 			selectionSprites[0][4] = ImageIO.read(getClass().getResource("assets/Portal.png"));
+			selectionSprites[0][5] = ImageIO.read(getClass().getResource("assets/Eraser.png"));
 			selectionSprites[4][0] = ImageIO.read(getClass().getResource("assets/RollyPolly.png"));
 			selectionSprites[4][1] = ImageIO.read(getClass().getResource("assets/Beetle.png"));
 			selectionSprites[4][2] = ImageIO.read(getClass().getResource("assets/AnimalControl.png"));

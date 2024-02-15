@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Objects;
 
+import javax.imageio.ImageIO;
+
 import gameEngine.GameObject;
 
 public class Block extends Platform{
@@ -13,14 +15,16 @@ public class Block extends Platform{
 		super(x, y, Grid.currGridSize, Grid.currGridSize, 0);
 		gridX = x;
 		gridY = y;
+		try {
+			this.setImage(ImageIO.read(getClass().getResource("assets/TestTile.png")));
+		} catch (Exception e) {e.printStackTrace();}
 	}
 	
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.red);
 //		x = gridX*Grid.currGridSize;
 //		y = gridY*Grid.currGridSize;
-		g.fillRect((int)x, (int)y, Grid.currGridSize, Grid.currGridSize);
+		g.drawImage(getImage(), (int)x, (int)y, w, h, null);
 	}
 	
 	@Override
