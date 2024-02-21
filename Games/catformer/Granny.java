@@ -36,7 +36,6 @@ public class Granny extends Enemy {
 	
 	@Override
 	public void draw(Graphics g) {
-		super.move();
 		switch(frame)
 		{
 			case 0:
@@ -115,8 +114,9 @@ public class Granny extends Enemy {
 		}
 		y+=dy;
 		GameObject o = this.hits();
+		super.collisionEffects(o);
 		
-		if(o != null && !(o instanceof Enemy))
+		if(o != null && !(o instanceof Enemy) && !(o instanceof Portal))
 		{
 			x+= dx;
 			if(x < o.x) {
@@ -136,6 +136,11 @@ public class Granny extends Enemy {
 		{
 			dy += Platformer.GRAVITY;
 		}
+		
+		if(dy>15)
+			dy=15;
+		if(dy<-15) 
+			dy=-15;
 		
 		push();
 	}

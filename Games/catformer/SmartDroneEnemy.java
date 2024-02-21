@@ -33,11 +33,11 @@ public class SmartDroneEnemy extends Enemy {
 	}
 	@Override
 	public void move() {
-		super.move();
 		y+=dy;
 		GameObject o = this.hits();
+		super.collisionEffects(o);
 		
-		if(o != null)
+		if(o != null && !(o instanceof Portal))
 		{
 			if(Platformer.player.x < this.x && Platformer.player.x > this.x-RANGE) {
 				dx = -3;
@@ -69,6 +69,11 @@ public class SmartDroneEnemy extends Enemy {
 		{
 			dy += gravity;
 		}
+		
+		if(dy>15)
+			dy=15;
+		if(dy<-15) 
+			dy=-15;
 		
 		push();
 	}

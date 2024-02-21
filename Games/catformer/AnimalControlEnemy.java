@@ -32,7 +32,6 @@ public class AnimalControlEnemy extends Enemy {
 	}
 	@Override
 	public void move() {
-		super.move();
 		float yVel = 0;
 		int xDist = 0;
 		int yDist = 0;
@@ -56,11 +55,17 @@ public class AnimalControlEnemy extends Enemy {
 		GameObject o = this.hits();
 		if(o == null)
 			dy += Platformer.GRAVITY;
-		else
+		else if(!(o instanceof Portal))
 		{
 			dy = 0;
 			y = o.y-h+1;
 		}
 		y += dy;
+		super.collisionEffects(o);
+		
+		if(dy>15)
+			dy=15;
+		if(dy<-15) 
+			dy=-15;
 	}
 }

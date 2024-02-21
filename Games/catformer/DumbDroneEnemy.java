@@ -30,12 +30,12 @@ public class DumbDroneEnemy extends Enemy {
 	}
 	@Override
 	public void move() {
-		super.move();
-		
 		y+=dy;
-		
 		GameObject o = this.hits();
-		if(o != null)
+		super.collisionEffects(o);
+		
+		
+		if(o != null && !(o instanceof Portal))
 		{
 			if(o instanceof Player)
 				((Player)o).damage(this);
@@ -73,6 +73,11 @@ public class DumbDroneEnemy extends Enemy {
 				dx *= -1;
 			}
 		}
+		
+		if(dy>15)
+			dy=15;
+		if(dy<-15) 
+			dy=-15;
 		
 		if(y > Platformer.game.getHeight())
 			Platformer.game.getHandeler().remove(this);

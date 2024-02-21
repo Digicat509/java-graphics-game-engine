@@ -88,7 +88,7 @@ public abstract class Enemy extends DangerThing  implements Entity {
 		}
 	}
 	
-	private void collisionEffects(GameObject o)
+	public void collisionEffects(GameObject o)
 	{
 		if(o instanceof DangerThing)
 		{
@@ -98,7 +98,6 @@ public abstract class Enemy extends DangerThing  implements Entity {
 		
 		if(o instanceof Portal)
 		{
-			y -= dy;
 			int move = (int)(((Portal)o).oPortal.x+((Portal)o).oPortal.w/2-this.w/2)-(int)x;
 			this.y = (((Portal)o).oPortal.y-this.h);
 			dy = -dy;

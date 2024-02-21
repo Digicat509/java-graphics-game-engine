@@ -16,11 +16,10 @@ public class DogEnemy extends Enemy{
 	}
 	
 	public void move() {
-		super.move();
 		y+=dy;
 		GameObject o = this.hits();
-		
-		if(o != null)
+		super.collisionEffects(o);
+		if(o != null && !(o instanceof Portal))
 		{
 			x+= dx;
 			if(x < o.x) {
@@ -40,6 +39,11 @@ public class DogEnemy extends Enemy{
 		{
 			dy += Platformer.GRAVITY;
 		}
+		
+		if(dy>15)
+			dy=15;
+		if(dy<-15) 
+			dy=-15;
 		
 		push();
 	}
