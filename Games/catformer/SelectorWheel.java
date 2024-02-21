@@ -30,6 +30,7 @@ public class SelectorWheel extends GameObject {
 		this.x = x-w/2;
 		this.y = y-h/2;
 		currImage = getImage();
+		current = Platformer.screen.et;
 		Platformer.game.getHandeler().add(this, false);
 	}
 	
@@ -47,6 +48,11 @@ public class SelectorWheel extends GameObject {
 			selectionSprites[4][3] = ImageIO.read(getClass().getResource("assets/Dog.png"));
 			selectionSprites[4][4] = ImageIO.read(getClass().getResource("assets/Granny.png"));
 			selectionSprites[4][5] = ImageIO.read(getClass().getResource("assets/back.png"));
+			selectionSprites[5][0] = ImageIO.read(getClass().getResource("assets/Spikes.png"));
+			selectionSprites[5][1] = ImageIO.read(getClass().getResource("assets/Portal.png"));
+			selectionSprites[5][2] = ImageIO.read(getClass().getResource("assets/Box.png"));
+//			selectionSprites[5][3] = ImageIO.read(getClass().getResource("assets/Pipe.png"));
+			selectionSprites[5][5] = ImageIO.read(getClass().getResource("assets/back.png"));
 		} catch (IOException e) {
 			System.out.println("No Image for "+getImage()+" "+this.getClass()+"!!!");
 		}
@@ -58,13 +64,20 @@ public class SelectorWheel extends GameObject {
 			g.drawImage(currImage, (int)x, (int)y, (int)w, (int)h, null);
 			for(int i = 0; i < selectionSprites[0].length; i++)
 			{
-				if(selectionSprites[current != null && current.hasChildren()?current.getIndex()+1:0][i] != null)
+				if(current != null && selectionSprites[current != null && current.hasChildren()?current.getIndex()+1:0][i] != null)
 				{
 					int w = selectionSprites[current != null && current.hasChildren()?current.getIndex()+1:0][i].getWidth(null) > 30 ? (int)(selectionSprites[current != null && current.hasChildren()?current.getIndex()+1:0][i].getWidth(null)*.4) : (int)(selectionSprites[current != null && current.hasChildren()?current.getIndex()+1:0][i].getWidth(null)*.6);
 					int h = selectionSprites[current != null && current.hasChildren()?current.getIndex()+1:0][i].getHeight(null) > 30 ? (int)(selectionSprites[current != null && current.hasChildren()?current.getIndex()+1:0][i].getHeight(null)*.4) : (int)(selectionSprites[current != null && current.hasChildren()?current.getIndex()+1:0][i].getHeight(null)*.6);
 					int x = (int)((this.x+this.w/2)+this.w/3*Math.cos((Math.PI/3)*(i+1)-((Math.PI*2)/3)))-w/2;
 					int y = (int)((this.y+this.h/2)+this.h/3*Math.sin((Math.PI/3)*(i+1)-((Math.PI*2)/3)))-h/2;
 					g.drawImage(selectionSprites[current != null && current.hasChildren()?current.getIndex()+1:0][i], x, y, w, h, null);
+				}
+				else if(current == null&& selectionSprites[0][i] != null) {
+					int w = selectionSprites[0][i].getWidth(null) > 30 ? (int)(selectionSprites[0][i].getWidth(null)*.4) : (int)(selectionSprites[0][i].getWidth(null)*.6);
+					int h = selectionSprites[0][i].getHeight(null) > 30 ? (int)(selectionSprites[0][i].getHeight(null)*.4) : (int)(selectionSprites[0][i].getHeight(null)*.6);
+					int x = (int)((this.x+this.w/2)+this.w/3*Math.cos((Math.PI/3)*(i+1)-((Math.PI*2)/3)))-w/2;
+					int y = (int)((this.y+this.h/2)+this.h/3*Math.sin((Math.PI/3)*(i+1)-((Math.PI*2)/3)))-h/2;
+					g.drawImage(selectionSprites[0][i], x, y, w, h, null);
 				}
 			}
 		}
@@ -99,8 +112,8 @@ public class SelectorWheel extends GameObject {
 			Platformer.screen.et = EditTool.choseTool(pos, current);
 			current = EditTool.choseTool(pos, current);
 			if(current == EditTool.BACK) {
-				Platformer.screen.et = current.getParent();
-				current = current.getParent();
+				Platformer.screen.et = EditTool.BLOCK;
+				current = null;
 			}
 		}
 	}

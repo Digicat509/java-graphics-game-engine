@@ -36,6 +36,8 @@ public class Screen extends GameObject{
 	EditTool et = EditTool.BLOCK;
 	Button soundButton = new Button(0, 0, 0, 0, ()->{});
 	Building editBuilding = null;
+	Spikes editSpike = null;
+	Pipe editPipe = null;
 	boolean drag = false;
 	int mx = 0, my = 0;
 	int level = 1;
@@ -334,6 +336,10 @@ public class Screen extends GameObject{
 				{
 					editLevel.add(new Portal((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, (mx/25+4)*25+(int)Platformer.level.grid.x, (my/25-4)*25));
 				}
+				else if(et.equals(EditTool.BOX) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+				{
+					editLevel.add(new Box((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25));
+				}
 				else if(et.equals(EditTool.ERASER))
 				{
 					Platformer.game.getHandeler().forEach((GameObject o) -> {
@@ -357,6 +363,24 @@ public class Screen extends GameObject{
 				{
 					editBuilding = new Building((int)editBuilding.x, (int)editBuilding.y, Platformer.game.getInput().getMouseDragX());
 				}
+				if(!drag && et.equals(EditTool.SPIKES))
+				{
+					editSpike = new Spikes((Platformer.game.getInput().getMouseX()/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+					drag = true;
+				}
+				else if(et.equals(EditTool.SPIKES) && Platformer.game.getInput().getMouseDragX() >= 16 && Platformer.game.getInput().getMouseDragX()%16 == 0)
+				{
+					editSpike = new Spikes((int)editSpike.x, (int)editSpike.y, Platformer.game.getInput().getMouseDragX());
+				}
+				if(!drag && et.equals(EditTool.PIPE))
+				{
+					editPipe = new Pipe((Platformer.game.getInput().getMouseX()/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+					drag = true;
+				}
+				else if(et.equals(EditTool.PIPE) && Platformer.game.getInput().getMouseDragX() >= 25 && Platformer.game.getInput().getMouseDragX()%25 == 0)
+				{
+					editPipe = new Pipe((int)editPipe.x, (int)editPipe.y, Platformer.game.getInput().getMouseDragX());
+				}
 			}
 			if(!Platformer.game.getInput().isButton(1) && drag && et != null)
 			{
@@ -368,6 +392,24 @@ public class Screen extends GameObject{
 				else if(editBuilding != null)
 				{
 					editBuilding = null;
+				}
+				if(et.equals(EditTool.SPIKES) && editSpike != null && editSpike.w > 0)
+				{
+					editLevel.add(editSpike);
+					editBuilding = null;
+				}
+				else if(editSpike != null)
+				{
+					editSpike = null;
+				}
+				if(et.equals(EditTool.PIPE) && editPipe != null && editPipe.w > 0)
+				{
+					editLevel.add(editPipe);
+					editPipe = null;
+				}
+				else if(editPipe != null)
+				{
+					editPipe = null;
 				}
 				drag = false;
 			}
@@ -513,7 +555,7 @@ public class Screen extends GameObject{
 	}
 	enum EditTool
 	{
-		PLAYER(0, null), BUILDING(1, null), BLOCK(2, null), ENEMY(3, null), PORTAL(4, null), ERASER(5, null), DUMB(0, ENEMY), SMART(1, ENEMY), ANIMAL_CONTROL(2, ENEMY), DOG(3, ENEMY), GRANNY(4, ENEMY), BACK(5, ENEMY);
+		PLAYER(0, null), BUILDING(1, null), BLOCK(2, null), ENEMY(3, null), INTERACTABLE(4, null), ERASER(5, null), DUMB(0, ENEMY), SMART(1, ENEMY), ANIMAL_CONTROL(2, ENEMY), DOG(3, ENEMY), GRANNY(4, ENEMY), BACK(5, null), SPIKES(0, INTERACTABLE), PORTAL(1, INTERACTABLE), BOX(2, INTERACTABLE), PIPE(3, INTERACTABLE);
 		private int i;
 		private EditTool parent;
 		private boolean hasChildren;
@@ -528,7 +570,7 @@ public class Screen extends GameObject{
 		{
 			for(EditTool e : EditTool.values())
 			{
-				if((parent != null && parent.hasChildren && parent.equals(e.parent) && e.i == i) || (parent == null && e.i == i) || (parent != null && !parent.hasChildren && e.i == i))
+				if((parent != null && parent.hasChildren && parent.equals(e.parent) && e.i == i) || (parent == null && e.i == i) || (parent != null && !parent.hasChildren && e.i == i) || (parent != null && e == BACK && e.i == i))
 					return e;
 			}
 			return parent;
