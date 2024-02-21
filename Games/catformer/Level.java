@@ -304,6 +304,18 @@ public class Level {
 				{
 					new Portal((int)Double.parseDouble(parameters[0])*25, (int)Double.parseDouble(parameters[1])*25, (int)Double.parseDouble(parameters[2])*25, (int)Double.parseDouble(parameters[3])*25);
 				}
+				else if(name.equalsIgnoreCase("spikes")  || name.equalsIgnoreCase(""+Spikes.class))
+				{
+					new Spikes((int)Double.parseDouble(parameters[0])*25, (int)Double.parseDouble(parameters[1])*25, (int)Double.parseDouble(parameters[2])*25);
+				}
+				else if(name.equalsIgnoreCase("pipe")  || name.equalsIgnoreCase(""+Pipe.class))
+				{
+					new Pipe((int)Double.parseDouble(parameters[0])*25, (int)Double.parseDouble(parameters[1])*25, (int)Double.parseDouble(parameters[2])*25);
+				}
+				else if(name.equalsIgnoreCase("box")  || name.equalsIgnoreCase(""+Box.class))
+				{
+					new Box((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]));
+				}
 			}
 		}
 	}

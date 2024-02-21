@@ -16,4 +16,7 @@ public class Pipe extends Platform {
 		g2d.setColor(Color.gray);
 		g2d.fillRect((int)x, (int)y, w, h);
 	}
+	public String toString() {
+		return ""+this.getClass()+" "+x/25+", "+y/25+", "+w/25;
+	}
 }

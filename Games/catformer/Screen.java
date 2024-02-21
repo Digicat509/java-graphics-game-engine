@@ -338,7 +338,7 @@ public class Screen extends GameObject{
 				}
 				else if(et.equals(EditTool.BOX) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
 				{
-					editLevel.add(new Box((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25));
+					editLevel.add(new Box((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25-5));
 				}
 				else if(et.equals(EditTool.ERASER))
 				{

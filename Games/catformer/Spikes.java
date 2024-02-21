@@ -24,4 +24,7 @@ public class Spikes extends Hazard{
 				g2d.drawImage(getImage(), (int)x+i, (int)y, w-i, h, null);
 		}
 	}
+	public String toString() {
+		return ""+this.getClass()+" "+x/25+", "+y/25+", "+w/25;
+	}
 }
