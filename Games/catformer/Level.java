@@ -38,9 +38,9 @@ public class Level {
 			new Building(1200, 550, 350);
 			new Building(1650, 500, 50);
 			
-			new Pipe(1300, 100, 150);
+			new Pipe(1275, 100, 175);
+			new Pipe(1600, 250, 125);
 			new FloatingPlatform(1200, 50, 100, 300);
-			new Pipe(1600, 250, 100);
 			new FloatingPlatform(1700, 200, 100, 150);
 			
 			new Building(1800, 550, 150);
