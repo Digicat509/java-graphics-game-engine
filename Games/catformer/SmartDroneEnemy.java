@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import javax.imageio.ImageIO;
 
+import gameEngine.Area;
 import gameEngine.GameObject;
 
 public class SmartDroneEnemy extends Enemy {
@@ -12,6 +13,7 @@ public class SmartDroneEnemy extends Enemy {
 	private float gravity = 0.5f;
 	private static final int RANGE = 200;
 	private boolean facing = true;
+	Area edgeChecker;
 	
 	public SmartDroneEnemy(int x, int y, boolean disabled) {
 		super(x, y, 3, 20, disabled);
@@ -52,18 +54,27 @@ public class SmartDroneEnemy extends Enemy {
 			}
 			if(o instanceof Platform)
 			{
-				if(x < o.x) {
-					x = o.x;
-				}
-				else if((x+w) > (o.x+o.w)){
-					x = o.x+o.w-w;
-				}
 				dy = 0;
 				if(o.y>= this.y) {
 					y = o.y-h;
 				}
 			}
 			x += dx;
+			Platformer.game.getHandeler().remove(edgeChecker);
+			edgeChecker = new Area((int)(dx < 0 ? x+dx : x+w+dx), (int)y+h+5, 2, 2, false);
+			if(!edgeChecker.hitsAny()) {
+				x -= dx;
+				dx = 0;
+				System.out.println("edge");
+			}
+			o = this.hits();
+			if(o instanceof Platform)
+			{
+				if(dx > 0 && o.x <= x+w)
+					updatePosition(1, (int)(o.x-x-w));
+				else if(dx < 0 && x <= o.x+o.w)
+					updatePosition(1, (int)(o.x+o.w-x));
+			}
 		}
 		else
 		{

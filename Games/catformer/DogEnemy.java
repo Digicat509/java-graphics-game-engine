@@ -3,9 +3,11 @@ package catformer;
 import java.awt.*;
 import javax.imageio.ImageIO;
 import gameEngine.GameObject;
+import gameEngine.Area;
 
 public class DogEnemy extends Enemy{
 	
+	Area edgeChecker;
 	public DogEnemy(int x, int y, boolean disabled) {
 		super(x, y, 2, 10, disabled);
 		w = 32;
@@ -22,17 +24,23 @@ public class DogEnemy extends Enemy{
 		if(o != null && !(o instanceof Portal))
 		{
 			x+= dx;
-			if(x < o.x) {
-				x = o.x;
-				dx*=-1;
-			}
-			else if((x+w) > (o.x+o.w)){
-				x = o.x+o.w-w;
-				dx*=-1;
+			Platformer.game.getHandeler().remove(edgeChecker);
+			edgeChecker = new Area((int)(dx < 0 ? x+dx : x+w+3), (int)y+h+5, 2, 2, false);
+			if(!edgeChecker.hitsAny()) {
+				dx *= -1;
 			}
 			dy = 0;
 			if(o.y>= this.y) {
 				y = o.y-h;
+			}
+			o = this.hits();
+			if(o instanceof Platform)
+			{
+				if(dx > 0 && o.x <= x+w)
+					updatePosition(1, (int)(o.x-x-w));
+				else if(dx < 0 && x <= o.x+o.w)
+					updatePosition(1, (int)(o.x+o.w-x));
+				dx *= -1;
 			}
 		}
 		else
