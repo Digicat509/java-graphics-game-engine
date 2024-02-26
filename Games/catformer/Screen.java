@@ -280,7 +280,7 @@ public class Screen extends GameObject{
 				if(textBar.getString().length() > 0 && Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
 				{
 					inputText = false;
-					String s = textBar.enterString();
+					String s = "data/"+textBar.enterString()+".txt";
 					Platformer.game.getHandeler().remove(textBar);
 					textBar = null;
 					try{Platformer.level.build(s);}catch(Exception e) {e.printStackTrace();}
@@ -490,15 +490,21 @@ public class Screen extends GameObject{
 		}
 	}
 	private void writeToSaveFile(String path) throws IOException{
-		//FileWriter out = new FileWriter(new File(getClass().getResource(path).getPath()), false);
-		String s = "";
+		File f = new File("Games/catformer/data/"+path+".txt");
+		FileWriter out = new FileWriter(f, false);
 		for(GameObject o: editLevel)
 		{
-			s += ""+o+"\n";
+			out.write(""+o+"\n");
 			System.out.println(o);
 		}
+		out.flush();
 		editLevel = new HashSet<GameObject>();
-		Platformer.gameData.addData(path, s);
+		try {
+			Platformer.gameData.addData(f);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	private TreeMap<Integer, String> readLeaderboard() throws IOException {
 		Scanner in = new Scanner(Platformer.gameData.getData("assets/leaderboard.txt") == null? "":Platformer.gameData.getData("assets/leaderboard.txt")/*new File(getClass().getResource("assets/leaderboard.txt").getPath())*/);
@@ -524,8 +530,6 @@ public class Screen extends GameObject{
 		if(arr != null)
 			temp.putAll(arr);
 		temp.put(i, s);
-//		Collections.sort(temp, Collections.reverseOrder());
-		//FileWriter out = new FileWriter(new File(getClass().getResource("assets/leaderboard.txt").getPath()), false);
 		String str = "";
 		for(int j = 0; j < 10; j++) {
 			if(temp.size() > 0) {
@@ -543,7 +547,6 @@ public class Screen extends GameObject{
 				if(!n.equals(str))
 					temp.add(n);
 		temp.add(str);
-		//FileWriter out = new FileWriter(new File(getClass().getResource("assets/leaderboard.txt").getPath()), false);
 		String s = "";
 		for(int j = 0; j < 10; j++) {
 			if(j < temp.size()-1)
