@@ -41,11 +41,11 @@ public class SmartDroneEnemy extends Enemy {
 		
 		if(o != null && !(o instanceof Portal))
 		{
-			if(Platformer.player.x < this.x && Platformer.player.x > this.x-RANGE) {
+			if(Platformer.player.x < this.x && Platformer.player.x+Platformer.player.w/2 > this.x+this.w/2-RANGE && Math.abs(Platformer.player.x+Platformer.player.w/2-this.x-this.w/2) > 3) {
 				dx = -3;
 				facing = true;
 			}
-			else if(Platformer.player.x > this.x && Platformer.player.x < this.x+this.w+RANGE) {
+			else if(Platformer.player.x > this.x && Platformer.player.x+Platformer.player.w/2 < this.x+this.w/2+RANGE && Math.abs(Platformer.player.x+Platformer.player.w/2-this.x-this.w/2) > 3) {
 				dx = 3;
 				facing = false;
 			}
@@ -65,7 +65,6 @@ public class SmartDroneEnemy extends Enemy {
 			if(!edgeChecker.hitsAny()) {
 				x -= dx;
 				dx = 0;
-				System.out.println("edge");
 			}
 			o = this.hits();
 			if(o instanceof Platform)
