@@ -382,8 +382,24 @@ public class Player extends GameObject implements Entity {
 	}
 	private void restart() {
 		if(Platformer.level.stage.equals(Level.Stage.INFINITE)) {
-			Platformer.screen.inputText = true;
-			Platformer.game.getHandeler().remove(this);
+			boolean b;
+			try {
+				b = Platformer.screen.readLeaderboard().keySet().size() >= 10?false:true;
+				for(Integer i: Platformer.screen.readLeaderboard().keySet())
+					if(i < (Platformer.player.localX+30)/Platformer.player.w)
+						b = true;
+			}
+			catch(IOException e) {
+				b = true;
+			}
+			if(b) {
+				Platformer.screen.inputText = true;
+				Platformer.game.getHandeler().remove(this);
+			}
+			else {
+				Platformer.game.stop();
+				Platformer.screen.updateState(State.TITLE);
+			}
 		}
 		else {
 			Platformer.game.stop();

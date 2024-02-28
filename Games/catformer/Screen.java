@@ -506,7 +506,7 @@ public class Screen extends GameObject{
 			e.printStackTrace();
 		}
 	}
-	private TreeMap<Integer, String> readLeaderboard() throws IOException {
+	TreeMap<Integer, String> readLeaderboard() throws IOException {
 		Scanner in = new Scanner(Platformer.gameData.getData("assets/leaderboard.txt") == null? "":Platformer.gameData.getData("assets/leaderboard.txt")/*new File(getClass().getResource("assets/leaderboard.txt").getPath())*/);
 		TreeMap<Integer, String> temp = new TreeMap<Integer, String>(Comparator.reverseOrder());
 		while(in.hasNextLine()) {
