@@ -49,6 +49,7 @@ public class Screen extends GameObject{
 	String font;
 	private boolean soundOn = true;
 	private boolean wrote;
+	private String rewrote;
 	private boolean playerPlaced = false;
 	private Timer keyPressDelayTimer = new Timer(0);
 	private Timer keyWaitTimer = new Timer(0);
@@ -77,7 +78,7 @@ public class Screen extends GameObject{
 			list.add(new Button(Platformer.game.getWidth()/2+75, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
 			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2-25, 380, 20, font, color);
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-100, 420, 150, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
-			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-85, 500, 120, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-85, 500, 120, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.TITLE, Stage.EDIT);}));
 			list.add(new Button("Credits", Platformer.game.getWidth()/2-75, 580, 100, 50, font, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
 			soundButton = new Button(Platformer.game.getWidth()-125, 20, 75, 75, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{soundButton.setImage(soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png")));}catch(Exception e) {e.printStackTrace();}});
 			list.add(soundButton);
@@ -120,7 +121,7 @@ public class Screen extends GameObject{
 		Platformer.game.getHandeler().clear();
 		Platformer.game.state = state;
 		Platformer.game.getHandeler().add(Platformer.screen, false);
-		if(state == State.TITLE) {
+		if(state == State.TITLE && stage != Stage.EDIT) {
 			keyWaitTimer = new Timer(1);
 			new GameImage(-1, getClass().getResource("assets/GameImage1.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			list = new ArrayList<Button>();
@@ -130,7 +131,7 @@ public class Screen extends GameObject{
 			list.add(new Button(Platformer.game.getWidth()/2+75, 300, 50, 50, getClass().getResource("assets/RightArrow.png"), () -> {if(this.level < Stage.maxLevel)this.level++;else this.level = 1;}));
 			levelText = new Text("Level:\t"+level, Platformer.game.getWidth()/2-25, 380, 20, color);
 			list.add(new Button("Infinite Mode", Platformer.game.getWidth()/2-100, 420, 150, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.INFINITE);}));
-			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-85, 500, 120, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Edit Mode", Platformer.game.getWidth()/2-85, 500, 120, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.TITLE, Stage.EDIT);}));
 			list.add(new Button("Credits", Platformer.game.getWidth()/2-75, 580, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
 			soundButton = new Button(Platformer.game.getWidth()-125, 20, 75, 75, getClass().getResource("assets/Sound.png"), () -> {soundOn = !soundOn;try{soundButton.setImage(soundOn?ImageIO.read(getClass().getResource("assets/Sound.png")):ImageIO.read(getClass().getResource("assets/NoSound.png")));}catch(Exception e) {e.printStackTrace();}});
 			list.add(soundButton);
@@ -148,6 +149,15 @@ public class Screen extends GameObject{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		else if(state == State.TITLE && stage == Stage.EDIT) {
+			keyWaitTimer = new Timer(1);
+			list = new ArrayList<Button>();
+			new Text("Edit Mode", Platformer.game.getWidth()/2-20, 200, 40, color);
+			list.add(new Button("Play", Platformer.game.getWidth()/2-75, 300, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.CUSTOM);}));
+			list.add(new Button("Create New Level", Platformer.game.getWidth()/2-125, 400, 250, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Edit Exsisting Level", Platformer.game.getWidth()/2-150, 480, 300, 50, color, getClass().getResource("assets/Button.png"), () -> {this.inputText = true;this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Credits", Platformer.game.getWidth()/2-75, 580, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
 		}
 		else if(state == State.PLAYING && stage == Stage.EDIT)
 		{
@@ -188,7 +198,7 @@ public class Screen extends GameObject{
 		{
 			if(levelText != null)
 				levelText.setText("Level:\t"+level);
-			if(Platformer.game.getInput().isMouseClicked()) {
+			if(keyWaitTimer.timeUp() && Platformer.game.getInput().isMouseClicked()) {
 				int mx = Platformer.game.getInput().getMouseX();
 				int my = Platformer.game.getInput().getMouseY();
 				for(Button b: list)
@@ -287,177 +297,197 @@ public class Screen extends GameObject{
 				}
 			}
 		}
-		if(Platformer.level != null && Platformer.level.stage == Stage.EDIT)
+		if(Platformer.game.state == State.PLAYING && Platformer.level != null && Platformer.level.stage == Stage.EDIT)
 		{
-			if(editRemove.size() > 0)
-			{
-				for(int i = editRemove.size()-1; i >= 0; i--)
+			if(!inputText) {
+				if(editRemove.size() > 0)
 				{
-					editLevel.remove(editRemove.remove(i));
-				}
-			}
-			if(Platformer.game.getInput().isMouseClicked() && !Platformer.game.getInput().isButton(2) && et != null) {
-				mx = Platformer.game.getInput().getMouseX();
-				my = Platformer.game.getInput().getMouseY();
-				if(et.equals(EditTool.BLOCK) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
-				{
-					editLevel.add(new Block((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25));
-				}
-				else if(et.equals(EditTool.PLAYER) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1 && !playerPlaced)
-				{
-					editLevel.add(new Player((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
-					playerPlaced = true;
-				}
-				else if(et.equals(EditTool.ENEMY) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
-				{
-					editLevel.add(new DogEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
-				}
-				else if(et.equals(EditTool.DOG) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
-				{
-					editLevel.add(new DogEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
-				}
-				else if(et.equals(EditTool.ANIMAL_CONTROL) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
-				{
-					editLevel.add(new AnimalControlEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
-				}
-				else if(et.equals(EditTool.SMART) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
-				{
-					editLevel.add(new SmartDroneEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
-				}
-				else if(et.equals(EditTool.DUMB) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
-				{
-					editLevel.add(new DumbDroneEnemy((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
-				}
-				else if(et.equals(EditTool.GRANNY) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
-				{
-					editLevel.add(new Granny((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
-				}
-				else if(et.equals(EditTool.PORTAL) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
-				{
-					editLevel.add(new Portal((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25, (mx/25+4)*25+(int)Platformer.level.grid.x, (my/25-4)*25));
-				}
-				else if(et.equals(EditTool.BOX) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
-				{
-					editLevel.add(new Box((mx/25)*25+(int)Platformer.level.grid.x, (my/25)*25+5));
-				}
-				else if(et.equals(EditTool.ERASER))
-				{
-					Platformer.game.getHandeler().forEach((GameObject o) -> {
-						if(o.getHitbox().contains(mx, my)) {
-							if(o instanceof Player)
-								playerPlaced = false;
-							Platformer.game.getHandeler().remove(o);
-							editRemove.add(o);
-						}
-					});
-				}
-			}
-			if((Math.abs(Platformer.game.getInput().getMouseDragX()) > 1 || Math.abs(Platformer.game.getInput().getMouseDragY()) > 1 )&& et != null)
-			{
-				if(!drag && et.equals(EditTool.BUILDING))
-				{
-					editBuilding = new Building((Platformer.game.getInput().getMouseX()/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
-					drag = true;
-				}
-				else if(et.equals(EditTool.BUILDING) && Platformer.game.getInput().getMouseDragX() >= 50 && Platformer.game.getInput().getMouseDragX()%50 == 0)
-				{
-					editBuilding = new Building((int)editBuilding.x, (int)editBuilding.y, Platformer.game.getInput().getMouseDragX());
-				}
-				if(!drag && et.equals(EditTool.SPIKES))
-				{
-					editSpike = new Spikes((Platformer.game.getInput().getMouseX()/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
-					drag = true;
-				}
-				else if(et.equals(EditTool.SPIKES) && Platformer.game.getInput().getMouseDragX() >= 16 && Platformer.game.getInput().getMouseDragX()%16 == 0)
-				{
-					editSpike = new Spikes((int)editSpike.x, (int)editSpike.y, Platformer.game.getInput().getMouseDragX());
-				}
-				if(!drag && et.equals(EditTool.PIPE))
-				{
-					editPipe = new Pipe((Platformer.game.getInput().getMouseX()/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
-					drag = true;
-				}
-				else if(et.equals(EditTool.PIPE) && Platformer.game.getInput().getMouseDragX() >= 25 && Platformer.game.getInput().getMouseDragX()%25 == 0)
-				{
-					editPipe = new Pipe((int)editPipe.x, (int)editPipe.y, Platformer.game.getInput().getMouseDragX());
-				}
-			}
-			if(!Platformer.game.getInput().isButton(1) && drag && et != null)
-			{
-				if(et.equals(EditTool.BUILDING) && editBuilding != null && editBuilding.w > 0)
-				{
-					editLevel.add(editBuilding);
-					editBuilding = null;
-				}
-				else if(editBuilding != null)
-				{
-					editBuilding = null;
-				}
-				if(et.equals(EditTool.SPIKES) && editSpike != null && editSpike.w > 0)
-				{
-					editLevel.add(editSpike);
-					editBuilding = null;
-				}
-				else if(editSpike != null)
-				{
-					editSpike = null;
-				}
-				if(et.equals(EditTool.PIPE) && editPipe != null && editPipe.w > 0)
-				{
-					editLevel.add(editPipe);
-					editPipe = null;
-				}
-				else if(editPipe != null)
-				{
-					editPipe = null;
-				}
-				drag = false;
-			}
-			if(Platformer.game.getInput().isButton(2) && Platformer.game.getInput().draging())
-			{
-				if(lastX == 0)
-					lastX = Platformer.game.getInput().getMouseX();
-				int temp = (Platformer.game.getInput().getMouseX()-lastX);
-				if(editOffsetX + temp > 0)
-				{
-					editOffsetX += temp;
-					Platformer.level.grid.x -= temp;
-					if(Platformer.level.grid.x <= -Grid.currGridSize || Platformer.level.grid.x >= Grid.currGridSize) {
-						Platformer.level.grid.x %= 25;
+					for(int i = editRemove.size()-1; i >= 0; i--)
+					{
+						editLevel.remove(editRemove.remove(i));
 					}
-					Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= temp;});
 				}
-				lastX = Platformer.game.getInput().getMouseX();
-			}
-			if(!Platformer.game.getInput().draging()) {
-				lastX = 0;
-			}
-			if(Platformer.game.getInput().isButton(3) && !selectorWheelHeld)
-			{
-				selectorWheelHeld = true;
-				if(sw == null)
-					sw = new SelectorWheel(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
-				else 
+				if(Platformer.game.getInput().isMouseClicked() && !Platformer.game.getInput().isButton(2) && et != null) {
+					mx = Platformer.game.getInput().getMouseX();
+					my = Platformer.game.getInput().getMouseY();
+					if(et.equals(EditTool.BLOCK) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new Block(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25));
+					}
+					else if(et.equals(EditTool.PLAYER) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1 && !playerPlaced)
+					{
+						editLevel.add(new Player(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+						playerPlaced = true;
+					}
+					else if(et.equals(EditTool.ENEMY) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new DogEnemy(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+					}
+					else if(et.equals(EditTool.DOG) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new DogEnemy(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+					}
+					else if(et.equals(EditTool.ANIMAL_CONTROL) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new AnimalControlEnemy(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+					}
+					else if(et.equals(EditTool.SMART) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new SmartDroneEnemy(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+					}
+					else if(et.equals(EditTool.DUMB) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new DumbDroneEnemy(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+					}
+					else if(et.equals(EditTool.GRANNY) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new Granny(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25, true));
+					}
+					else if(et.equals(EditTool.PORTAL) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new Portal(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25, (mx/25+4)*25+(int)Platformer.level.grid.x, (my/25-4)*25));
+					}
+					else if(et.equals(EditTool.INTERACTABLE) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new Portal(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25, (mx/25+4)*25+(int)Platformer.level.grid.x, (my/25-4)*25));
+					}
+					else if(et.equals(EditTool.BOX) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new Box(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25+5));
+					}
+					else if(et.equals(EditTool.ERASER))
+					{
+						Platformer.game.getHandeler().forEach((GameObject o) -> {
+							if(o.getHitbox().contains(mx, my)) {
+								if(o instanceof Player)
+									playerPlaced = false;
+								Platformer.game.getHandeler().remove(o);
+								editRemove.add(o);
+							}
+						});
+					}
+				}
+				if((Math.abs(Platformer.game.getInput().getMouseDragX()) > 1 || Math.abs(Platformer.game.getInput().getMouseDragY()) > 1 )&& et != null)
 				{
-					sw.show();
-					sw.recenter(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
+					if(!drag && et.equals(EditTool.BUILDING))
+					{
+						editBuilding = new Building(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+						drag = true;
+					}
+					else if(et.equals(EditTool.BUILDING) && Platformer.game.getInput().getMouseDragX() >= 50 && Platformer.game.getInput().getMouseDragX()%50 == 0)
+					{
+						editBuilding = new Building((int)editBuilding.x, (int)editBuilding.y, Platformer.game.getInput().getMouseDragX());
+					}
+					if(!drag && et.equals(EditTool.SPIKES))
+					{
+						editSpike = new Spikes(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+						drag = true;
+					}
+					else if(et.equals(EditTool.SPIKES) && Platformer.game.getInput().getMouseDragX() >= 16 && Platformer.game.getInput().getMouseDragX()%16 == 0)
+					{
+						editSpike = new Spikes((int)editSpike.x, (int)editSpike.y, Platformer.game.getInput().getMouseDragX());
+					}
+					if(!drag && et.equals(EditTool.PIPE))
+					{
+						editPipe = new Pipe(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+						drag = true;
+					}
+					else if(et.equals(EditTool.PIPE) && Platformer.game.getInput().getMouseDragX() >= 25 && Platformer.game.getInput().getMouseDragX()%25 == 0)
+					{
+						editPipe = new Pipe((int)editPipe.x, (int)editPipe.y, Platformer.game.getInput().getMouseDragX());
+					}
+				}
+				if(!Platformer.game.getInput().isButton(1) && drag && et != null)
+				{
+					if(et.equals(EditTool.BUILDING) && editBuilding != null && editBuilding.w > 0)
+					{
+						editLevel.add(editBuilding);
+						editBuilding = null;
+					}
+					else if(editBuilding != null)
+					{
+						editBuilding = null;
+					}
+					if(et.equals(EditTool.SPIKES) && editSpike != null && editSpike.w > 0)
+					{
+						editLevel.add(editSpike);
+						editBuilding = null;
+					}
+					else if(editSpike != null)
+					{
+						editSpike = null;
+					}
+					if(et.equals(EditTool.PIPE) && editPipe != null && editPipe.w > 0)
+					{
+						editLevel.add(editPipe);
+						editPipe = null;
+					}
+					else if(editPipe != null)
+					{
+						editPipe = null;
+					}
+					drag = false;
+				}
+				if(Platformer.game.getInput().isButton(2) && Platformer.game.getInput().draging())
+				{
+					if(lastX == 0)
+						lastX = Platformer.game.getInput().getMouseX();
+					int temp = (Platformer.game.getInput().getMouseX()-lastX);
+					if(editOffsetX + temp > 0)
+					{
+						editOffsetX += temp;
+						Platformer.level.grid.x -= temp;
+						if(Platformer.level.grid.x <= -Grid.currGridSize || Platformer.level.grid.x >= Grid.currGridSize) {
+							Platformer.level.grid.x %= 25;
+						}
+						Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x -= temp;});
+					}
+					lastX = Platformer.game.getInput().getMouseX();
+				}
+				if(!Platformer.game.getInput().draging()) {
+					lastX = 0;
+				}
+				if(Platformer.game.getInput().isButton(3) && !selectorWheelHeld)
+				{
+					selectorWheelHeld = true;
+					if(sw == null)
+						sw = new SelectorWheel(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
+					else 
+					{
+						sw.show();
+						sw.recenter(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
+					}
+				}
+				else if(sw != null && !Platformer.game.getInput().isButton(3) && selectorWheelHeld)
+				{
+					selectorWheelHeld = false;
+					sw.selectFinal(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
+					System.out.println(et);
+					sw.hide();
+				}
+				if(selectorWheelHeld){
+					sw.select(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
+				}
+				if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && rewrote.length() > 0)
+				{
+					Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += editOffsetX;});
+					try {
+						addToLevelIndex(rewrote);
+						writeToSaveFile(rewrote);
+						wrote = true;
+						rewrote = "";
+					} 
+					catch(IOException e) {e.printStackTrace();}
+					textBar = null;
+					Platformer.level = null;
+					updateState(State.TITLE);
+				}
+				else if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && !wrote)
+				{
+					inputText = true;
 				}
 			}
-			else if(sw != null && !Platformer.game.getInput().isButton(3) && selectorWheelHeld)
-			{
-				selectorWheelHeld = false;
-				sw.selectFinal(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
-				System.out.println(et);
-				sw.hide();
-			}
-			if(selectorWheelHeld){
-				sw.select(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
-			}
-			if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && !wrote)
-			{
-				inputText = true;
-			}
-			if(inputText)
+			if(inputText && editLevel.size() > 0)
 			{
 				if(textBar == null)
 					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15, 30);
@@ -466,23 +496,38 @@ public class Screen extends GameObject{
 				{
 					textBar.add(k);
 				}
-				if(Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
+				if(textBar.getString().length() > 0 && Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
 				{
 					String s = textBar.enterString();
-					if(s != "")
-					{
-						inputText = false;
-						Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += editOffsetX;});
-						try {
-							addToLevelIndex(s);
-							writeToSaveFile(s);
-							wrote = true;
-						} 
-						catch(IOException e) {e.printStackTrace();}
-						textBar = null;
-						Platformer.level = null;
-						updateState(State.TITLE);
-					}
+					inputText = false;
+					Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += editOffsetX;});
+					try {
+						addToLevelIndex(s);
+						writeToSaveFile(s);
+						wrote = true;
+					} 
+					catch(IOException e) {e.printStackTrace();}
+					textBar = null;
+					Platformer.level = null;
+					updateState(State.TITLE);
+				}
+			}
+			else if(inputText) {
+				if(textBar == null)
+					textBar = new TextBar(Platformer.game.getWidth()/2-100, Platformer.game.getHeight()/2-15, 30);
+				String k = Platformer.game.getInput().getLastKeyTyped();
+				if(k != null)
+				{
+					textBar.add(k);
+				}
+				if(textBar.getString().length() > 0 && Platformer.game.getInput().isKey(KeyEvent.VK_ENTER))
+				{
+					inputText = false;
+					String enter = textBar.enterString();
+					String s = "data/"+enter+".txt";
+					Platformer.game.getHandeler().remove(textBar);
+					textBar = null;
+					try{Platformer.level.build(s, true);rewrote = enter;}catch(Exception e) {e.printStackTrace();}
 				}
 			}
 			if(Platformer.game.getInput().isKey(KeyEvent.VK_Z))

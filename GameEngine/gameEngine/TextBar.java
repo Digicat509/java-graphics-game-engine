@@ -40,7 +40,7 @@ public class TextBar extends GameObject {
 		g.fillRect((int)x, (int)y, w, h);
 		if(text == null)
 			text = new Text(str, new Rectangle((int)x, (int)y, w, h)); 
-		else if(str.length() > 0)
+		else
 			text.setText(str);
 	}
 }
