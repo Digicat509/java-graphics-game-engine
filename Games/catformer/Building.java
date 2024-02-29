@@ -32,6 +32,7 @@ public class Building extends Platform {
 	@Override
 	public void draw(Graphics g)
 	{
+		updateSize(w);
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.red);
 		for(int i = 0; i < w; i += 50) {
@@ -52,6 +53,24 @@ public class Building extends Platform {
 //				//g2d.drawImage(image, (int)x+i, (int)y+j, 50, 50, null);
 //				g2d.fillRect((int)x+i, (int)y+j, 10, 10);
 //			}
+	}
+	private void updateSize(int w) {
+		if(w != 0 && w%50 == 0) {
+			for(int i = arr.size()*50; i < w; i += 50) {
+				arr.add(new ArrayList<BuildingBlock>());
+				for(int j = 0; j <= h; j += 50) {
+					double r = Math.random();
+					if(r > .4)
+						arr.get(i/50).add(new BuildingBlock((int)x+i, (int)y+j, 50, 50, "assets/TestTile.png"));
+					else if(r > .13)
+						arr.get(i/50).add(new BuildingBlock((int)x+i, (int)y+j, 50, 50, "assets/WindowTile.png"));
+					else if(r > .08)
+						arr.get(i/50).add(new BuildingBlock((int)x+i, (int)y+j, 50, 50, "assets/WindowGrateTile.png"));
+					else
+						arr.get(i/50).add(new BuildingBlock((int)x+i, (int)y+j, 50, 50, "assets/WindowGratePersonTile.png"));
+				}
+			}
+		}
 	}
 	public String toString() {
 		return ""+this.getClass()+" "+x/25+", "+y/25+", "+w/25;

@@ -153,14 +153,15 @@ public class Screen extends GameObject{
 		else if(state == State.TITLE && stage == Stage.EDIT) {
 			keyWaitTimer = new Timer(1);
 			list = new ArrayList<Button>();
-			new Text("Edit Mode", Platformer.game.getWidth()/2-20, 200, 40, color);
-			list.add(new Button("Play", Platformer.game.getWidth()/2-75, 300, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.CUSTOM);}));
-			list.add(new Button("Create New Level", Platformer.game.getWidth()/2-125, 400, 250, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
-			list.add(new Button("Edit Exsisting Level", Platformer.game.getWidth()/2-150, 480, 300, 50, color, getClass().getResource("assets/Button.png"), () -> {this.inputText = true;this.updateState(State.PLAYING, Stage.EDIT);}));
-			list.add(new Button("Credits", Platformer.game.getWidth()/2-75, 580, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
+			new Text("Edit Mode", Platformer.game.getWidth()/2, 200, 40, color);
+			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 260, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.CUSTOM);}));
+			list.add(new Button("Create New Level", Platformer.game.getWidth()/2-125, 325, 250, 75, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Edit Exsisting Level", Platformer.game.getWidth()/2-125, 420, 250, 75, color, getClass().getResource("assets/Button.png"), () -> {this.inputText = true;this.updateState(State.PLAYING, Stage.EDIT);}));
+			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 510, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
 		}
 		else if(state == State.PLAYING && stage == Stage.EDIT)
 		{
+			new GameImage(-1, getClass().getResource("assets/GameImage1.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			sw = null;
 			editLevel = new HashSet<GameObject>();
 			list = new ArrayList<Button>();
@@ -374,27 +375,32 @@ public class Screen extends GameObject{
 						editBuilding = new Building(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
 						drag = true;
 					}
-					else if(et.equals(EditTool.BUILDING) && Platformer.game.getInput().getMouseDragX() >= 50 && Platformer.game.getInput().getMouseDragX()%50 == 0)
+					else if(et.equals(EditTool.BUILDING) && /*Math.abs(*/Platformer.game.getInput().getMouseDragX()/*)*/ >= 50)
 					{
-						editBuilding = new Building((int)editBuilding.x, (int)editBuilding.y, Platformer.game.getInput().getMouseDragX());
+//						if(Platformer.game.getInput().getMouseDragX() > 0)
+							editBuilding.w = ((Platformer.game.getInput().getMouseDragX())/50)*50;
+//						else {
+//							editBuilding.w = ((Platformer.game.getInput().getMouseDragX())/50)*50;
+//							editBuilding.x-=editBuilding.w;
+//						}
 					}
 					if(!drag && et.equals(EditTool.SPIKES))
 					{
-						editSpike = new Spikes(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+						editSpike = new Spikes(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25+2, 0);
 						drag = true;
 					}
-					else if(et.equals(EditTool.SPIKES) && Platformer.game.getInput().getMouseDragX() >= 16 && Platformer.game.getInput().getMouseDragX()%16 == 0)
+					else if(et.equals(EditTool.SPIKES) && /*Math.abs(*/Platformer.game.getInput().getMouseDragX()/*)*/ >= 16)
 					{
-						editSpike = new Spikes((int)editSpike.x, (int)editSpike.y, Platformer.game.getInput().getMouseDragX());
+						editSpike.w = Platformer.game.getInput().getMouseDragX();
 					}
 					if(!drag && et.equals(EditTool.PIPE))
 					{
 						editPipe = new Pipe(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
 						drag = true;
 					}
-					else if(et.equals(EditTool.PIPE) && Platformer.game.getInput().getMouseDragX() >= 25 && Platformer.game.getInput().getMouseDragX()%25 == 0)
+					else if(et.equals(EditTool.PIPE) && /*Math.abs(*/Platformer.game.getInput().getMouseDragX()/*)*/ >= 25)
 					{
-						editPipe = new Pipe((int)editPipe.x, (int)editPipe.y, Platformer.game.getInput().getMouseDragX());
+						editPipe.w = ((Platformer.game.getInput().getMouseDragX())/25)*25;
 					}
 				}
 				if(!Platformer.game.getInput().isButton(1) && drag && et != null)

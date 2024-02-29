@@ -243,7 +243,6 @@ public class Level {
 			s = new Scanner((new BufferedInputStream(getClass().getResource(path).openStream())));
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			s = new Scanner("");
 		}
 		while(s.hasNextLine())
@@ -427,14 +426,14 @@ public class Level {
 	public enum Stage
 	{
 		TEST(-3),
-		EDIT(-1),
+		EDIT(-2),
 		LEVEL1(1),
 		LEVEL2(2),
 		LEVEL3(3),
-		CUSTOM(4),
+		CUSTOM(-1),
 		INFINITE(0);
 		int level;
-		static final int maxLevel = 4;
+		static final int maxLevel = 3;
 		Stage(int i)
 		{
 			this.level = i;
