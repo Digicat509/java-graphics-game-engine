@@ -55,6 +55,7 @@ public class Screen extends GameObject{
 	private Timer keyPressDelayTimer = new Timer(0);
 	private Timer keyWaitTimer = new Timer(0);
 	boolean inputText;
+	private GameImage editBackground;
 	public Screen() {
 		color = new Color(164, 143, 181);
 		font = "roboto";
@@ -152,16 +153,21 @@ public class Screen extends GameObject{
 			}
 		}
 		else if(state == State.TITLE && stage == Stage.EDIT) {
+			editBackground = new GameImage(-1, getClass().getResource("assets/EditBackground.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			keyWaitTimer = new Timer(1);
 			list = new ArrayList<Button>();
-			new Text("Edit Mode", Platformer.game.getWidth()/2, 200, 40, color);
+			new Text("Edit Mode", Platformer.game.getWidth()/2, 200, 40, new Color(81, 15, 133));
 			list.add(new Button("Play", Platformer.game.getWidth()/2-50, 260, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.CUSTOM);}));
 			list.add(new Button("Create New Level", Platformer.game.getWidth()/2-125, 325, 250, 75, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.PLAYING, Stage.EDIT);}));
 			list.add(new Button("Edit Exsisting Level", Platformer.game.getWidth()/2-125, 420, 250, 75, color, getClass().getResource("assets/Button.png"), () -> {this.inputText = true;this.updateState(State.PLAYING, Stage.EDIT);}));
-			list.add(new Button("Credits", Platformer.game.getWidth()/2-50, 510, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.CREDITS);}));
+			list.add(new Button("Back", Platformer.game.getWidth()/2-50, 510, 100, 50, color, getClass().getResource("assets/Button.png"), () -> {this.updateState(State.TITLE);}));
 		}
 		else if(state == State.PLAYING && stage == Stage.EDIT)
 		{
+			if(editBackground != null) {
+				Platformer.game.getHandeler().remove(editBackground);
+				editBackground = null;
+			}
 			new GameImage(-1, getClass().getResource("assets/GameImage1.png"), 0, 0, Platformer.game.getWidth(), Platformer.game.getHeight());
 			sw = null;
 			editLevel = new HashSet<GameObject>();
@@ -569,7 +575,7 @@ public class Screen extends GameObject{
 	}
 	private void writeToSaveFile(String path) throws IOException{
 		File f = new File("Games/catformer/data/"+path+".txt");
-		FileWriter out = new FileWriter(f, false);
+		FileWriter out = new FileWriter(f, true);
 		for(GameObject o: editLevel)
 		{
 			out.write(""+o+"\n");
