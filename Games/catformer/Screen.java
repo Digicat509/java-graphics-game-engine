@@ -38,6 +38,7 @@ public class Screen extends GameObject{
 	Building editBuilding = null;
 	Spikes editSpike = null;
 	Pipe editPipe = null;
+	int editBuildingX, editBuildingY, editSpikeX, editSpikeY, editPipeX, editPipeY;
 	boolean drag = false;
 	int mx = 0, my = 0;
 	int level = 1;
@@ -356,6 +357,10 @@ public class Screen extends GameObject{
 					{
 						editLevel.add(new Box(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25+5));
 					}
+					else if(et.equals(EditTool.LEVELPORTAL) && mx % Grid.currGridSize > 1 && mx % Grid.currGridSize < Grid.currGridSize-1 && my % Grid.currGridSize > 1 && my % Grid.currGridSize < Grid.currGridSize-1)
+					{
+						editLevel.add(new LevelPortal(((mx-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (my/25)*25+5, Stage.CUSTOM, true));
+					}
 					else if(et.equals(EditTool.ERASER))
 					{
 						Platformer.game.getHandeler().forEach((GameObject o) -> {
@@ -373,34 +378,56 @@ public class Screen extends GameObject{
 					if(!drag && et.equals(EditTool.BUILDING))
 					{
 						editBuilding = new Building(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+						editBuildingX = (int)editBuilding.x;
+						editBuildingY = (int)editBuilding.y;
 						drag = true;
 					}
-					else if(et.equals(EditTool.BUILDING) && /*Math.abs(*/Platformer.game.getInput().getMouseDragX()/*)*/ >= 50)
+					else if(et.equals(EditTool.BUILDING) && Math.abs(Platformer.game.getInput().getMouseDragX()) >= 50)
 					{
-//						if(Platformer.game.getInput().getMouseDragX() > 0)
+						if(Platformer.game.getInput().getMouseDragX() > 0) {
+							editBuilding.x = editBuildingX;
 							editBuilding.w = ((Platformer.game.getInput().getMouseDragX())/50)*50;
-//						else {
-//							editBuilding.w = ((Platformer.game.getInput().getMouseDragX())/50)*50;
-//							editBuilding.x-=editBuilding.w;
-//						}
+						}
+						else {
+							editBuilding.w = Math.abs(((Platformer.game.getInput().getMouseDragX())/50)*50);
+							editBuilding.x=editBuildingX-editBuilding.w;
+						}
 					}
 					if(!drag && et.equals(EditTool.SPIKES))
 					{
 						editSpike = new Spikes(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25+2, 0);
+						editSpikeX = (int)editSpike.x;
+						editSpikeY = (int)editSpike.y;
 						drag = true;
 					}
-					else if(et.equals(EditTool.SPIKES) && /*Math.abs(*/Platformer.game.getInput().getMouseDragX()/*)*/ >= 16)
+					else if(et.equals(EditTool.SPIKES) && Math.abs(Platformer.game.getInput().getMouseDragX()) >= 16)
 					{
-						editSpike.w = Platformer.game.getInput().getMouseDragX();
+						if(Platformer.game.getInput().getMouseDragX() > 0) {
+							editSpike.x = editSpikeX;
+							editSpike.w = Platformer.game.getInput().getMouseDragX();
+						}
+						else {
+							editSpike.w = Math.abs((Platformer.game.getInput().getMouseDragX()));
+							editSpike.x=editSpikeX-editSpike.w;
+						}
 					}
 					if(!drag && et.equals(EditTool.PIPE))
 					{
 						editPipe = new Pipe(((Platformer.game.getInput().getMouseX()-(int)Platformer.level.grid.x)/25)*25+(int)Platformer.level.grid.x, (Platformer.game.getInput().getMouseY()/25)*25, 0);
+						editPipeX = (int)editPipe.x;
+						editPipeY = (int)editPipe.y;
 						drag = true;
 					}
-					else if(et.equals(EditTool.PIPE) && /*Math.abs(*/Platformer.game.getInput().getMouseDragX()/*)*/ >= 25)
+					else if(et.equals(EditTool.PIPE) && Math.abs(Platformer.game.getInput().getMouseDragX()) >= 25)
 					{
-						editPipe.w = ((Platformer.game.getInput().getMouseDragX())/25)*25;
+						if(Platformer.game.getInput().getMouseDragX() > 0) {
+							editPipe.x = editPipeX;
+							editPipe.w = ((Platformer.game.getInput().getMouseDragX())/25)*25;
+						}
+						else {
+							editPipe.w = Math.abs(((Platformer.game.getInput().getMouseDragX())/25)*25);
+							editPipe.x=editPipeX-editPipe.w;
+						}
 					}
 				}
 				if(!Platformer.game.getInput().isButton(1) && drag && et != null)
@@ -474,7 +501,7 @@ public class Screen extends GameObject{
 				if(selectorWheelHeld){
 					sw.select(Platformer.game.getInput().getMouseX(), Platformer.game.getInput().getMouseY());
 				}
-				if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && rewrote.length() > 0)
+				if(Platformer.game.getInput().isKey(KeyEvent.VK_ESCAPE) && rewrote != null && rewrote.length() > 0)
 				{
 					Platformer.game.getHandeler().forEach(other -> {if(!other.equals(this))other.x += editOffsetX;});
 					try {
@@ -609,7 +636,7 @@ public class Screen extends GameObject{
 	}
 	enum EditTool
 	{
-		PLAYER(0, null), BUILDING(1, null), BLOCK(2, null), ENEMY(3, null), INTERACTABLE(4, null), ERASER(5, null), DUMB(0, ENEMY), SMART(1, ENEMY), ANIMAL_CONTROL(2, ENEMY), DOG(3, ENEMY), GRANNY(4, ENEMY), BACK(5, null), SPIKES(0, INTERACTABLE), PORTAL(1, INTERACTABLE), BOX(2, INTERACTABLE), PIPE(3, INTERACTABLE);
+		PLAYER(0, null), BUILDING(1, null), BLOCK(2, null), ENEMY(3, null), INTERACTABLE(4, null), ERASER(5, null), DUMB(0, ENEMY), SMART(1, ENEMY), ANIMAL_CONTROL(2, ENEMY), DOG(3, ENEMY), GRANNY(4, ENEMY), BACK(5, null), SPIKES(0, INTERACTABLE), PORTAL(1, INTERACTABLE), BOX(2, INTERACTABLE), PIPE(3, INTERACTABLE), LEVELPORTAL(4, INTERACTABLE);
 		private int i;
 		private EditTool parent;
 		private boolean hasChildren;

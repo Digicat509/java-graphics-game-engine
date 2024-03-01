@@ -26,7 +26,7 @@ public class Pipe extends Platform {
 	public void draw(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D)g;
-		if(w % 25 == 0 && w >= 75) {
+		if(w % 25 == 0 && w >= 50) {
 			for(int i = 0; i < w; i+=25) {
 				if(i == 0)
 					g2d.drawImage(leftPipe, (int)x+i, (int)y, 25, h, null);

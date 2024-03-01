@@ -14,7 +14,7 @@ public class LevelPortal extends GameObject{
 	Stage stage;
 	boolean last = false;
 	public LevelPortal(int x, int y, Stage s, boolean l){
-		super(1, "assets/Portal.png");
+		super(1, "assets/LevelPortal.png");
 		this.x = x;
 		this.y = y;
 		w = 75*2;
@@ -28,6 +28,8 @@ public class LevelPortal extends GameObject{
 	{
 		if(last == false)
 			Platformer.screen.updateState(State.PLAYING, stage);
+		else if(stage == Stage.CUSTOM)
+			Platformer.screen.updateState(State.TITLE);
 		else
 			Platformer.screen.updateState(State.CREDITS);
 //		System.out.println("LEVEL");
@@ -40,5 +42,8 @@ public class LevelPortal extends GameObject{
 //		Platformer.sound.audio.loop(Clip.LOOP_CONTINUOUSLY);
 
 	}
-	
+	@Override
+	public String toString() {
+		return ""+this.getClass()+" "+x+", "+y+", "+stage+", "+last;
+	}
 }

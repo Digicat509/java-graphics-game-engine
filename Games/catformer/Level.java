@@ -323,6 +323,10 @@ public class Level {
 				{
 					new Box((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]));
 				}
+				else if(name.equalsIgnoreCase("level portal")  || name.equalsIgnoreCase(""+LevelPortal.class))
+				{
+					new LevelPortal((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), Stage.get(parameters[2]), Boolean.parseBoolean(parameters[3]));
+				}
 			}
 		}
 		s.close();
@@ -443,6 +447,12 @@ public class Level {
 			for(Stage s: Stage.values())
 				if(s.level == i)
 					return s;
+			return null;
+		}
+		public static Stage get(String s) {
+			for(Stage st: Stage.values())
+				if(st.name().equals(s))
+					return st;
 			return null;
 		}
 	}
