@@ -24,7 +24,7 @@ public class Text extends GameObject{
 		this.color = Color.white;
 		textSize = 20;
 		layers = 6;
-		Handler.addHand.put(this, false);
+		Handler.addHand.put(this, true);
 	}
 	
 	public Text(String s, int x, int y, int textSize) {
@@ -43,7 +43,7 @@ public class Text extends GameObject{
 		this.color = Color.white;
 		textSize = 20;
 		layers = 6;
-		Handler.addHand.put(this, false);
+		Handler.addHand.put(this, true);
 	}
 	
 	public Text(String s, Rectangle rect, int textSize) {
@@ -89,6 +89,9 @@ public class Text extends GameObject{
 		this.text = text;
 		centered = false;
 	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
 	public String getText() {
 		return text;
 	}
@@ -102,16 +105,38 @@ public class Text extends GameObject{
 		if(!centered)
 		{
 			FontMetrics metrics = g.getFontMetrics();
+			if(this.rect != null) {
+				String[] words = text.split(" ");
+				String temp = "";
+				int len = 0;
+				for(String word : words) {
+					if(len+metrics.stringWidth(word) > ((rect.width > 200) ? rect.width-50 : rect.width)) {
+						temp+="\n"+word+" ";
+						len = 0;
+					}
+					else {
+						temp += word+" ";
+					}
+					len += metrics.stringWidth(word);
+				}
+				text = temp;
+			}
+			String[] lines = text.split("\n");
+			String line = lines[0];
 			if(rect != null) {
-				x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
-				y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
+				x = rect.x + (rect.width - metrics.stringWidth(line)) / 2;
+				y = rect.y + ((rect.height - metrics.getHeight()) / 2) / lines.length + metrics.getAscent();
 			}
 			else {
-				x = trueX - metrics.stringWidth(text) / 2;
-				y = trueY - metrics.getHeight() / 2 + metrics.getAscent();
+				x = trueX - metrics.stringWidth(line) / 2;
+				y = trueY - (metrics.getHeight() / 2) / lines.length + metrics.getAscent();
 			}
 			centered = true;
 		}
-		g.drawString(text, (int)x, (int)y);
+		int i = 0;
+		for (String line : text.split("\n")) {
+	        g.drawString(line, (int)x, (int)y + i*g.getFontMetrics().getHeight());
+	        i++;
+		}
 	}
 }

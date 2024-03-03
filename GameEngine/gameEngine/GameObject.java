@@ -75,11 +75,10 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public GameObject hits() {
 		if(this.layers > 0) {
 			for(GameObject o: Handler.hitsHand) {
-					if(!this.equals(o))
-//						if(this.layers >= o.layers)
-							if(this.getHitbox().hits(o.getHitbox())) {
-								return o;
-							}
+				if(!this.equals(o))
+					if(o.layers > 0)
+						if(this.getHitbox().hits(o.getHitbox()))
+							return o;
 			}
 		}
 		return null;
@@ -91,10 +90,10 @@ public abstract class GameObject implements Comparable<GameObject> {
 		HashSet<GameObject> hiting = new HashSet<GameObject>(); 
 		if(this.layers > 0) {
 			for(GameObject o: Handler.hitsHand) {
-					if(!this.equals(o))
-//						if(this.layers >= o.layers)
-							if(this.getHitbox().hits(o.getHitbox()))
-								hiting.add(o);
+				if(!this.equals(o))
+					if(o.layers > 0)
+						if(this.getHitbox().hits(o.getHitbox()))
+							hiting.add(o);
 			}
 			return hiting;
 		}

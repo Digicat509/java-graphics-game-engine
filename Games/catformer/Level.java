@@ -104,6 +104,11 @@ public class Level {
 		
 		if(stage == Stage.LEVEL1) {
 			Platformer.player = new Player(30, 250, false);
+			new TutorialBox("Press a and d or arrow keys to move", 250, 100, 250, 75);
+			new TutorialBox("Press w, up or space to jump", 400, 250, 150, 75);
+			new TutorialBox("Avoid enemies", 950, 300, 150, 30);
+			new TutorialBox("You can jump off walls", 2650, 180, 250, 30);
+			new TutorialBox("Finish the level through the portal", 3800, 250, 250, 75);
 			new Building(-50, 500, 500);
 			new Building(500, 450, 300);
 			new DogEnemy(1000,350, false);
