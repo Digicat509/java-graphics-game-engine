@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 
 import gameEngine.Area;
 import gameEngine.GameObject;
@@ -51,6 +52,15 @@ public class SmartDroneEnemy extends Enemy {
 			}
 			else {
 				dx = 0;
+			}
+			if(Platformer.player.x < this.x && Platformer.player.x+Platformer.player.w/2 > this.x+this.w/2-RANGE || Platformer.player.x > this.x && Platformer.player.x+Platformer.player.w/2 < this.x+this.w/2+RANGE) {
+				if(!Platformer.sound.roboticNoise.isActive()) {
+					Platformer.sound.roboticNoise.start();
+					Platformer.sound.roboticNoise.setFramePosition(0);
+				}
+			}
+			else {
+				Platformer.sound.roboticNoise.stop();
 			}
 			if(o instanceof Platform)
 			{

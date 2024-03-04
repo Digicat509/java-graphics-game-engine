@@ -2,12 +2,15 @@ package catformer;
 
 import java.awt.*;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
+
 import gameEngine.GameObject;
 import gameEngine.Area;
 
 public class DogEnemy extends Enemy{
 	
 	Area edgeChecker;
+	private int RANGE = 500;
 	public DogEnemy(int x, int y, boolean disabled) {
 		super(x, y, 2, 10, disabled);
 		w = 32;
@@ -47,6 +50,16 @@ public class DogEnemy extends Enemy{
 		{
 			dy += Platformer.GRAVITY;
 		}
+		
+//		if(Platformer.player.x < this.x && Platformer.player.x+Platformer.player.w/2 > this.x+this.w/2-RANGE || Platformer.player.x > this.x && Platformer.player.x+Platformer.player.w/2 < this.x+this.w/2+RANGE) {
+//			if(!Platformer.sound.robotWalk.isActive()) {
+//				Platformer.sound.robotWalk.start();
+//				Platformer.sound.robotWalk.setFramePosition(0);
+//			}
+//		}
+//		else {
+//			Platformer.sound.robotWalk.stop();
+//		}
 		
 		if(dy>15)
 			dy=15;

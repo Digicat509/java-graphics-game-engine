@@ -41,6 +41,8 @@ public class DumbDroneEnemy extends Enemy {
 				((Player)o).damage(this);
 			onGround = true;
 			if(Platformer.player.x > this.x-RANGE && !rolling) {
+				Platformer.sound.roboticIdentification.setFramePosition(0);
+				Platformer.sound.roboticIdentification.start();
 				dx = -4;
 				if(Platformer.player.x > this.x)
 					dx = 4;

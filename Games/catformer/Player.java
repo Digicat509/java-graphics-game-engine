@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 
 import gameEngine.GameEngine.State;
 import gameEngine.GameObject;
@@ -247,6 +248,8 @@ public class Player extends GameObject implements Entity {
 		
 		if(o instanceof Portal)
 		{
+			Platformer.sound.portalSound.setFramePosition(0);
+			Platformer.sound.portalSound.start();
 			y -= dy;
 			int move = (int)(((Portal)o).oPortal.x+((Portal)o).oPortal.w/2-this.w/2)-(int)x;
 			this.y = (((Portal)o).oPortal.y-this.h);
@@ -258,6 +261,8 @@ public class Player extends GameObject implements Entity {
 		}
 		
 		if(o instanceof LevelPortal){
+			Platformer.sound.loudWoosh.setFramePosition(0);
+			Platformer.sound.loudWoosh.start();
 			((LevelPortal) o).updateStage();
 		}
 		
@@ -342,6 +347,7 @@ public class Player extends GameObject implements Entity {
 			if(dy < 0 && y <= o.y+o.h) {
 				dy = 0;
 				y = o.y+o.h;
+				onGround = true;
 			}
 		}
 		else
@@ -353,6 +359,13 @@ public class Player extends GameObject implements Entity {
 		}
 		
 		collisionJumps(o);
+		
+//		if(walking) {
+//			Platformer.sound.footsteps.start();
+//		}
+//		else {
+//			Platformer.sound.footsteps.stop();
+//		}
 		
 		if(x < 0) {
 			x = 0;

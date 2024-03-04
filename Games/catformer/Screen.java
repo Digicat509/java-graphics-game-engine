@@ -63,9 +63,7 @@ public class Screen extends GameObject{
 	}
 	public void updateState(State state)
 	{
-		Platformer.sound.audio.stop();
-		Platformer.sound.creditsAudio.stop();
-		Platformer.sound.bossAudio.stop();
+		Platformer.sound.stopAll();
 		Platformer.game.getHandeler().clear();
 		Platformer.game.state = state;
 		Platformer.game.getHandeler().add(Platformer.screen, false);
@@ -118,8 +116,7 @@ public class Screen extends GameObject{
 	}
 	public void updateState(State state, Stage stage)
 	{
-		Platformer.sound.audio.stop();
-		Platformer.sound.creditsAudio.stop();
+		Platformer.sound.stopAll();
 		Platformer.game.getHandeler().clear();
 		Platformer.game.state = state;
 		Platformer.game.getHandeler().add(Platformer.screen, false);
