@@ -25,7 +25,7 @@ public class DogEnemy extends Enemy{
 		{
 			x+= dx;
 			Platformer.game.getHandeler().remove(edgeChecker);
-			edgeChecker = new Area((int)(dx < 0 ? x+dx : x+w+3), (int)y+h+5, 2, 2, false);
+			edgeChecker = new Area((int)(dx < 0 ? x : x+w-1), (int)y+h+5, 2, 2, false);
 			if(!edgeChecker.hitsAny()) {
 				dx *= -1;
 			}
