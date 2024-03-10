@@ -22,7 +22,14 @@ public class Level {
 		{
 			Platformer.screen.inputText = true;
 		}
-		
+		if(stage == Stage.LEVEL5)
+		{
+			try {build("assets/level5.txt");}catch(Exception e) {e.printStackTrace();}
+		}
+		if(stage == Stage.LEVEL4)
+		{
+			try {build("assets/level4.txt");}catch(Exception e) {e.printStackTrace();}
+		}
 		if(stage == Stage.LEVEL3) {
 			Platformer.player = new Player(30, 250, false);
 			new Building(-50, 400, 400);
@@ -439,10 +446,12 @@ public class Level {
 		LEVEL1(1),
 		LEVEL2(2),
 		LEVEL3(3),
+		LEVEL4(4),
+		LEVEL5(5),
 		CUSTOM(-1),
 		INFINITE(0);
 		int level;
-		static final int maxLevel = 3;
+		static final int maxLevel = 5;
 		Stage(int i)
 		{
 			this.level = i;

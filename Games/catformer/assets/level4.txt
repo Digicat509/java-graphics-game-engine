@@ -1,0 +1,92 @@
+class catformer.Block 109.0, 10.0
+class catformer.Building 98.0, 16.0, 22
+class catformer.Block 27.0, 17.0
+class catformer.Block 73.0, 11.0
+class catformer.Player 2.0, 19.0
+class catformer.Block 110.0, 10.0
+class catformer.DogEnemy 157.0, 13.0
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.Block 29.0, 17.0
+class catformer.Block 107.0, 11.0
+class catformer.Block 31.0, 17.0
+class catformer.Block 108.0, 11.0
+class catformer.Building 149.0, 15.0, 12
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.Block 21.0, 19.0
+class catformer.Block 23.0, 19.0
+class catformer.DumbDroneEnemy 1500.0, 375.0
+class catformer.Block 100.0, 11.0
+class catformer.SmartDroneEnemy 2875.0, 350.0
+class catformer.Block 50.0, 15.0
+class catformer.Block 101.0, 11.0
+class catformer.DogEnemy 180.0, 8.0
+class catformer.Block 68.0, 11.0
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.DogEnemy 110.0, 6.0
+class catformer.Block 52.0, 15.0
+class catformer.Block 72.0, 11.0
+class catformer.Block 100.0, 12.0
+class catformer.Block 60.0, 16.0
+class catformer.Block 54.0, 15.0
+class catformer.Block 116.0, 10.0
+class catformer.Block 62.0, 16.0
+class catformer.Portal 56.0, 17.0, 59.0, 13.0
+class catformer.Building 133.0, 18.0, 14
+class catformer.Block 118.0, 10.0
+class catformer.Block 101.0, 12.0
+class catformer.Block 65.0, 11.0
+class catformer.Building 34.0, 16.0, 14
+class catformer.Block 120.0, 10.0
+class catformer.SmartDroneEnemy 3575.0, 400.0
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.Block 67.0, 11.0
+class catformer.Building 77.0, 16.0, 16
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.Building 197.0, 0.0, 14
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.Block 71.0, 11.0
+class catformer.Building 178.0, 10.0, 12
+class catformer.AnimalControlEnemy 3025.0, 200.0
+class catformer.DogEnemy 41.0, 14.0
+class catformer.Block 28.0, 17.0
+class catformer.Block 30.0, 17.0
+class catformer.Block 107.0, 8.0
+class catformer.Block 108.0, 8.0
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.Block 109.0, 8.0
+class catformer.Block 110.0, 8.0
+class catformer.Block 22.0, 19.0
+class catformer.Block 111.0, 8.0
+class catformer.AnimalControlEnemy 4175.0, 300.0
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.Block 51.0, 15.0
+class catformer.Block 107.0, 9.0
+class catformer.Block 70.0, 11.0
+class catformer.Block 59.0, 16.0
+class catformer.Block 53.0, 15.0
+class catformer.Block 108.0, 9.0
+class catformer.SmartDroneEnemy 3400.0, 400.0
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.Block 61.0, 16.0
+class catformer.Block 63.0, 16.0
+class catformer.Block 109.0, 9.0
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.LevelPortal 4775.0, 330.0, CUSTOM, true
+class catformer.Block 110.0, 9.0
+class catformer.Block 117.0, 10.0
+class catformer.Building 126.0, 14.0, 2
+class catformer.Block 111.0, 9.0
+class catformer.Block 119.0, 10.0
+class catformer.Building 0.0, 21.0, 18
+class catformer.Block 66.0, 11.0
+class catformer.Block 20.0, 19.0
+class catformer.Block 121.0, 10.0
+class catformer.Building 164.0, 14.0, 10
+class catformer.Building 211.0, 0.0, 20
+class catformer.Block 107.0, 10.0
+class catformer.Building 231.0, 0.0, 16
+class catformer.Block 108.0, 10.0
+class catformer.DogEnemy 23.0, 17.0
+class catformer.Block 69.0, 11.0
+class catformer.Building 247.0, 0.0, 22
+class gameEngine.Text 717.0, 368.0
