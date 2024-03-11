@@ -31,129 +31,15 @@ public class Level {
 			try {build("assets/level4.txt");}catch(Exception e) {e.printStackTrace();}
 		}
 		if(stage == Stage.LEVEL3) {
-			Platformer.player = new Player(30, 250, false);
-			new Building(-50, 400, 400);
-			
-			new Building(450, 400, 100);
-			new Building(550, 300, 100);
-			
-			new Building(750, 400, 200);
-			new FloatingPlatform(750, 100, 100, 200);
-			new Building(950, 100, 100);
-			new Building(1050, 500, 100);
-			
-			new DogEnemy(1300,525, false);
-			new Building(1200, 550, 350);
-			new Building(1650, 500, 50);
-			
-			new Pipe(1275, 100, 175);
-			new Pipe(1600, 250, 125);
-			new FloatingPlatform(1200, 50, 100, 300);
-			new FloatingPlatform(1700, 200, 100, 150);
-			
-			new Building(1800, 550, 150);
-			new DumbDroneEnemy(1920,540, false);
-			new Building(1950, 500, 150);
-			new DumbDroneEnemy(2085,490, false);
-			
-			new Building(2200, 500, 400);
-			new Box(2400-30,500-19);
-			
-			new Building(2700, 500, 450);
-			new Granny(2950, 100, false);
-			
-			new Building(3200, 500, 350);
-			new LevelPortal(3555, 550, Stage.LEVEL1, true);
+			try {build("assets/level3.txt");}catch(Exception e) {e.printStackTrace();}
 		}
 		
 		if(stage == Stage.LEVEL2) {
-			Platformer.player = new Player(30, 250, false);
-			new Building(-50, 400, 1450);
-			new Building(1400, 500, 400);
-			
-			new Building(500, 350, 50);
-			new Building(600, 300, 50);
-			new Building(700, 250, 50);
-			new Building(800, 300, 50);
-			new Building(900, 350, 50);
-			new FloatingPlatform(900, 200, 50, 50);
-			new Spikes(550,376,50);
-			new Spikes(650,376,50);
-			new Spikes(750,376,50);
-			new Spikes(850,376,50);
-			
-			new FloatingPlatform(1150, 200, 150, 50);
-			new DumbDroneEnemy(1200, 150, false);
-			new FloatingPlatform(1400, 100, 100, 200);
-			new FloatingPlatform(1600, 300, 100, 50);
-			new DumbDroneEnemy(1650, 250, false);
-
-			new Building(1900, 400, 100);
-			new Building(2100, 300, 100);
-			new Building(2300, 400, 100);
-			new DogEnemy(1950, 350, false);
-			new DogEnemy(2350, 350, false);
-			new DogEnemy(2150, 250, false);
-			
-			new Building(2500, 500, 200);
-			new Building(2700, 450, 50);
-			new Building(2750, 400, 50);
-			new Building(2800, 350, 50);
-			
-			new Building(2950, 500, 700);
-			new FloatingPlatform(3050, 300, 50, 50);
-			new FloatingPlatform(3500, 300, 50, 50);
-			
-			new AnimalControlEnemy(3075, 250, false);
-			new AnimalControlEnemy(3525, 250, false);
-			new LevelPortal(3650, 500, Stage.LEVEL3, false);
+			try {build("assets/level2.txt");}catch(Exception e) {e.printStackTrace();}
 		}
 		
 		if(stage == Stage.LEVEL1) {
-			Platformer.player = new Player(30, 250, false);
-			new TutorialBox("Press a and d or arrow keys to move", 250, 100, 250, 75);
-			new TutorialBox("Press w, up or space to jump", 400, 250, 150, 75);
-			new TutorialBox("Avoid enemies", 950, 300, 150, 30);
-			new TutorialBox("You can jump off walls", 2650, 180, 250, 30);
-			new TutorialBox("Finish the level through the portal", 3800, 250, 250, 75);
-			new Building(-50, 500, 500);
-			new Building(500, 450, 300);
-			new DogEnemy(1000,350, false);
-			new Building(850, 400, 300);
-			new DogEnemy(1350,350, false);
-			new Building(1200, 400, 300);
-			new Building(1550, 500, 300);
-			new Building(1950, 600, 400);
-			
-			new FloatingPlatform(2150, 550, 50, 50);
-			new DumbDroneEnemy(2175, 500, false);
-			new FloatingPlatform(2250, 500, 50, 50);
-			new DumbDroneEnemy(2275, 450, false);
-			
-			new Building(2400, 500, 650);
-			new DumbDroneEnemy(2550, 450, false);
-			new DumbDroneEnemy(2600, 450, false);
-			new DumbDroneEnemy(2750, 450, false);
-			new DumbDroneEnemy(2800, 450, false);
-			new SmartDroneEnemy(2950,450, false);
-			
-			new FloatingPlatform(2750, 400, 50, 50);
-			new FloatingPlatform(2650, 400, 50, 50);
-			new FloatingPlatform(2850, 400, 50, 50);
-			new FloatingPlatform(2750, 300, 50, 50);
-			
-			new Building(3050, 450, 100);
-			new Building(3100, 400, 50);
-			
-			new Building(3250, 500, 400);
-			new DumbDroneEnemy(3525, 450, false);
-			new Building(3250, 450, 100);
-			new Building(3250, 400, 50);
-			
-			new Building(3650, 450, 150);
-			new Building(3700, 400, 100);
-			new Building(3750, 350, 50);
-			new LevelPortal(3800, 500, Stage.LEVEL2, false);
+			try {build("assets/level1.txt");}catch(Exception e) {e.printStackTrace();}
 		}
 		if(stage == Stage.EDIT)
 		{
@@ -299,15 +185,15 @@ public class Level {
 				{
 					Platformer.player = new Player((int)Double.parseDouble(parameters[0])*25, (int)Double.parseDouble(parameters[1])*25, false);
 				}
-				else if(name.equalsIgnoreCase("dog enemy")  || name.equalsIgnoreCase(""+DogEnemy.class))
+				else if(name.equalsIgnoreCase("dog enemy")  || name.equalsIgnoreCase("dogenemy") || name.equalsIgnoreCase(""+DogEnemy.class))
 				{
 					new DogEnemy((int)Double.parseDouble(parameters[0])*25, (int)Double.parseDouble(parameters[1])*25, false);
 				}
-				else if(name.equalsIgnoreCase("smart drone enemy")  || name.equalsIgnoreCase(""+SmartDroneEnemy.class))
+				else if(name.equalsIgnoreCase("smart drone enemy") || name.equalsIgnoreCase("smartdroneenemy") || name.equalsIgnoreCase(""+SmartDroneEnemy.class))
 				{
 					new SmartDroneEnemy((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), false);
 				}
-				else if(name.equalsIgnoreCase("dumb drone enemy")  || name.equalsIgnoreCase(""+DumbDroneEnemy.class))
+				else if(name.equalsIgnoreCase("dumb drone enemy") || name.equalsIgnoreCase("dumbdroneenemy") || name.equalsIgnoreCase(""+DumbDroneEnemy.class))
 				{
 					new DumbDroneEnemy((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), false);
 				}
@@ -315,7 +201,7 @@ public class Level {
 				{
 					new Granny((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), false);
 				}
-				else if(name.equalsIgnoreCase("animal control enemy")  || name.equalsIgnoreCase(""+AnimalControlEnemy.class))
+				else if(name.equalsIgnoreCase("animal control enemy") || name.equalsIgnoreCase("animalcontrolenemy") || name.equalsIgnoreCase(""+AnimalControlEnemy.class))
 				{
 					new AnimalControlEnemy((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), false);
 				}
@@ -335,9 +221,17 @@ public class Level {
 				{
 					new Box((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]));
 				}
-				else if(name.equalsIgnoreCase("level portal")  || name.equalsIgnoreCase(""+LevelPortal.class))
+				else if(name.equalsIgnoreCase("level portal") || name.equalsIgnoreCase("levelportal") || name.equalsIgnoreCase(""+LevelPortal.class))
 				{
 					new LevelPortal((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), Stage.get(parameters[2]), Boolean.parseBoolean(parameters[3]));
+				}
+				else if(name.equalsIgnoreCase("tutorial box") || name.equalsIgnoreCase("tutorialbox") || name.equalsIgnoreCase(""+LevelPortal.class))
+				{
+					new TutorialBox(parameters[0], (int)Double.parseDouble(parameters[1]), (int)Double.parseDouble(parameters[2]), (int)Double.parseDouble(parameters[3]), (int)Double.parseDouble(parameters[4]));
+				}
+				else if(name.equalsIgnoreCase("floating platform") || name.equalsIgnoreCase("floatingplatform") || name.equalsIgnoreCase(""+LevelPortal.class))
+				{
+					new FloatingPlatform((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), (int)Double.parseDouble(parameters[2]), (int)Double.parseDouble(parameters[3]));
 				}
 			}
 		}
@@ -431,6 +325,18 @@ public class Level {
 				else if(name.equalsIgnoreCase("box")  || name.equalsIgnoreCase(""+Box.class))
 				{
 					new Box((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]));
+				}
+				else if(name.equalsIgnoreCase("level portal") || name.equalsIgnoreCase("levelportal") || name.equalsIgnoreCase(""+LevelPortal.class))
+				{
+					new LevelPortal((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), Stage.get(parameters[2]), Boolean.parseBoolean(parameters[3]));
+				}
+				else if(name.equalsIgnoreCase("tutorial box") || name.equalsIgnoreCase("tutorialbox") || name.equalsIgnoreCase(""+LevelPortal.class))
+				{
+					new TutorialBox(parameters[0], (int)Double.parseDouble(parameters[1]), (int)Double.parseDouble(parameters[2]), (int)Double.parseDouble(parameters[3]), (int)Double.parseDouble(parameters[4]));
+				}
+				else if(name.equalsIgnoreCase("floating platform") || name.equalsIgnoreCase("floatingplatform") || name.equalsIgnoreCase(""+LevelPortal.class))
+				{
+					new FloatingPlatform((int)Double.parseDouble(parameters[0]), (int)Double.parseDouble(parameters[1]), (int)Double.parseDouble(parameters[2]), (int)Double.parseDouble(parameters[3]));
 				}
 			}
 			if(disabled) {
