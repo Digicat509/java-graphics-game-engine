@@ -347,7 +347,6 @@ public class Player extends GameObject implements Entity {
 			if(dy < 0 && y <= o.y+o.h) {
 				dy = 0;
 				y = o.y+o.h;
-				onGround = true;
 			}
 		}
 		else
