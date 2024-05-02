@@ -571,7 +571,7 @@ public class Screen extends GameObject{
 		}
 	}
 	private void writeToSaveFile(String path) throws IOException{
-		File f = new File("Games/catformer/data/"+path+".txt");
+		File f = new File(getClass().getResource("data").getPath().concat("/"+path+".txt"));
 		FileWriter out = new FileWriter(f, true);
 		for(GameObject o: editLevel)
 		{
